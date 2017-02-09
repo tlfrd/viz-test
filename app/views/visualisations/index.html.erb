@@ -1,0 +1,14 @@
+<h1>Visualisations</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+  </tr>
+
+  <% @visualisations.each do |visualisation| %>
+    <tr>
+      <td><%= visualisation.title %></td>
+      <td><%= link_to 'Show', visualisation_path(visualisation) %></td>
+    </tr>
+  <% end %>
+</table>

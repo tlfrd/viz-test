@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'home/index'
 
+  resources :visualisations
+  
   root 'home#index'
 end
