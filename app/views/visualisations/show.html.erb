@@ -3,42 +3,67 @@
   <%= @visualisation.title %>
 </p>
 
-<style>
-  .border {
-    stroke: #777;
-  }
-</style>
-
 <div id="map"></div>
+<div id="blank-map"></div>
 
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
 <script>
-  var syria = "http://crisis.net/projects/syria-tracker/cities.json";
+  var usa = "https://raw.githubusercontent.com/alignedleft/d3-book/master/chapter_12/us-states.json";
+  var stats = "https://raw.githubusercontent.com/alignedleft/d3-book/master/chapter_12/us-ag-productivity-2004.csv";
 
   var width = 600, height = 400;
   var svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-  var center = [38.996815, 34.802075];
-  var projection = d3.geo.conicConformal()
-    .center(center)
-    .clipAngle(180)
-    .scale(3000)
-    .translate([width / 2, height / 2])
-    .precision(.1);
+  var svg2 = d3.select("#blank-map").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  var colour = d3.scale.quantize()
+    .range(["rgb(237,248,233)","rgb(186,228,179)","rgb(116,196,118)","rgb(49,163,84)","rgb(0,109,44)"]);
+
+  var projection = d3.geo.albersUsa()
+    .scale(500)
+    .translate([width / 2, height / 2]);
 
   var path = d3.geo.path().projection(projection);
 
-  d3.json(syria, function(err, data) {
-    $.each(data.features, function(i, feature) {
-      svg.append("path")
-        .datum(feature.geometry)
-        .attr("class", "border")
-        .attr("d", path);
-      // console.log(feature.properties.NAME_EN);
+  // remove nested ajax
+  d3.csv(stats, function(err, stats) {
+    colour.domain([
+      d3.min(stats, function(d) { return d.value; }),
+      d3.max(stats, function(d) { return d.value; })
+    ]);
+
+    d3.json(usa, function(err, data) {
+      $.each(data.features, function(i, feature) {
+        var name = feature.properties.name;
+        var record = _.findWhere(stats, {state: name})
+        if (record) {
+          // console.log(record.value);
+        }
+        svg.append("path")
+          .datum(feature.geometry)
+          .attr("class", "border")
+          .attr("d", path)
+          .style("fill", function(d) {
+            if (record) {
+              return colour(record.value)
+            } else {
+              return "#ccc";
+            }
+          });
+        svg2.append("path")
+          .datum(feature.geometry)
+          .attr("class", "border")
+          .attr("d", path)
+          .style("fill", "#fff")
+          .style("stroke", "aaa");
+      });
     });
   });
 </script>

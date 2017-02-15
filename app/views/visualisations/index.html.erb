@@ -8,7 +8,8 @@
   <% @visualisations.each do |visualisation| %>
     <tr>
       <td><%= visualisation.title %></td>
-      <td><%= link_to 'Show', visualisation_path(visualisation) %></td>
+      <!-- override turbolinks -->
+      <td><%= link_to 'Show', visualisation_path(visualisation), method: :get %></td>
     </tr>
   <% end %>
 </table>
