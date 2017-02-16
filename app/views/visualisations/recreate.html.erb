@@ -32,6 +32,32 @@
 
   var path = d3.geo.path().projection(projection);
 
+  function changeColour(area) {
+    var valInRange = parseInt(area.attr("currentvalue"));
+    var newColour;
+
+    if (valInRange === colour.range().length) {
+      area.attr("currentvalue", 0);
+      newColour = colour.range()[0];
+    } else if (valInRange === colour.range().length - 1) {
+      area.attr("currentvalue", valInRange + 1);
+      newColour = "#ccc";
+    } else {
+      area.attr("currentvalue", valInRange + 1);
+      newColour = colour.range()[valInRange + 1];
+    }
+
+    area.style("fill", newColour);
+  }
+
+  function getResults() {
+    var results = {};
+    d3.selectAll('.border-2').each(function(d, i) {
+      results[this.getAttribute("name")] = this.getAttribute("currentvalue");
+    });
+    return results;
+  }
+
   // remove nested ajax
   d3.csv(stats, function(err, stats) {
     colour.domain([
@@ -49,6 +75,7 @@
         svg.append("path")
           .datum(feature.geometry)
           .attr("class", "border")
+          .attr("name", name)
           .attr("d", path)
           .style("fill", function(d) {
             if (record) {
@@ -56,6 +83,18 @@
             } else {
               return "#ccc";
             }
+          });
+        svg2.append("path")
+          .datum(feature.geometry)
+          .attr("class", "border-2")
+          .attr("d", path)
+          .style("fill", "#ccc")
+          .style("stroke", "aaa")
+          .attr("currentvalue", 0)
+          .attr("name", name)
+          .on("click", function() {
+            // console.log(d3.select(this).attr("currentvalue"));
+            changeColour(d3.select(this));
           });
       });
     });

@@ -7,6 +7,14 @@ class VisualisationsController < ApplicationController
     @visualisation = Visualisation.find(params[:id])
   end
 
+  def recreate
+    @visualisation = Visualisation.find(params[:visualisation_id])
+  end
+
+  def tasks
+    @visualisation = Visualisation.find(params[:visualisation_id])
+  end
+
   def new
   end
 
@@ -19,6 +27,6 @@ class VisualisationsController < ApplicationController
 
   private
     def visualisation_params
-      params.require(:visualisation).permit(:title)
+      params.require(:visualisation).permit(:title, :json_urL, :csv_urL)
     end
 end
