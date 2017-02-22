@@ -10,7 +10,7 @@
       <td><%= visualisation.title %></td>
       <!-- override turbolinks -->
       <td><%= link_to 'Show', visualisation_path(visualisation), method: :get %></td>
-      <td><%= link_to 'Recreate', visualisation_recreate_path(visualisation), method: :get %></td>
+      <td><%= link_to 'Recreate', visualisation_recreate_path(visualisation, :stage => 'filled'), method: :get %></td>
       <td><%= link_to 'Tasks', visualisation_tasks_path(visualisation), method: :get %></td>
     </tr>
   <% end %>

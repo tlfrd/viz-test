@@ -13,8 +13,10 @@ class VisualisationsController < ApplicationController
 
   def submit_json
     colours = params[:visualisation][:colour_values]
-    json = JSON.parse(colours, :quirks_mode => true)
-    render plain: json
+    if colours
+      json = JSON.parse(colours, :quirks_mode => true)
+      render plain: json
+    end
   end
 
   def tasks
