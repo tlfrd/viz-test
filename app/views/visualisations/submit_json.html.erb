@@ -3,18 +3,10 @@
   <%= @visualisation.title %>
 </p>
 
+Original
 <div id="map"></div>
-
-<div>
-  <%= link_to @visualisation.json_urL do %>
-      <b>JSON</b>
-  <% end %>
-</div>
-<div>
-  <%= link_to @visualisation.csv_urL do %>
-      <b>CSV</b>
-  <% end %>
-</div>
+Recreated
+<div id="blank-map"></div>
 
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
@@ -24,20 +16,36 @@
   var usa = "<%= @visualisation.json_urL %>";
   var stats = "<%= @visualisation.csv_urL %>";
 
-  var width = 900, height = 600;
+  var width = 600, height = 400;
 
+  var results = <%= raw @colours %>;
+
+  // TODO read query using JS
   var svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height);
 
+  var svg2 = d3.select("#blank-map").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  var colour_range = ["rgb(237,248,233)","rgb(186,228,179)","rgb(116,196,118)","rgb(49,163,84)","rgb(0,109,44)"];
   var colour = d3.scale.quantize()
-    .range(["rgb(237,248,233)","rgb(186,228,179)","rgb(116,196,118)","rgb(49,163,84)","rgb(0,109,44)"]);
+    .range(colour_range);
 
   var projection = d3.geo.albersUsa()
-    .scale(750)
+    .scale(500)
     .translate([width / 2, height / 2]);
 
   var path = d3.geo.path().projection(projection);
+
+  function updateResults() {
+    var results = {};
+    d3.selectAll('.border-2').each(function(d, i) {
+      results[this.getAttribute("name")] = this.getAttribute("currentvalue");
+    });
+    document.getElementById('visualisation_colour_values').value = JSON.stringify(results);
+  }
 
   // remove nested ajax
   d3.csv(stats, function(err, stats) {
@@ -52,18 +60,33 @@
         var record = _.findWhere(stats, {state: name})
         if (record) {
           // console.log(record.value);
-        }
+      }
         svg.append("path")
           .datum(feature.geometry)
           .attr("class", "border")
+          .attr("name", name)
           .attr("d", path)
-          .style("fill", function(d) {
+          .style("fill", function (d) {
             if (record) {
               return colour(record.value)
             } else {
               return "#ccc";
             }
           });
+        svg2.append("path")
+          .datum(feature.geometry)
+          .attr("class", "border-2")
+          .attr("d", path)
+          .style("fill", function (d) {
+            if (results[name] === "0") {
+              return "#ccc";
+            } else {
+              return colour_range[results[name]];
+            }
+          })
+          .style("stroke", "aaa")
+          .attr("currentvalue", 0)
+          .attr("name", name);
       });
     });
   });
