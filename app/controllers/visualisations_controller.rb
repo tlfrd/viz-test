@@ -11,6 +11,12 @@ class VisualisationsController < ApplicationController
     @visualisation = Visualisation.find(params[:visualisation_id])
   end
 
+  def submit_json
+    colours = params[:visualisation][:colour_values]
+    json = JSON.parse(colours, :quirks_mode => true)
+    render plain: json
+  end
+
   def tasks
     @visualisation = Visualisation.find(params[:visualisation_id])
   end

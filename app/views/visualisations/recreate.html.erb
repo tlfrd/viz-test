@@ -6,6 +6,11 @@
 <div id="map"></div>
 <div id="blank-map"></div>
 
+<%= form_for @visualisation, :url => {:action=> "submit_json"}, :html => {:class => "nifty_form", :method => :post} do |f| %>
+    <%= f.hidden_field :colour_values %>
+    <%= f.submit "Submit"%>
+<% end %>
+
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
@@ -48,14 +53,15 @@
     }
 
     area.style("fill", newColour);
+    updateResults();
   }
 
-  function getResults() {
+  function updateResults() {
     var results = {};
     d3.selectAll('.border-2').each(function(d, i) {
       results[this.getAttribute("name")] = this.getAttribute("currentvalue");
     });
-    return results;
+    document.getElementById('visualisation_colour_values').value = JSON.stringify(results);
   }
 
   // remove nested ajax
