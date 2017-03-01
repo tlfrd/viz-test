@@ -61,32 +61,31 @@ Recreated
         if (record) {
           // console.log(record.value);
       }
-        svg.append("path")
-          .datum(feature.geometry)
-          .attr("class", "border")
-          .attr("name", name)
-          .attr("d", path)
-          .style("fill", function (d) {
-            if (record) {
-              return colour(record.value)
-            } else {
-              return "#ccc";
-            }
-          });
-        svg2.append("path")
-          .datum(feature.geometry)
-          .attr("class", "border-2")
-          .attr("d", path)
-          .style("fill", function (d) {
-            if (results[name] === "0") {
-              return "#ccc";
-            } else {
-              return colour_range[results[name]];
-            }
-          })
-          .style("stroke", "aaa")
-          .attr("currentvalue", 0)
-          .attr("name", name);
+      svg.append("path")
+        .datum(feature.geometry)
+        .attr("class", "border")
+        .attr("name", name)
+        .attr("d", path)
+        .style("fill", function (d) {
+          if (record) {
+            return colour(record.value)
+          } else {
+            return "#ccc";
+          }
+        });
+      svg2.append("path")
+        .datum(feature.geometry)
+        .attr("class", "border-2")
+        .attr("d", path)
+        .style("fill", function (d) {
+          if (results[name] === "0") {
+            return "#ccc";
+          } else {
+            return colour_range[results[name] - 1];
+          }
+        })
+        .style("stroke", "aaa")
+        .attr("name", name);
       });
     });
   });

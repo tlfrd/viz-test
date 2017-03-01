@@ -55,13 +55,15 @@
 
     if (valInRange === colour.range().length) {
       area.attr("currentvalue", 0);
-      newColour = colour.range()[0];
+      // newColour = colour.range()[0];
+      newColour = "#ccc";
     } else if (valInRange === colour.range().length - 1) {
       area.attr("currentvalue", valInRange + 1);
-      newColour = "#ccc";
+      // newColour = "#ccc";
+      newColour = colour.range()[valInRange];
     } else {
       area.attr("currentvalue", valInRange + 1);
-      newColour = colour.range()[valInRange + 1];
+      newColour = colour.range()[valInRange];
     }
 
     area.style("fill", newColour);
@@ -119,6 +121,7 @@
             });
         }
       });
+      updateResults();
     });
   });
 </script>
