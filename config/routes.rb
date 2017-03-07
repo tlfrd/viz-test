@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :tasks
   resources :experiments
   resources :visualisations do
       get :recreate

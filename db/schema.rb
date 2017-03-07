@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307220245) do
+ActiveRecord::Schema.define(version: 20170307220503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 20170307220245) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "visualisation_id"
+    t.string   "type"
+    t.string   "description"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["visualisation_id"], name: "index_tasks_on_visualisation_id", using: :btree
   end
 
   create_table "visualisations", force: :cascade do |t|
@@ -30,4 +40,5 @@ ActiveRecord::Schema.define(version: 20170307220245) do
     t.json     "colour_values"
   end
 
+  add_foreign_key "tasks", "visualisations"
 end
