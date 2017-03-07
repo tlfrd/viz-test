@@ -1,3 +1,4 @@
 class Task < ApplicationRecord
-  belongs_to :visualisation
+  has_one :visualisation
+  has_many :experiment_tasks
 end

@@ -1,4 +1,4 @@
 class ExperimentTask < ApplicationRecord
   belongs_to :experiment
-  belongs_to :task
+  has_one :task
 end
