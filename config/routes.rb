@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :experiment_tasks
   resources :tasks
   resources :experiments
   resources :visualisations do

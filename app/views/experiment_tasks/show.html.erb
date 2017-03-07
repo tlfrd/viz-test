@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Experiment:</strong>
+  <%= @experiment_task.experiment %>
+</p>
+
+<p>
+  <strong>Task:</strong>
+  <%= @experiment_task.task %>
+</p>
+
+<p>
+  <strong>Order:</strong>
+  <%= @experiment_task.order %>
+</p>
+
+<%= link_to 'Edit', edit_experiment_task_path(@experiment_task) %> |
+<%= link_to 'Back', experiment_tasks_path %>
