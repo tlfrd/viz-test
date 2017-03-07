@@ -32,6 +32,6 @@ class VisualisationsController < ApplicationController
 
   private
     def visualisation_params
-      params.require(:visualisation).permit(:title, :json_urL, :csv_urL)
+      params.require(:visualisation).permit(:title, :json_url, :csv_url)
     end
 end

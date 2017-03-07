@@ -6,12 +6,12 @@
 <div id="map"></div>
 
 <div>
-  <%= link_to @visualisation.json_urL do %>
+  <%= link_to @visualisation.json_url do %>
       <b>JSON</b>
   <% end %>
 </div>
 <div>
-  <%= link_to @visualisation.csv_urL do %>
+  <%= link_to @visualisation.csv_url do %>
       <b>CSV</b>
   <% end %>
 </div>
@@ -21,8 +21,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
 <script>
-  var usa = "<%= @visualisation.json_urL %>";
-  var stats = "<%= @visualisation.csv_urL %>";
+  var usa = "<%= @visualisation.json_url %>";
+  var stats = "<%= @visualisation.csv_url %>";
 
   var width = 900, height = 600;
 
