@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307231516) do
+ActiveRecord::Schema.define(version: 20170307234423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "experiment_results", force: :cascade do |t|
+    t.integer  "experiment_task_result_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["experiment_task_result_id"], name: "index_experiment_results_on_experiment_task_result_id", using: :btree
+  end
+
+  create_table "experiment_task_results", force: :cascade do |t|
+    t.json     "result"
+    t.integer  "experiment_task_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["experiment_task_id"], name: "index_experiment_task_results_on_experiment_task_id", using: :btree
+  end
 
   create_table "experiment_tasks", force: :cascade do |t|
     t.integer  "experiment_id"
@@ -50,6 +65,8 @@ ActiveRecord::Schema.define(version: 20170307231516) do
     t.json     "colour_values"
   end
 
+  add_foreign_key "experiment_results", "experiment_task_results"
+  add_foreign_key "experiment_task_results", "experiment_tasks"
   add_foreign_key "experiment_tasks", "experiments"
   add_foreign_key "experiment_tasks", "tasks"
   add_foreign_key "tasks", "visualisations"
