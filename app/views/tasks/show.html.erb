@@ -20,5 +20,8 @@
   <%= @task.description %>
 </p>
 
+<%= link_to 'Preview Task', task_preview_path(@task), method: :get %>
+</br></br>
+
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>

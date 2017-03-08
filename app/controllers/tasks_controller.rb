@@ -13,6 +13,12 @@ class TasksController < ApplicationController
     @visualisation = Visualisation.find(@task.visualisation_id)
   end
 
+  # GET /tasks/1/preview
+  def preview
+    @task = Task.find(params[:task_id])
+    @visualisation = Visualisation.find(@task.visualisation_id)
+  end
+
   # GET /tasks/new
   def new
     @task = Task.new
