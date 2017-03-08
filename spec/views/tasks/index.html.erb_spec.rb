@@ -6,13 +6,13 @@ RSpec.describe "tasks/index", type: :view do
       Task.create!(
         :name => "Name",
         :visualisation => nil,
-        :type => "Type",
+        :task_type => "Type",
         :description => "Description"
       ),
       Task.create!(
         :name => "Name",
         :visualisation => nil,
-        :type => "Type",
+        :task_type => "Type",
         :description => "Description"
       )
     ])

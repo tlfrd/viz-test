@@ -2,14 +2,17 @@ require 'rails_helper'
 
 RSpec.describe "experiment_tasks/index", type: :view do
   before(:each) do
+    @experiment = assign(:experiment, Experiment.create!(
+      :name => nil
+    ))
     assign(:experiment_tasks, [
       ExperimentTask.create!(
-        :experiment => nil,
+        :experiment => @experiment,
         :task => nil,
         :order => 2
       ),
       ExperimentTask.create!(
-        :experiment => nil,
+        :experiment => @experiment,
         :task => nil,
         :order => 2
       )
