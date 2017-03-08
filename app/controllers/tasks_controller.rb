@@ -10,6 +10,7 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    @visualisation = Visualisation.find(@task.visualisation_id)
   end
 
   # GET /tasks/new
@@ -69,6 +70,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:name, :visualisation_id, :type, :description)
+      params.require(:task).permit(:name, :visualisation_id, :task_type, :description)
     end
 end
