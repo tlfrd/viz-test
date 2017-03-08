@@ -18,7 +18,8 @@
 
   <div class="field">
     <%= f.label :visualisation_id %>
-    <%= f.text_field :visualisation_id %>
+    <!-- <%= f.text_field :visualisation_id %> -->
+    <%= f.collection_select(:visualisation_id, Visualisation.all, :id, :title) %>
   </div>
 
   <div class="field">
