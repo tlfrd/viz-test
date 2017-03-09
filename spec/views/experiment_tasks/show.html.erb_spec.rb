@@ -5,9 +5,15 @@ RSpec.describe "experiment_tasks/show", type: :view do
     @experiment = assign(:experiment, Experiment.create!(
       :name => nil
     ))
+    @task = assign(:task, Task.create!(
+      :name => "Name",
+      :visualisation => nil,
+      :task_type => "Type",
+      :description => "Description"
+    ))
     @experiment_task = assign(:experiment_task, ExperimentTask.create!(
       :experiment => @experiment,
-      :task => nil,
+      :task => @task,
       :order => 2
     ))
   end

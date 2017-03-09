@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= f.label :experiment_id %>
-    <%= f.text_field :experiment_id %>
+    <%= f.collection_select(:experiment_id, Experiment.all, :id, :name) %>
   </div>
 
   <div class="field">
     <%= f.label :task_id %>
-    <%= f.text_field :task_id %>
+    <%= f.collection_select(:task_id, Task.all, :id, :name) %>
   </div>
 
   <div class="field">

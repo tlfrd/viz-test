@@ -10,6 +10,7 @@ class ExperimentsController < ApplicationController
   # GET /experiments/1
   # GET /experiments/1.json
   def show
+    @experiment_tasks = @experiment.experiment_tasks
   end
 
   # GET /experiments/new

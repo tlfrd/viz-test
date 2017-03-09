@@ -5,5 +5,12 @@
   <%= @experiment.name %>
 </p>
 
+<p>
+  <strong>Tasks</strong></br>
+  <% @experiment_tasks.each do |experiment_task| %>
+    <%= link_to Task.find(experiment_task.task_id).name, task_path(experiment_task.task_id), method: :get %></br>
+  <% end %>
+</p>
+
 <%= link_to 'Edit', edit_experiment_path(@experiment) %> |
 <%= link_to 'Back', experiments_path %>

@@ -15,8 +15,8 @@
   <tbody>
     <% @experiment_tasks.each do |experiment_task| %>
       <tr>
-        <td><%= experiment_task.experiment %></td>
-        <td><%= experiment_task.task %></td>
+        <td><%= Experiment.find(experiment_task.experiment_id).name %></td>
+        <td><%= Task.find(experiment_task.task_id).name %></td>
         <td><%= experiment_task.order %></td>
         <td><%= link_to 'Show', experiment_task %></td>
         <td><%= link_to 'Edit', edit_experiment_task_path(experiment_task) %></td>

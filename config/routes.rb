@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resources :tasks do
       get :preview
   end
-  resources :experiments
+  resources :experiments do
+      get :preview
+  end
   resources :visualisations do
       get :recreate
       post :submit_json

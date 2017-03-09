@@ -16,6 +16,13 @@
     <%= f.text_field :name %>
   </div>
 
+  <% if false %>
+    <div class="field">
+      <%= f.label :experiment_tasks %>
+      <%= collection_check_boxes(:experiment_tasks, :task_ids, Task.all, :id, :name) %>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= f.submit %>
   </div>
