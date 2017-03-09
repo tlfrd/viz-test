@@ -5,9 +5,13 @@ RSpec.describe "experiment_tasks/index", type: :view do
     @experiment = assign(:experiment, Experiment.create!(
       :name => nil
     ))
+    @visualisation = assign(:visualisation, Visualisation.create!(
+      :title => "Test",
+      :html => "<b>woah</b>"
+    ))
     @task = assign(:task, Task.create!(
       :name => "Name",
-      :visualisation => nil,
+      :visualisation => @visualisation,
       :task_type => "Type",
       :description => "Description"
     ))

@@ -2,9 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "tasks/edit", type: :view do
   before(:each) do
+    @visualisation = assign(:visualisation, Visualisation.create!(
+      :title => "Test",
+      :html => "<b>woah</b>"
+    ))
     @task = assign(:task, Task.create!(
       :name => "MyString",
-      :visualisation => nil,
+      :visualisation => @visualisation,
       :task_type => "",
       :description => "MyString"
     ))

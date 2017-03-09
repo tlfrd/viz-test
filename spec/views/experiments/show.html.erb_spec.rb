@@ -5,9 +5,13 @@ RSpec.describe "experiments/show", type: :view do
     @experiment = assign(:experiment, Experiment.create!(
       :name => "Name"
     ))
+    @visualisation = assign(:visualisation, Visualisation.create!(
+      :title => "Test",
+      :html => "<b>woah</b>"
+    ))
     @task = Task.create!(
       :name => "Name",
-      :visualisation => nil,
+      :visualisation => @visualisation,
       :task_type => "Type",
       :description => "Description"
     )

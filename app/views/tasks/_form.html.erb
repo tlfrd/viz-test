@@ -32,6 +32,11 @@
     <%= f.text_field :description %>
   </div>
 
+  <div class="field">
+    <%= f.label :no_of_clicks %>
+    <%= f.number_field :no_of_clicks, :value => 1 %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

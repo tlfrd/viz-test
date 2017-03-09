@@ -20,6 +20,11 @@
   <%= @task.description %>
 </p>
 
+<p>
+  <strong>Number of clicks allowed:</strong>
+  <%= @task.no_of_clicks %>
+</p>
+
 <%= link_to 'Preview Task', task_preview_path(@task), method: :get %>
 </br></br>
 

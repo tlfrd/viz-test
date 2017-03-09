@@ -17,7 +17,7 @@
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.name %></td>
-        <td><%= task.visualisation_id %></td>
+        <td><%= link_to Visualisation.find(task.visualisation_id).title, visualisation_path(task.visualisation_id), method: :get %></td>
         <td><%= task.task_type %></td>
         <td><%= task.description %></td>
         <td><%= link_to 'Show', task %></td>

@@ -28,7 +28,7 @@
     this.ElapsedMilliseconds = new Date().getTime() - this.StartMilliseconds;
   }
 
-  var numberOfClicksAllowed = 3;
+  var numberOfClicksAllowed = <%= @task.no_of_clicks %>;
   var numberOfClicks = 0;
   var taskActive = false;
 
