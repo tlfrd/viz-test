@@ -8,9 +8,11 @@
 <p>
   <strong>Tasks</strong></br>
   <% @experiment_tasks.each do |experiment_task| %>
+    <strong><%= experiment_task.order %></strong>:
     <%= link_to Task.find(experiment_task.task_id).name, task_path(experiment_task.task_id), method: :get %></br>
   <% end %>
 </p>
 
+<%= link_to "Preview", :action => "preview", :experiment_id => @experiment.id, :position => 1 %></br>
 <%= link_to 'Edit', edit_experiment_path(@experiment) %> |
 <%= link_to 'Back', experiments_path %>

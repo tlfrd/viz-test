@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       get :preview
   end
   resources :experiments do
-      get :preview
+      get "preview/:position", :to => "experiments#preview"
   end
   resources :visualisations do
       get :recreate

@@ -10,7 +10,15 @@ class ExperimentsController < ApplicationController
   # GET /experiments/1
   # GET /experiments/1.json
   def show
-    @experiment_tasks = @experiment.experiment_tasks
+    @experiment_tasks = @experiment.experiment_tasks.order(:order)
+  end
+
+  def preview
+    @experiment = Experiment.find(params[:experiment_id])
+    @experiment_tasks = @experiment.experiment_tasks.order(:order)
+    @position = params[:position]
+    @task = @experiment_tasks[@position.to_i - 1].task
+    @visualisation = @task.visualisation
   end
 
   # GET /experiments/new
