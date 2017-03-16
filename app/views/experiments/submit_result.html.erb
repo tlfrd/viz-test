@@ -1,1 +1,9 @@
-Done!
+Done! </br>
+
+Experiment: <%=  @experiment_result.experiment.name %> </br>
+Experiment Result ID: <%=  @experiment_result.id %> </br>
+
+<% @experiment_result.experiment_task_results.each do |result| %>
+  Task Name: <%= result.experiment_task.task.name %> </br>
+  Result ID: <%= result.id %> </br>
+<% end %>

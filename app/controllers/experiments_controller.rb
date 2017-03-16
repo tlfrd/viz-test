@@ -29,7 +29,7 @@ class ExperimentsController < ApplicationController
     if ExperimentResult.exists?(id: params[:experiment_result_id].to_i)
       @experiment_result = ExperimentResult.find(params[:experiment_result_id])
     else
-      @experiment_result = ExperimentResult.create(id: params[:experiment_result_id])
+      @experiment_result = ExperimentResult.create(id: params[:experiment_result_id], experiment_id: @experiment.id)
     end
     @experiment_task = @experiment_tasks[@position - 1]
     @task = @experiment_task.task
