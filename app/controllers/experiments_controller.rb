@@ -11,6 +11,7 @@ class ExperimentsController < ApplicationController
   # GET /experiments/1.json
   def show
     @experiment_tasks = @experiment.experiment_tasks.order(:order)
+    @experiment_result = ExperimentResult.get_next_id
   end
 
   def preview
@@ -19,6 +20,34 @@ class ExperimentsController < ApplicationController
     @position = params[:position]
     @task = @experiment_tasks[@position.to_i - 1].task
     @visualisation = @task.visualisation
+  end
+
+  def run
+    @experiment = Experiment.find(params[:experiment_id])
+    @experiment_tasks = @experiment.experiment_tasks.order(:order)
+    @position = params[:position].to_i
+    if ExperimentResult.exists?(id: params[:experiment_result_id].to_i)
+      @experiment_result = ExperimentResult.find(params[:experiment_result_id])
+    else
+      @experiment_result = ExperimentResult.create(id: params[:experiment_result_id])
+    end
+    @experiment_task = @experiment_tasks[@position - 1]
+    @task = @experiment_task.task
+    @visualisation = @task.visualisation
+
+    # make sure it doesnt create duplicates if you go back to the page
+    if @position > 1
+      @previous_experiment_task = ExperimentTask.find_by_order(@position - 1)
+      @experiment_task_result = ExperimentTaskResult.create(experiment_task_id: @previous_experiment_task.id, experiment_result_id: @experiment_result.id)
+    end
+  end
+
+  def submit_result
+    @position = params[:position].to_i
+    @experiment_result = ExperimentResult.find(params[:experiment_result_id])
+
+    @previous_experiment_task = ExperimentTask.find_by_order(@position - 1)
+    @experiment_task_result = ExperimentTaskResult.create(experiment_task_id: @previous_experiment_task.id, experiment_result_id: @experiment_result.id)
   end
 
   # GET /experiments/new

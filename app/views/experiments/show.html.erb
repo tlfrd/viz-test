@@ -13,6 +13,7 @@
   <% end %>
 </p>
 
+<%= link_to "Run", :action => "run", :experiment_id => @experiment.id, :experiment_result_id => @experiment_result, :position => 1 %> |
 <%= link_to "Preview", :action => "preview", :experiment_id => @experiment.id, :position => 1 %></br>
 <%= link_to 'Edit', edit_experiment_path(@experiment) %> |
 <%= link_to 'Back', experiments_path %>
