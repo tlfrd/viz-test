@@ -1,12 +1,18 @@
 <h3>Visualisations</h3>
+</br>
 
-<table>
-  <tr>
-    <th style="text-align: left;">Title</th>
-  </tr>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
 
   <% @visualisations.each do |visualisation| %>
     <tr>
+      <td><strong><%= visualisation.id %></strong></td>
       <td><%= visualisation.title %></td>
       <!-- override turbolinks -->
       <td><%= link_to 'Show', visualisation_path(visualisation), method: :get %></td>
@@ -14,3 +20,7 @@
     </tr>
   <% end %>
 </table>
+
+</br>
+
+<%= button_to 'New Visualisation', new_visualisation_path, method: :get, class: "btn btn-primary" %>

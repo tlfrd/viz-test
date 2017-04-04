@@ -1,8 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Experiments</h1>
+<h3>Experiments</h3>
+</br>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Name</th>
@@ -24,4 +25,4 @@
 
 <br>
 
-<%= link_to 'New Experiment', new_experiment_path %>
+<%= button_to 'New Experiment', new_experiment_path, method: :get, class: "btn btn-primary" %>
