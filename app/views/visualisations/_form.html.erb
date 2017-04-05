@@ -1,0 +1,21 @@
+<%= form_for(visualisation) do |f| %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :html %>
+    <%= f.text_field :html %>
+  </div>
+
+  <div class="field">
+    <%= f.label :img_src %>
+    <%= f.text_field :img_src %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

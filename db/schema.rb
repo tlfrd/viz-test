@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316141552) do
+ActiveRecord::Schema.define(version: 20170405114251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20170316141552) do
     t.string   "csv_url"
     t.json     "colour_values"
     t.text     "html"
+    t.string   "img_src"
   end
 
   add_foreign_key "experiment_results", "experiment_task_results"
