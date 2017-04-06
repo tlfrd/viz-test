@@ -11,7 +11,54 @@ class ExperimentsController < ApplicationController
   # GET /experiments/1.json
   def show
     @experiment_tasks = @experiment.experiment_tasks.order(:order)
-    @experiment_result = ExperimentResult.get_next_id
+    @experiment_results = @experiment.experiment_results
+    # @experiment_result = ExperimentResult.get_next_id
+  end
+
+  # creates an instance of the experiment
+  def create_instance
+    @experiment = Experiment.find(params[:experiment_id])
+    @experiment_result = ExperimentResult.create(experiment_id: @experiment.id, uuid: ExperimentResult.generate_uuid, completed: false)
+    redirect_to @experiment
+  end
+
+  def run_experiment
+    @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
+    @experiment = @experiment_result.experiment
+    @experiment_tasks = @experiment.experiment_tasks.order(:order)
+
+    if (params[:position].to_i > @experiment_tasks.length)
+      redirect_to submit_experiment_result_path(:uuid => @experiment_result.uuid)
+    else
+      if params[:position]
+        @position = params[:position].to_i
+      else
+        @position = 1
+      end
+
+      @experiment_task = @experiment_tasks[@position - 1]
+      @task = @experiment_task.task
+      @visualisation = @task.visualisation
+    end
+  end
+
+  def submit_task_result
+    @position = params[:position]
+    @result = JSON.parse(params[:request][:result])
+    @experiment_task = ExperimentTask.find_by_order(@position)
+    @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
+    @experiment_task_result = ExperimentTaskResult.create(experiment_task_id: @experiment_task.id, experiment_result_id: @experiment_result.id, result: @result)
+
+    redirect_to run_experiment_pos_path(:uuid => @experiment_result.uuid, :position => (@position.to_i + 1))
+  end
+
+  def submit_result
+    @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
+    @experiment_result.update(completed: true)
+  end
+
+  def view_results
+    @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
   end
 
   def preview
@@ -20,34 +67,6 @@ class ExperimentsController < ApplicationController
     @position = params[:position]
     @task = @experiment_tasks[@position.to_i - 1].task
     @visualisation = @task.visualisation
-  end
-
-  def run
-    @experiment = Experiment.find(params[:experiment_id])
-    @experiment_tasks = @experiment.experiment_tasks.order(:order)
-    @position = params[:position].to_i
-    if ExperimentResult.exists?(id: params[:experiment_result_id].to_i)
-      @experiment_result = ExperimentResult.find(params[:experiment_result_id])
-    else
-      @experiment_result = ExperimentResult.create(id: params[:experiment_result_id], experiment_id: @experiment.id)
-    end
-    @experiment_task = @experiment_tasks[@position - 1]
-    @task = @experiment_task.task
-    @visualisation = @task.visualisation
-
-    # make sure it doesnt create duplicates if you go back to the page
-    if @position > 1
-      @previous_experiment_task = ExperimentTask.find_by_order(@position - 1)
-      @experiment_task_result = ExperimentTaskResult.create(experiment_task_id: @previous_experiment_task.id, experiment_result_id: @experiment_result.id)
-    end
-  end
-
-  def submit_result
-    @position = params[:position].to_i
-    @experiment_result = ExperimentResult.find(params[:experiment_result_id])
-
-    @previous_experiment_task = ExperimentTask.find_by_order(@position - 1)
-    @experiment_task_result = ExperimentTaskResult.create(experiment_task_id: @previous_experiment_task.id, experiment_result_id: @experiment_result.id)
   end
 
   # GET /experiments/new

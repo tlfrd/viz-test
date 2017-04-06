@@ -1,6 +1,12 @@
+require 'securerandom'
+
 class ExperimentResult < ApplicationRecord
   has_many :experiment_task_results
   belongs_to :experiment
+
+  def self.generate_uuid
+    return SecureRandom.uuid
+  end
 
   def self.get_next_id
     max_id = self.maximum(:id)

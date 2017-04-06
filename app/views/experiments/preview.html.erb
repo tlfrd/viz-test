@@ -5,7 +5,7 @@
   <%= @visualisation.html.html_safe %>
 </div>
 
-<button id="taskButton" onclick="startTask()">Start Task</button>
+<button id="taskButton" class="btn btn-primary" onclick="startTask()">Start Task</button>
 </br></br>
 <div id="results"></div>
 
@@ -76,7 +76,7 @@
   }
 
   function displayResults(results) {
-      var results_html = "<table><tr>" +
+      var results_html = "<table class='table'><tr>" +
       "<td><strong>No.</strong></td>" +
       "<td><strong>Coordinates (pixels)</strong></td>" +
       "<td><strong>Time (ms)</strong></td>" +

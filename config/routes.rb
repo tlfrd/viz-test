@@ -5,15 +5,20 @@ Rails.application.routes.draw do
       get :preview
   end
   resources :experiments do
-      get "preview/:position", :to => "experiments#preview"
-      get "run/:experiment_result_id/step/:position", :to => "experiments#run"
-      get "submit_result/:experiment_result_id/step/:position", :to => "experiments#submit_result"
+      get "preview/:position", :to => "experiments#preview", :as => "preview"
+      get "create_instance"
   end
   resources :visualisations
   # resources :visualisations do
   #     get :recreate
   #     post :submit_json
   # end
+
+  get "run/:uuid", :to => "experiments#run_experiment", :as => "run_experiment"
+  get "run/:uuid/task/:position", :to => "experiments#run_experiment", :as => "run_experiment_pos"
+  get "completed/:uuid/", :to => "experiments#submit_result", :as => "submit_experiment_result"
+  get "results/:uuid", :to => "experiments#view_results", :as => "view_experiment_result"
+  post "submit/:uuid/task/:position", :to => "experiments#submit_task_result", :as => "submit_task_result"
 
   root 'home#index'
 end

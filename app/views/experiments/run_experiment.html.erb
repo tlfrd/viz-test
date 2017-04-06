@@ -5,8 +5,19 @@
   <%= @visualisation.html.html_safe %>
 </div>
 
-<button id="taskButton" onclick="startTask()">Start Task</button>
+<button id="taskButton" class="btn btn-primary" onclick="startTask()">Start Task</button>
+
 </br></br>
+
+<%= form_for(:request, :url => submit_task_result_path(:uuid => @experiment_result.uuid, :position => @position)) do |f| %>
+    <div class="actions">
+        <%= f.hidden_field :result, :value => "{}" %>
+        <div id="json_submit">
+          <%= f.submit "Submit", class: "btn btn-success" %>
+        </div>
+    </div>
+<% end %>
+
 <div id="results"></div>
 
 <style>
@@ -16,6 +27,8 @@
 </style>
 
 <script>
+  document.getElementById("json_submit").hidden = true;
+
   StopWatch = function() {
     this.StartMilliseconds = 0;
     this.ElapsedMilliseconds = 0;
@@ -70,13 +83,12 @@
     displayResults(results);
     results = {};
     numberOfClicks = 0;
-    document.getElementById("taskButton").disabled = false;
-    document.getElementById("taskButton").innerHTML = "Start Task"
-    document.getElementById("taskText").innerHTML = "</br>";
+    document.getElementById("taskButton").innerHTML = "Task Complete";
+    document.getElementById("json_submit").hidden = false;
   }
 
   function displayResults(results) {
-      var results_html = "<table><tr>" +
+      var results_html = "<table class='table'><tr>" +
       "<td><strong>No.</strong></td>" +
       "<td><strong>Coordinates (pixels)</strong></td>" +
       "<td><strong>Time (ms)</strong></td>" +
@@ -89,6 +101,7 @@
         results_html += results_row;
       }
       document.getElementById("results").innerHTML = results_html + "</table>";
+      document.getElementById("request_result").value = JSON.stringify(results);
   }
 
   function drawCircle(x, y, size) {
@@ -121,9 +134,3 @@
     });
   }
 </script>
-
-<% if @experiment_tasks.length != @position.to_i %>
-  <%= link_to "Next Task", :action => "run", :experiment_id => @experiment.id, :experiment_result_id => @experiment_result.id, :position => (@position.to_i + 1) %></br>
-<% else %>
-  <%= link_to "Finish Experiment", :action => "submit_result", :experiment_id => @experiment.id, :experiment_result_id => @experiment_result.id, :position => (@position.to_i + 1) %>
-<% end %>
