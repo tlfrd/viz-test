@@ -6,6 +6,9 @@ class VisualisationsController < ApplicationController
   end
 
   def show
+    if (@visualisation.html.start_with?('http'))
+      @visualisation.html = open(@visualisation.html).read
+    end
   end
 
   # def recreate
