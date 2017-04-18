@@ -39,6 +39,9 @@ class ExperimentsController < ApplicationController
       @experiment_task = @experiment_tasks[@position - 1]
       @task = @experiment_task.task
       @visualisation = @task.visualisation
+      if (@visualisation.html.start_with?('http'))
+        @visualisation.html = open(@visualisation.html).read
+      end
     end
   end
 
@@ -67,6 +70,9 @@ class ExperimentsController < ApplicationController
     @position = params[:position]
     @task = @experiment_tasks[@position.to_i - 1].task
     @visualisation = @task.visualisation
+    if (@visualisation.html.start_with?('http'))
+      @visualisation.html = open(@visualisation.html).read
+    end
   end
 
   # GET /experiments/new

@@ -19,7 +19,7 @@ RSpec.describe "tasks/new", type: :view do
 
       assert_select "select#task_visualisation_id[name=?]", "task[visualisation_id]"
 
-      assert_select "input#task_task_type[name=?]", "task[task_type]"
+      assert_select "select#task_task_type[name=?]", "task[task_type]"
 
       assert_select "input#task_description[name=?]", "task[description]"
     end

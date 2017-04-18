@@ -17,6 +17,9 @@ class TasksController < ApplicationController
   def preview
     @task = Task.find(params[:task_id])
     @visualisation = Visualisation.find(@task.visualisation_id)
+    if (@visualisation.html.start_with?('http'))
+      @visualisation.html = open(@visualisation.html).read
+    end
   end
 
   # GET /tasks/new

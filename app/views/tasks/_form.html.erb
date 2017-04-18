@@ -24,11 +24,11 @@
 
   <div class="field">
     <%= f.label :task_type %>
-    <%= f.text_field :task_type %>
+    <%= f.select :task_type, ['Click', 'Question']%>
   </div>
 
   <div class="field">
-    <%= f.label :description %>
+    <%= f.label :description, "Description/Question" %>
     <%= f.text_field :description %>
   </div>
 
@@ -40,4 +40,20 @@
   <div class="actions">
     <%= f.submit %>
   </div>
+
+  <script>
+  var task_type = $("#task_task_type option:selected").text();
+  if (task_type !== "Click") {
+    $("#task_no_of_clicks").attr("disabled", true);
+  }
+
+  $("#task_task_type").change(function() {
+    task_type = this.options[this.selectedIndex].value;
+    if (task_type === "Click") {
+      $("#task_no_of_clicks").attr("disabled", false);
+    } else {
+      $("#task_no_of_clicks").attr("disabled", true);
+    }
+  });
+  </script>
 <% end %>

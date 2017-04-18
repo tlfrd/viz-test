@@ -1,0 +1,28 @@
+<script>
+  window.onload = function() {
+    var selected_svg = d3.select("svg");
+    var h = selected_svg.attr("height");
+    var w = selected_svg.attr("width");
+
+    selected_svg.append("rect")
+       			.attr("x", 0)
+       			.attr("y", 0)
+       			.attr("height", h)
+       			.attr("width", w)
+       			.style("stroke", "black")
+       			.style("fill", "none")
+       			.style("stroke-width", 1);
+  }
+
+  document.getElementById("taskDescription").innerHTML = "<%= @task.description %>";
+
+  function submitTask() {
+    console.log($("#answer").val());
+  }
+</script>
+
+<textarea id="answer" rows="4" cols="50" placeholder="Write your answer here...">
+</textarea>
+<br/>
+
+<button id="taskButton" onclick="submitTask()" class="btn btn-success">Submit</button>
