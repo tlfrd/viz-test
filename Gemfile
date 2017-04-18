@@ -44,6 +44,8 @@ group :development, :test do
 
   gem 'rspec-rails', '~> 3.5'
   gem 'rails-controller-testing'
+
+  gem 'seed_dump'
 end
 
 group :development do
