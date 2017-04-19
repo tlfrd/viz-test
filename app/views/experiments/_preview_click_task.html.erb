@@ -2,14 +2,14 @@
 
 </br></br>
 
-<%= form_for(:request, :url => submit_task_result_path(:uuid => @experiment_result.uuid, :position => @position)) do |f| %>
-    <div class="actions">
-        <%= f.hidden_field :result, :value => "{}" %>
-        <div id="json_submit">
-          <%= f.submit "Submit", class: "btn btn-success" %>
-        </div>
-    </div>
-<% end %>
+<input id="request_result" hidden></input>
+<div id="json_submit">
+  <% if @experiment_tasks.length != @position.to_i %>
+    <input type="button" onclick="location.href='<%= experiment_preview_url(:experiment_id => @experiment.id, :position => (@position.to_i + 1)) %>';" value="Next Task" class="btn btn-success"/>
+  <% else %>
+    <input type="button" onclick="location.href='<%= experiment_url(@experiment) %>';" value="Finish Preview" class="btn btn-success"/>
+  <% end %>
+</div>
 
 <div id="results"></div>
 

@@ -47,7 +47,11 @@ class ExperimentsController < ApplicationController
 
   def submit_task_result
     @position = params[:position]
-    @result = JSON.parse(params[:request][:result])
+    if params[:request][:result].start_with?('{')
+      @result = JSON.parse(params[:request][:result])
+    else
+      @result = '{"answer":"' + params[:request][:result] + '"}'
+    end
     @experiment_task = ExperimentTask.find_by_order(@position)
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
     @experiment_task_result = ExperimentTaskResult.create(experiment_task_id: @experiment_task.id, experiment_result_id: @experiment_result.id, result: @result)
