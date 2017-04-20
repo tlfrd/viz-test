@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= f.label :order %>
-    <%= f.number_field :order, :value => @experiment_task.order || 1 %>
+    <%= f.number_field :order, :value => @experiment_task.order || 1, :class => "form-control" %>
   </div>
 
   <div class="actions">

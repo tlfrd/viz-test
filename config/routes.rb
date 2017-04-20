@@ -22,5 +22,7 @@ Rails.application.routes.draw do
 
   get "experiment_tasks/new/:experiment_id", :to => "experiment_tasks#new", :as => "with_experiment"
 
-  root 'home#index'
+  get "results", :to => "results#index"
+
+  root 'visualisations#index'
 end

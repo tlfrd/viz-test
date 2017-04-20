@@ -2,20 +2,22 @@
 
   <div class="field">
     <%= f.label :title %>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, :class => "form-control" %>
   </div>
 
   <div class="field">
     <%= f.label :html, "Link to HTML" %>
-    <%= f.text_field :html %>
+    <%= f.text_field :html, :class => "form-control" %>
   </div>
 
   <div class="field">
     <%= f.label :img_src, "Image Source" %>
-    <%= f.text_field :img_src %>
+    <%= f.text_field :img_src, :class => "form-control" %>
   </div>
 
+  <br/>
+
   <div class="actions">
-    <%= f.submit "Submit", :class => 'btn btn-success' %>
+    <%= f.submit :class => 'btn btn-success' %>
   </div>
 <% end %>

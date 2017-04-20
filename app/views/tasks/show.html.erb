@@ -1,32 +1,36 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div class="alert alert-info" role="alert"><%= notice %></div>
+<% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @task.name %>
-</p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="panel-title">
+      <%= @task.name %>
+    </div>
+  </div>
 
-<p>
-  <strong>Visualisation:</strong>
-  <%= @visualisation.html.html_safe %>
-</p>
+  <table class="table">
+    <tr>
+      <td><strong>HTML</strong></td>
+      <td><%= link_to "Link", @visualisation.html.html_safe %></td>
+    </tr>
+    <tr>
+      <td><strong>Type<strong></td>
+      <td><%= @task.task_type %></td>
+    </tr>
+    <tr>
+      <td><strong>Description<strong></td>
+      <td><%= @task.description %></td>
+    </tr>
+    <tr>
+      <td><strong>Number of clicks<strong></td>
+      <td><%= @task.no_of_clicks %></td>
+    </tr>
+  </table>
+</div>
 
-<p>
-  <strong>Type:</strong>
-  <%= @task.task_type %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @task.description %>
-</p>
-
-<p>
-  <strong>Number of clicks allowed:</strong>
-  <%= @task.no_of_clicks %>
-</p>
-
-<%= link_to 'Preview Task', task_preview_path(@task), method: :get %>
+<%= link_to 'Preview Task', task_preview_path(@task), method: :get, :class => "btn btn-info btn-white-text" %>
 </br></br>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<%= link_to 'Edit', edit_task_path(@task), :class => "btn btn-warning btn-white-text"  %>
+<%= link_to 'Back', tasks_path, :class => "btn btn-default" %>
