@@ -14,11 +14,14 @@
         <tr>
           <td><strong><%= experiment_task.order %></strong></td>
           <td><%= link_to Task.find(experiment_task.task_id).name, task_path(experiment_task.task_id), method: :get %></td>
+          <td><%= link_to 'Destroy', experiment_task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
+
+<%= link_to "Add Task", new_experiment_task_path(:experiment_id => @experiment.id), class: "btn btn-success btn-white-text" %><br/><br/>
 
 <div class="panel panel-default">
   <div class="panel-heading"><strong>Instances</strong></div>

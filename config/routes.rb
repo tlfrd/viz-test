@@ -20,5 +20,7 @@ Rails.application.routes.draw do
   get "results/:uuid", :to => "experiments#view_results", :as => "view_experiment_result"
   post "submit/:uuid/task/:position", :to => "experiments#submit_task_result", :as => "submit_task_result"
 
+  get "experiment_tasks/new/:experiment_id", :to => "experiment_tasks#new", :as => "with_experiment"
+
   root 'home#index'
 end
