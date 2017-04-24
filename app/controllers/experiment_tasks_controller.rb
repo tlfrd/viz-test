@@ -64,9 +64,10 @@ class ExperimentTasksController < ApplicationController
   # DELETE /experiment_tasks/1
   # DELETE /experiment_tasks/1.json
   def destroy
+    @experiment = @experiment_task.experiment
     @experiment_task.destroy
     respond_to do |format|
-      format.html { redirect_to experiment_tasks_url, notice: 'Experiment task was successfully destroyed.' }
+      format.html { redirect_to @experiment, notice: 'Experiment task was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

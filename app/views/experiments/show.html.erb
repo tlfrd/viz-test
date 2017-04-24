@@ -16,7 +16,7 @@
         <tr>
           <td><strong><%= experiment_task.order %></strong></td>
           <td><%= link_to Task.find(experiment_task.task_id).name, task_path(experiment_task.task_id), method: :get %></td>
-          <td><%= link_to 'Destroy', experiment_task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= button_to 'Remove', experiment_task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
         </tr>
       <% end %>
     </tbody>
@@ -37,10 +37,10 @@
             <% if experiment_result.completed %>
               Completed <%= link_to "(view results)", view_experiment_result_path(experiment_result.uuid) %>
             <% else %>
-              In Progress
+              <%= experiment_result.experiment_task_results.length %> / <%= @experiment.experiment_tasks.length %> Tasks Completed
             <% end %>
           </td>
-          <td><%= link_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= button_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
         </tr>
       <% end %>
     </tbody>

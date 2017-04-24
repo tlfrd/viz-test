@@ -1,4 +1,6 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div class="alert alert-info" role="alert"><%= notice %></div>
+<% end %>
 
 <h3>Experiments</h3>
 </br>
@@ -8,7 +10,8 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th colspan="3"></th>
+        <th>Actions</th>
+        <th colspan="2"></th>
       </tr>
     </thead>
 
@@ -16,9 +19,9 @@
       <% @experiments.each do |experiment| %>
         <tr>
           <td><%= experiment.name %></td>
-          <td><%= link_to 'Show', experiment %></td>
-          <td><%= link_to 'Edit', edit_experiment_path(experiment) %></td>
-          <td><%= link_to 'Destroy', experiment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= button_to 'Show', experiment, method: :get, class: "btn btn-default" %></td>
+          <td><%= button_to 'Edit', edit_experiment_path(experiment), method: :get, class: "btn btn-warning" %></td>
+          <td><%= button_to 'Destroy', experiment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
         </tr>
       <% end %>
     </tbody>
