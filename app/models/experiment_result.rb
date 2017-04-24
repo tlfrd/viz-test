@@ -1,7 +1,7 @@
 require 'securerandom'
 
 class ExperimentResult < ApplicationRecord
-  has_many :experiment_task_results
+  has_many :experiment_task_results, dependent: :destroy
   belongs_to :experiment
 
   def self.generate_uuid

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :experiment_results
   resources :experiment_tasks
   resources :tasks do
       get :preview

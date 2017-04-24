@@ -1,4 +1,6 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div class="alert alert-info" role="alert"><%= notice %></div>
+<% end %>
 
 <h4>
   <strong>Name:</strong>
@@ -38,6 +40,7 @@
               In Progress
             <% end %>
           </td>
+          <td><%= link_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
