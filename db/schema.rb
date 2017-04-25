@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170309104842) do
+ActiveRecord::Schema.define(version: 20170406094033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,10 @@ ActiveRecord::Schema.define(version: 20170309104842) do
     t.integer  "experiment_task_result_id"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "experiment_id"
+    t.string   "uuid"
+    t.boolean  "completed"
+    t.index ["experiment_id"], name: "index_experiment_results_on_experiment_id", using: :btree
     t.index ["experiment_task_result_id"], name: "index_experiment_results_on_experiment_task_result_id", using: :btree
   end
 
@@ -67,9 +71,11 @@ ActiveRecord::Schema.define(version: 20170309104842) do
     t.string   "csv_url"
     t.json     "colour_values"
     t.text     "html"
+    t.string   "img_src"
   end
 
   add_foreign_key "experiment_results", "experiment_task_results"
+  add_foreign_key "experiment_results", "experiments"
   add_foreign_key "experiment_task_results", "experiment_results"
   add_foreign_key "experiment_task_results", "experiment_tasks"
   add_foreign_key "experiment_tasks", "experiments"

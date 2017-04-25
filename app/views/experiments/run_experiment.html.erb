@@ -1,0 +1,12 @@
+<h1>Step: <%= @position %></h1>
+<h2>Task: <%= @experiment_tasks[@position.to_i - 1].task.name %></h2>
+<h2 id="taskDescription"></br></h2>
+<div class="visualisation">
+  <%= @visualisation.html.html_safe %>
+</div>
+
+<% if @task.task_type == "Click" %>
+  <%= render 'click_task' %>
+<% else %>
+  <%= render 'question_task' %>
+<% end %>

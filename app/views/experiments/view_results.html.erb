@@ -1,0 +1,24 @@
+<h2>Done!</h2></br>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><strong><%= @experiment_result.experiment.name %></strong></div>
+  <table class="table">
+    <thead>
+      <tr>
+        <td>Position</td>
+        <td>Task Name</td>
+        <td>Result</td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @experiment_result.experiment_task_results.each do |result| %>
+        <tr>
+          <td><%= result.experiment_task.order %></td>
+          <td><%= result.experiment_task.task.name %></td>
+          <td><%= result.result %> </br></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

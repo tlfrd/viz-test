@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :class => "form-control" %>
   </div>
 
   <div class="field">
@@ -24,20 +24,38 @@
 
   <div class="field">
     <%= f.label :task_type %>
-    <%= f.text_field :task_type %>
+    <%= f.select :task_type, ['Click', 'Question'] %>
   </div>
 
   <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
+    <%= f.label :description, "Description/Question" %>
+    <%= f.text_field :description, :class => "form-control" %>
   </div>
 
   <div class="field">
     <%= f.label :no_of_clicks %>
-    <%= f.number_field :no_of_clicks, :value => 1 %>
+    <%= f.number_field :no_of_clicks, :value => @task.no_of_clicks || 1, :class => "form-control" %>
   </div>
 
+  <br/>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => 'btn btn-success' %>
   </div>
+
+  <script>
+  var task_type = $("#task_task_type option:selected").text();
+  if (task_type !== "Click") {
+    $("#task_no_of_clicks").attr("disabled", true);
+  }
+
+  $("#task_task_type").change(function() {
+    task_type = this.options[this.selectedIndex].value;
+    if (task_type === "Click") {
+      $("#task_no_of_clicks").attr("disabled", false);
+    } else {
+      $("#task_no_of_clicks").attr("disabled", true);
+    }
+  });
+  </script>
 <% end %>

@@ -1,18 +1,55 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div class="alert alert-info" role="alert"><%= notice %></div>
+<% end %>
 
-<p>
+<h4>
   <strong>Name:</strong>
   <%= @experiment.name %>
-</p>
+</h4>
+</br>
 
-<p>
-  <strong>Tasks</strong></br>
-  <% @experiment_tasks.each do |experiment_task| %>
-    <strong><%= experiment_task.order %></strong>:
-    <%= link_to Task.find(experiment_task.task_id).name, task_path(experiment_task.task_id), method: :get %></br>
-  <% end %>
-</p>
+<div class="panel panel-default">
+  <div class="panel-heading"><strong>Tasks</strong></div>
+  <table class="table">
+    <tbody>
+      <% @experiment_tasks.each do |experiment_task| %>
+        <tr>
+          <td><strong><%= experiment_task.order %></strong></td>
+          <td><%= link_to Task.find(experiment_task.task_id).name, task_path(experiment_task.task_id), method: :get %></td>
+          <td><%= button_to 'Edit', edit_experiment_task_path(experiment_task), method: :get, class: "btn btn-warning" %></td>
+          <td><%= button_to 'Remove', experiment_task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-<%= link_to "Preview", :action => "preview", :experiment_id => @experiment.id, :position => 1 %></br>
-<%= link_to 'Edit', edit_experiment_path(@experiment) %> |
-<%= link_to 'Back', experiments_path %>
+<%= link_to "Add Task", new_experiment_task_path(:experiment_id => @experiment.id), class: "btn btn-success btn-white-text" %><br/><br/>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><strong>Instances</strong></div>
+  <table class="table">
+    <tbody>
+      <% @experiment_results.each do |experiment_result| %>
+        <tr>
+          <td><%= link_to experiment_result.uuid, run_experiment_path(experiment_result.uuid) %></td>
+          <td><%= run_experiment_url(experiment_result.uuid) %></td>
+          <td>
+            <% if experiment_result.completed %>
+              Completed <%= link_to "(view results)", view_experiment_result_path(experiment_result.uuid) %>
+            <% else %>
+              <%= experiment_result.experiment_task_results.length %> / <%= @experiment.experiment_tasks.length %> Tasks Completed
+            <% end %>
+          </td>
+          <td><%= button_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<%= link_to "Create Instance", experiment_create_instance_path(@experiment.id), class: "btn btn-primary btn-white-text" %> </br></br>
+<%= link_to "Preview", experiment_preview_path(:experiment_id => @experiment.id, :position => 1), class: "btn btn-info btn-white-text" %>
+<%= link_to 'Edit', edit_experiment_path(@experiment), class: "btn btn-warning btn-white-text" %> </br></br>
+<%= link_to 'Back', experiments_path, class: "btn btn-default" %>

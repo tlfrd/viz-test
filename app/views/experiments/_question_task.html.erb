@@ -1,0 +1,31 @@
+<script>
+  window.onload = function() {
+    var selected_svg = d3.select("svg");
+    var h = selected_svg.attr("height");
+    var w = selected_svg.attr("width");
+
+    selected_svg.append("rect")
+       			.attr("x", 0)
+       			.attr("y", 0)
+       			.attr("height", h)
+       			.attr("width", w)
+       			.style("stroke", "black")
+       			.style("fill", "none")
+       			.style("stroke-width", 1);
+  }
+
+  document.getElementById("taskDescription").innerHTML = "<%= @task.description %>";
+</script>
+
+<!-- <textarea id="answer" rows="4" cols="50" placeholder="Write your answer here...">
+</textarea>
+<br/> -->
+
+<%= form_for(:request, :url => submit_task_result_path(:uuid => @experiment_result.uuid, :position => @position)) do |f| %>
+    <div class="actions">
+        <%= f.text_area :result %>
+        <div id="json_submit">
+          <%= f.submit "Submit", class: "btn btn-success" %>
+        </div>
+    </div>
+<% end %>

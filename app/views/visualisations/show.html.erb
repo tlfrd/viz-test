@@ -3,68 +3,9 @@
   <%= @visualisation.title %>
 </p>
 
+<p>
+  <%= @visualisation.html.html_safe %>
+</p>
 <div id="map"></div>
 
-<div>
-  <%= link_to @visualisation.json_url do %>
-      <b>JSON</b>
-  <% end %>
-</div>
-<div>
-  <%= link_to @visualisation.csv_url do %>
-      <b>CSV</b>
-  <% end %>
-</div>
-
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script src="https://d3js.org/topojson.v2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-
-<script>
-  var usa = "<%= @visualisation.json_url %>";
-  var stats = "<%= @visualisation.csv_url %>";
-
-  var width = 900, height = 600;
-
-  var svg = d3.select("#map").append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
-  var colour = d3.scale.quantize()
-    .range(["rgb(237,248,233)","rgb(186,228,179)","rgb(116,196,118)","rgb(49,163,84)","rgb(0,109,44)"]);
-
-  var projection = d3.geo.albersUsa()
-    .scale(750)
-    .translate([width / 2, height / 2]);
-
-  var path = d3.geo.path().projection(projection);
-
-  // remove nested ajax
-  d3.csv(stats, function(err, stats) {
-    colour.domain([
-      d3.min(stats, function(d) { return d.value; }),
-      d3.max(stats, function(d) { return d.value; })
-    ]);
-
-    d3.json(usa, function(err, data) {
-      $.each(data.features, function(i, feature) {
-        var name = feature.properties.name;
-        var record = _.findWhere(stats, {state: name})
-        if (record) {
-          // console.log(record.value);
-        }
-        svg.append("path")
-          .datum(feature.geometry)
-          .attr("class", "border")
-          .attr("d", path)
-          .style("fill", function(d) {
-            if (record) {
-              return colour(record.value)
-            } else {
-              return "#ccc";
-            }
-          });
-      });
-    });
-  });
-</script>
+<%= link_to 'Back', visualisations_path, :class => "btn btn-default" %>

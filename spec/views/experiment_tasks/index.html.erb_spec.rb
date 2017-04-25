@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "experiment_tasks/index", type: :view do
   before(:each) do
     @experiment = assign(:experiment, Experiment.create!(
-      :name => nil
+      :name => "Experiment1"
     ))
     @visualisation = assign(:visualisation, Visualisation.create!(
       :title => "Test",
@@ -19,12 +19,12 @@ RSpec.describe "experiment_tasks/index", type: :view do
       ExperimentTask.create!(
         :experiment => @experiment,
         :task => @task,
-        :order => 2
+        :order => 0
       ),
       ExperimentTask.create!(
         :experiment => @experiment,
         :task => @task,
-        :order => 2
+        :order => 0
       )
     ])
   end
@@ -33,6 +33,6 @@ RSpec.describe "experiment_tasks/index", type: :view do
     render
     assert_select "tr>td", :text => @task.name.to_s, :count => 2
     assert_select "tr>td", :text => @experiment.name.to_s, :count => 2
-    assert_select "tr>td", :text => 2.to_s, :count => 2
+    assert_select "tr>td", :text => 0.to_s, :count => 2
   end
 end

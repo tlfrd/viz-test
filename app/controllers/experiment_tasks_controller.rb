@@ -15,6 +15,9 @@ class ExperimentTasksController < ApplicationController
   # GET /experiment_tasks/new
   def new
     @experiment_task = ExperimentTask.new
+    if params[:experiment_id]
+      @experiment_id = params[:experiment_id]
+    end
   end
 
   # GET /experiment_tasks/1/edit
@@ -24,29 +27,37 @@ class ExperimentTasksController < ApplicationController
   # POST /experiment_tasks
   # POST /experiment_tasks.json
   def create
+    # @experiment_task = ExperimentTask.new(experiment_task_params)
+    #
+    # respond_to do |format|
+    #   if @experiment_task.save
+    #     format.html { redirect_to @experiment, notice: 'Experiment task was successfully created.' }
+    #     format.json { render :show, status: :created, location: @experiment_task }
+    #   else
+    #     format.html { render :new }
+    #     format.json { render json: @experiment_task.errors, status: :unprocessable_entity }
+    #   end
+    # end
+
     @experiment_task = ExperimentTask.new(experiment_task_params)
 
-    respond_to do |format|
-      if @experiment_task.save
-        format.html { redirect_to @experiment_task, notice: 'Experiment task was successfully created.' }
-        format.json { render :show, status: :created, location: @experiment_task }
-      else
-        format.html { render :new }
-        format.json { render json: @experiment_task.errors, status: :unprocessable_entity }
-      end
+    if @experiment_task.save
+      @experiment = params[:experiment_task][:experiment_id]
+      redirect_to experiment_path(:id => @experiment)
     end
   end
 
   # PATCH/PUT /experiment_tasks/1
   # PATCH/PUT /experiment_tasks/1.json
   def update
+    @experiment = @experiment_task.experiment
     respond_to do |format|
       if @experiment_task.update(experiment_task_params)
-        format.html { redirect_to @experiment_task, notice: 'Experiment task was successfully updated.' }
+        format.html { redirect_to @experiment, notice: 'Experiment task was successfully updated.' }
         format.json { render :show, status: :ok, location: @experiment_task }
       else
         format.html { render :edit }
-        format.json { render json: @experiment_task.errors, status: :unprocessable_entity }
+        format.json { render json: @experiment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -54,9 +65,10 @@ class ExperimentTasksController < ApplicationController
   # DELETE /experiment_tasks/1
   # DELETE /experiment_tasks/1.json
   def destroy
+    @experiment = @experiment_task.experiment
     @experiment_task.destroy
     respond_to do |format|
-      format.html { redirect_to experiment_tasks_url, notice: 'Experiment task was successfully destroyed.' }
+      format.html { redirect_to @experiment, notice: 'Experiment task was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

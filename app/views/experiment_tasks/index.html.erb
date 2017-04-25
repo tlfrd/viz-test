@@ -1,14 +1,18 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div class="alert alert-info" role="alert"><%= notice %></div>
+<% end %>
 
-<h1>Experiment Tasks</h1>
+<h3>Experiment Tasks</h3>
+</br>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Experiment</th>
       <th>Task</th>
       <th>Order</th>
-      <th colspan="3"></th>
+      <th>Actions</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -18,9 +22,9 @@
         <td><%= Experiment.find(experiment_task.experiment_id).name %></td>
         <td><%= Task.find(experiment_task.task_id).name %></td>
         <td><%= experiment_task.order %></td>
-        <td><%= link_to 'Show', experiment_task %></td>
-        <td><%= link_to 'Edit', edit_experiment_task_path(experiment_task) %></td>
-        <td><%= link_to 'Destroy', experiment_task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Show', experiment_task, method: :get, class: "btn btn-default" %></td>
+        <td><%= button_to 'Edit', edit_experiment_task_path(experiment_task), method: :get, class: "btn btn-warning" %></td>
+        <td><%= button_to 'Destroy', experiment_task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +32,4 @@
 
 <br>
 
-<%= link_to 'New Experiment Task', new_experiment_task_path %>
+<%= button_to 'New Experiment Task', new_experiment_task_path, method: :get, class: "btn btn-primary" %>

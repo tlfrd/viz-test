@@ -5,6 +5,12 @@ RSpec.describe "experiments/show", type: :view do
     @experiment = assign(:experiment, Experiment.create!(
       :name => "Name"
     ))
+    @experiment_results = assign(:experiment_results, [
+      ExperimentResult.create!(
+      :experiment => @experiment,
+      :uuid => ExperimentResult.generate_uuid
+      )
+    ])
     @visualisation = assign(:visualisation, Visualisation.create!(
       :title => "Test",
       :html => "<b>woah</b>"
