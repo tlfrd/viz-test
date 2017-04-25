@@ -42,6 +42,8 @@ class ExperimentsController < ApplicationController
       if (@visualisation.html.start_with?('http'))
         @visualisation.html = open(@visualisation.html).read
       end
+
+      render :layout => 'public_view'
     end
   end
 
@@ -62,6 +64,8 @@ class ExperimentsController < ApplicationController
   def submit_result
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
     @experiment_result.update(completed: true)
+
+    render :layout => 'public_view'
   end
 
   def view_results

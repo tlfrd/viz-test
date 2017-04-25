@@ -50,13 +50,14 @@ class ExperimentTasksController < ApplicationController
   # PATCH/PUT /experiment_tasks/1
   # PATCH/PUT /experiment_tasks/1.json
   def update
+    @experiment = @experiment_task.experiment
     respond_to do |format|
       if @experiment_task.update(experiment_task_params)
-        format.html { redirect_to @experiment_task, notice: 'Experiment task was successfully updated.' }
+        format.html { redirect_to @experiment, notice: 'Experiment task was successfully updated.' }
         format.json { render :show, status: :ok, location: @experiment_task }
       else
         format.html { render :edit }
-        format.json { render json: @experiment_task.errors, status: :unprocessable_entity }
+        format.json { render json: @experiment.errors, status: :unprocessable_entity }
       end
     end
   end

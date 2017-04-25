@@ -44,6 +44,10 @@ class VisualisationsController < ApplicationController
 
   def destroy
     @visualisation.destroy
+    respond_to do |format|
+      format.html { redirect_to visualisations_url, notice: 'Visualisation was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
   private

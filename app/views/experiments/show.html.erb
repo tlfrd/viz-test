@@ -16,6 +16,7 @@
         <tr>
           <td><strong><%= experiment_task.order %></strong></td>
           <td><%= link_to Task.find(experiment_task.task_id).name, task_path(experiment_task.task_id), method: :get %></td>
+          <td><%= button_to 'Edit', edit_experiment_task_path(experiment_task), method: :get, class: "btn btn-warning" %></td>
           <td><%= button_to 'Remove', experiment_task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
         </tr>
       <% end %>
