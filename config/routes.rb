@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   resources :experiments do
       get "preview/:position", :to => "experiments#preview", :as => "preview"
       get "create_instance"
+      get "create_and_start_instance", :to => "experiments#create_and_start_instance", :as => "create_and_start_instance"
+      get "start", :to => "experiments#public_show", :as => "public_show"
   end
   resources :visualisations
   # resources :visualisations do

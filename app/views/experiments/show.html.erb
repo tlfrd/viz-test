@@ -28,11 +28,14 @@
 
 <div class="panel panel-default">
   <div class="panel-heading"><strong>Instances</strong></div>
+  <div class="panel-body">
+    Public link to create and start an instance: <%= link_to experiment_public_show_url(@experiment.id) %>
+  </div>
   <table class="table">
     <tbody>
       <% @experiment_results.each do |experiment_result| %>
         <tr>
-          <td><%= link_to experiment_result.uuid, run_experiment_path(experiment_result.uuid) %></td>
+          <td><%= link_to experiment_result.id, run_experiment_path(experiment_result.uuid) %></td>
           <td><%= run_experiment_url(experiment_result.uuid) %></td>
           <td>
             <% if experiment_result.completed %>

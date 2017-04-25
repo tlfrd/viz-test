@@ -15,11 +15,23 @@ class ExperimentsController < ApplicationController
     # @experiment_result = ExperimentResult.get_next_id
   end
 
+  def public_show
+    @experiment = Experiment.find(params[:experiment_id])
+    render :layout => 'public_view'
+  end
+
   # creates an instance of the experiment
   def create_instance
     @experiment = Experiment.find(params[:experiment_id])
     @experiment_result = ExperimentResult.create(experiment_id: @experiment.id, uuid: ExperimentResult.generate_uuid, completed: false)
     redirect_to @experiment
+  end
+
+  def create_and_start_instance
+    @experiment = Experiment.find(params[:experiment_id])
+    @experiment_result = ExperimentResult.create(experiment_id: @experiment.id, uuid: ExperimentResult.generate_uuid, completed: false)
+
+    redirect_to run_experiment_url(@experiment_result.uuid)
   end
 
   def run_experiment
