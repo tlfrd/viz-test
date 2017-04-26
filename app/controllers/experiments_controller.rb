@@ -68,7 +68,9 @@ class ExperimentsController < ApplicationController
     end
     @experiment_task = ExperimentTask.find_by_order(@position)
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
-    @experiment_task_result = ExperimentTaskResult.create(experiment_task_id: @experiment_task.id, experiment_result_id: @experiment_result.id, result: @result)
+
+    @experiment_task_result = ExperimentTaskResult.find_or_create_by(experiment_task_id: @experiment_task.id, experiment_result_id: @experiment_result.id)
+    @experiment_task_result.update(result: @result)
 
     redirect_to run_experiment_pos_path(:uuid => @experiment_result.uuid, :position => (@position.to_i + 1))
   end
