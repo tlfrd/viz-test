@@ -37,7 +37,7 @@
 <div class="panel panel-default">
   <div class="panel-heading"><strong>Instances</strong></div>
   <div class="panel-body">
-    Public link to create and start an instance: <%= link_to experiment_public_show_url(@experiment.id) %>
+    Public link to create and start an instance: <%= link_to experiment_public_show_url(@experiment.id), experiment_public_show_url(@experiment.id) %>
   </div>
   <table class="table">
     <thead>
