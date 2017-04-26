@@ -1,13 +1,11 @@
-<h2>Done!</h2></br>
-
 <div class="panel panel-default">
-  <div class="panel-heading"><strong><%= @experiment_result.experiment.name %></strong></div>
+  <div class="panel-heading"><strong><%= @experiment_result.experiment.name %></strong> <br/> Result <%= @experiment_result.id %></div>
   <table class="table">
     <thead>
       <tr>
-        <td>Position</td>
-        <td>Task Name</td>
-        <td>Result</td>
+        <td><strong>Position</strong></td>
+        <td><strong>Task Name</strong></td>
+        <td><strong>Result</strong></td>
       </tr>
     </thead>
 
@@ -16,7 +14,13 @@
         <tr>
           <td><%= result.experiment_task.order %></td>
           <td><%= result.experiment_task.task.name %></td>
-          <td><%= result.result %> </br></td>
+          <td>
+            <% if result.experiment_task.task.task_type == "Click" %>
+              <%= render partial: "click_task_result", object: @result = result.result %>
+            <% else %>
+              <%= render partial: "question_task_result", object: @result = result.result %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
