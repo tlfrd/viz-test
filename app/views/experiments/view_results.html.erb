@@ -12,7 +12,7 @@
     </thead>
 
     <tbody>
-      <% @experiment_result.experiment_task_results.each do |result| %>
+      <% @experiment_task_results.each do |result| %>
         <tr>
           <td><%= result.experiment_task.order %></td>
           <td><%= result.experiment_task.task.name %></td>

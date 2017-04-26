@@ -84,6 +84,7 @@ class ExperimentsController < ApplicationController
 
   def view_results
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
+    @experiment_task_results = @experiment_result.experiment_task_results.includes(:experiment_task).order("experiment_tasks.order asc")
   end
 
   def preview
