@@ -1,35 +1,11 @@
 <h3>Visualisations</h3>
 </br>
 
-<% if false %>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-      <th colspan="4"></th>
-    </tr>
-  </thead>
-
-  <% @visualisations.each do |visualisation| %>
-    <tr>
-      <td><strong><%= visualisation.id %></strong></td>
-      <td><%= visualisation.title %></td>
-      <td><%= image_tag visualisation.img_src, class: "visualisation_image" %></td>
-      <!-- override turbolinks -->
-      <td><%= link_to 'Show', visualisation_path(visualisation), method: :get %></td>
-      <td><%= link_to 'Edit', edit_visualisation_path(visualisation) %></td>
-      <td><%= link_to 'Destroy', visualisation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
-</table>
-<% end %>
-
 <% @visualisations.in_groups_of(4, false).each do |group| %>
   <div class='row'>
     <% group.each do |visualisation| %>
       <div class='col-md-3'>
-        <%= image_tag( visualisation.img_src, class: "img-responsive") %>
+        <%= image_tag( visualisation.img_src, class: "img-responsive visualisation-image img-rounded") %>
         <h3><%= visualisation.title %></h3>
         <%= link_to 'Show', visualisation_path(visualisation), method: :get, class: "btn btn-default" %>
         <%= link_to 'Edit', edit_visualisation_path(visualisation), class: "btn btn-warning btn-white-text" %>

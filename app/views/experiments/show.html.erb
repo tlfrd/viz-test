@@ -2,22 +2,30 @@
   <div class="alert alert-info" role="alert"><%= notice %></div>
 <% end %>
 
-<h4>
-  <strong>Name:</strong>
+<h3>
   <%= @experiment.name %>
-</h4>
+</h3>
 </br>
 
 <div class="panel panel-default">
   <div class="panel-heading"><strong>Tasks</strong></div>
   <table class="table">
+    <thead>
+      <tr>
+        <th>Order</th>
+        <th>Task</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
     <tbody>
       <% @experiment_tasks.each do |experiment_task| %>
         <tr>
           <td><strong><%= experiment_task.order %></strong></td>
           <td><%= link_to Task.find(experiment_task.task_id).name, task_path(experiment_task.task_id), method: :get %></td>
-          <td><%= button_to 'Edit', edit_experiment_task_path(experiment_task), method: :get, class: "btn btn-warning" %></td>
-          <td><%= button_to 'Remove', experiment_task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+          <td>
+            <%= link_to 'Edit', edit_experiment_task_path(experiment_task), method: :get, class: "btn btn-warning btn-white-text" %>
+            <%= link_to 'Remove', experiment_task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-white-text" %>
+          </td>
         </tr>
       <% end %>
     </tbody>
@@ -32,11 +40,17 @@
     Public link to create and start an instance: <%= link_to experiment_public_show_url(@experiment.id) %>
   </div>
   <table class="table">
+    <thead>
+      <tr>
+        <th>UUID</th>
+        <th>Progress</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
     <tbody>
       <% @experiment_results.each do |experiment_result| %>
         <tr>
-          <td><%= link_to experiment_result.id, run_experiment_path(experiment_result.uuid) %></td>
-          <td><%= run_experiment_url(experiment_result.uuid) %></td>
+          <td><%= link_to experiment_result.uuid, run_experiment_path(experiment_result.uuid) %></td>
           <td>
             <% if experiment_result.completed %>
               Completed <%= link_to "(view results)", view_experiment_result_path(experiment_result.uuid) %>
