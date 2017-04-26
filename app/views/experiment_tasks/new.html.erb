@@ -1,5 +1,6 @@
-<h1>New Experiment Task</h1>
+<h3>New Experiment Task</h3>
+<br/>
 
 <%= render 'form', experiment_task: @experiment_task %>
 
-<%= link_to 'Back', experiment_tasks_path %>
+<%= link_to 'Back', @experiment_task.experiment, :class => "btn btn-default" %>
