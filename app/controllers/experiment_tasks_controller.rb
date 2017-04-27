@@ -10,6 +10,10 @@ class ExperimentTasksController < ApplicationController
   # GET /experiment_tasks/1
   # GET /experiment_tasks/1.json
   def show
+    @visualisation = @experiment_task.task.visualisation
+    if (@visualisation.html.start_with?('http'))
+      @visualisation.html = open(@visualisation.html).read
+    end
   end
 
   # GET /experiment_tasks/new
