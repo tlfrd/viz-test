@@ -1,0 +1,75 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><strong><%= @experiment_task_result.experiment_result.experiment.name %><br/></strong></div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>UUID</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><%= @experiment_task_result.experiment_result.uuid %></td>
+          <td><%= @experiment_task_result.experiment_task.task.name %></td>
+          <td><%= @experiment_task_result.experiment_task.task.description %></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="visualisation">
+  <%= @visualisation.html.html_safe %>
+</div>
+
+<% if @experiment_task_result.experiment_task.task.task_type == "Click" %>
+  <style>
+    .click-circle {
+        fill: white;
+        stroke: black;
+        stroke-width: 2px;
+    }
+  </style>
+
+  <script>
+
+
+    function drawCircle(x, y, size, time) {
+      var circle = svg.append("circle")
+          .attr('class', 'click-circle')
+          .attr("cx", x)
+          .attr("cy", y)
+          .attr("r", size)
+          .append("title")
+          .text(function(d) {
+                return time + " ms";
+          });
+    }
+
+    var loadResults = function() {
+      var selected_svg = d3.select("svg");
+      var h = selected_svg.attr("height");
+      var w = selected_svg.attr("width");
+
+      selected_svg.append("rect")
+         			.attr("x", 0)
+         			.attr("y", 0)
+         			.attr("height", h)
+         			.attr("width", w)
+         			.style("stroke", "black")
+         			.style("fill", "none")
+         			.style("stroke-width", 1);
+
+      <% @experiment_task_result.result.each do |result| %>
+          drawCircle(<%= result[1]["coordinates"][0] %>, <%= result[1]["coordinates"][1] %>, 5, <%= result[1]["time"] %>);
+      <% end %>
+    }
+
+  </script>
+
+  <br/>
+  <%= render partial: "click_task_result", object: @result = @experiment_task_result.result %>
+<% else %>
+  <br/>
+  <%= render partial: "question_task_result", object: @result = @experiment_task_result.result %>
+<% end %>

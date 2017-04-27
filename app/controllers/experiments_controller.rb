@@ -85,7 +85,16 @@ class ExperimentsController < ApplicationController
 
   def view_results
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
+    @experiment = @experiment_result.experiment
     @experiment_task_results = @experiment_result.experiment_task_results.includes(:experiment_task).order("experiment_tasks.order asc")
+  end
+
+  def experiment_task_result
+    @experiment_task_result = ExperimentTaskResult.find(params[:experiment_task_result_id])
+    @visualisation = @experiment_task_result.experiment_task.task.visualisation
+    if (@visualisation.html.start_with?('http'))
+      @visualisation.html = open(@visualisation.html).read
+    end
   end
 
   def preview
