@@ -64,10 +64,11 @@ class ExperimentsController < ApplicationController
     if params[:request][:result].start_with?('{')
       @result = JSON.parse(params[:request][:result])
     else
-      @result = '{"answer":"' + params[:request][:result] + '"}'
+      @result = JSON.parse('{"answer":"' + params[:request][:result] + '"}')
     end
-    @experiment_task = ExperimentTask.find_by_order(@position)
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
+    @experiment = @experiment_result.experiment
+    @experiment_task = ExperimentTask.find_by(order: @position, experiment_id: @experiment.id)
 
     @experiment_task_result = ExperimentTaskResult.find_or_create_by(experiment_task_id: @experiment_task.id, experiment_result_id: @experiment_result.id)
     @experiment_task_result.update(result: @result)
