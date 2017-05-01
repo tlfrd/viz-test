@@ -61,12 +61,29 @@
         .attr("y2", y2);
     }
 
+    function calculateDistance(x1, y1, x2, y2) {
+      var distance = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+      return distance;
+    }
+
+    function average(array) {
+      var sum = array.reduce(function(sum, a) {
+        return sum + a
+      }, 0)
+      return sum / (array.length || 1);
+    }
+
     function drawLinesToAllCircles(x1, y1) {
+      var distances = [];
+
       d3.select("g.circles")
         .selectAll("circle")
         .each(function(d) {
           drawLine(x1, y1, d.x, d.y);
+          distances.push(calculateDistance(x1, y1, d.x, d.y));
         });
+
+      console.log(average(distances));
     }
 
     function removeAllLines(transition_boolean) {
@@ -84,6 +101,7 @@
     }
 
     var loadResults = function() {
+      var locked = false;
       var h = svg.attr("height");
       var w = svg.attr("width");
 
@@ -107,15 +125,24 @@
      			.style("stroke-width", 1)
           .style("pointer-events", "all")
           .on("mouseover", function() {
-            drawLinesToAllCircles(d3.mouse(this)[0], d3.mouse(this)[1]);
+            if (!locked) {
+                drawLinesToAllCircles(d3.mouse(this)[0], d3.mouse(this)[1]);
+            }
           })
           .on("mousemove", function() {
-            removeAllLines(false);
-            drawLinesToAllCircles(d3.mouse(this)[0], d3.mouse(this)[1]);
+            if (!locked) {
+              removeAllLines(false);
+              drawLinesToAllCircles(d3.mouse(this)[0], d3.mouse(this)[1]);
+            }
           })
           .on("mouseout", function() {
-            removeAllLines(true);
-          });
+            if (!locked) {
+              removeAllLines(true);
+            }
+          })
+          .on("click", function() {
+            locked = !locked;
+          })
     }
 
   </script>
