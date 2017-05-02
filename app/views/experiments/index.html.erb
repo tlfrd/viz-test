@@ -19,9 +19,11 @@
       <% @experiments.each do |experiment| %>
         <tr>
           <td><%= experiment.name %></td>
-          <td><%= button_to 'Show', experiment, method: :get, class: "btn btn-default" %></td>
-          <td><%= button_to 'Edit', edit_experiment_path(experiment), method: :get, class: "btn btn-warning" %></td>
-          <td><%= button_to 'Destroy', experiment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+          <td>
+            <%= link_to 'Show', experiment, method: :get, class: "btn btn-default" %>
+            <%= link_to 'Edit', edit_experiment_path(experiment), method: :get, class: "btn btn-warning" %>
+            <%= link_to 'Destroy', experiment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+          </td>
         </tr>
       <% end %>
     </tbody>

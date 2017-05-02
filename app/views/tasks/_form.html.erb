@@ -16,21 +16,30 @@
     <%= f.text_field :name, :class => "form-control" %>
   </div>
 
+  <br/>
+
   <div class="field">
     <%= f.label :visualisation_id %>
-    <!-- <%= f.text_field :visualisation_id %> -->
+    <br/>
     <%= f.collection_select(:visualisation_id, Visualisation.all, :id, :title) %>
   </div>
 
+  <br/>
+
   <div class="field">
     <%= f.label :task_type %>
+    <br/>
     <%= f.select :task_type, ['Click', 'Question'] %>
   </div>
+
+  <br/>
 
   <div class="field">
     <%= f.label :description, "Description/Question" %>
     <%= f.text_field :description, :class => "form-control" %>
   </div>
+
+  <br/>
 
   <div class="field">
     <%= f.label :no_of_clicks %>
@@ -59,3 +68,5 @@
   });
   </script>
 <% end %>
+
+<br/>
