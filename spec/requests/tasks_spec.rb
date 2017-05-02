@@ -1,9 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "Tasks", type: :request do
+  before(:each) do
+    http_login
+  end
+
   describe "GET /tasks" do
     it "works! (now write some real specs)" do
-      get tasks_path
+      get tasks_path, {}, @env
       expect(response).to have_http_status(200)
     end
   end

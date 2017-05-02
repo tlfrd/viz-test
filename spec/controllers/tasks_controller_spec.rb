@@ -20,6 +20,10 @@ require 'rails_helper'
 
 RSpec.describe TasksController, type: :controller do
 
+  before(:each) do
+    http_login
+  end
+  
   # This should return the minimal set of attributes required to create a valid
   # Task. As you add validations to Task, be sure to
   # adjust the attributes here as well.

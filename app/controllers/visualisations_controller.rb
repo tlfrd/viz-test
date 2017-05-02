@@ -1,5 +1,6 @@
 class VisualisationsController < ApplicationController
   before_action :set_visualisation, only: [:show, :edit, :update, :destroy]
+  http_basic_authenticate_with name: ENV["APP_USER"], password: ENV["APP_SECRET"]
 
   def index
     @visualisations = Visualisation.all

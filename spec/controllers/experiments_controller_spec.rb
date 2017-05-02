@@ -20,6 +20,10 @@ require 'rails_helper'
 
 RSpec.describe ExperimentsController, type: :controller do
 
+  before(:each) do
+    http_login
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # Experiment. As you add validations to Experiment, be sure to
   # adjust the attributes here as well.

@@ -1,5 +1,6 @@
 class ExperimentTasksController < ApplicationController
   before_action :set_experiment_task, only: [:show, :edit, :update, :destroy]
+  http_basic_authenticate_with name: ENV["APP_USER"], password: ENV["APP_SECRET"]
 
   # GET /experiment_tasks
   # GET /experiment_tasks.json

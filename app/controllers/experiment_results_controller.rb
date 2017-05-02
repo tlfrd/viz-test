@@ -1,5 +1,6 @@
 class ExperimentResultsController < ApplicationController
   before_action :set_experiment_result, only: [:destroy]
+  http_basic_authenticate_with name: ENV["APP_USER"], password: ENV["APP_SECRET"]
 
   # DELETE /experiment_results/1
   # DELETE /experiment_results/1.json

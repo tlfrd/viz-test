@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe VisualisationsController, type: :controller do
+
+  before(:each) do
+    http_login
+  end
+  
   describe "GET #index" do
     it "responds successfully with an HTTP 200 status code" do
       get :index
