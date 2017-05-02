@@ -5,7 +5,15 @@
 <h3>
   <%= @experiment.name %>
 </h3>
-</br>
+
+<br/>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><strong>Public intro text</strong></div>
+  <div class="panel-body">
+    <%= @experiment.intro_html.html_safe %>
+  </div>
+</div>
 
 <div class="panel panel-default">
   <div class="panel-heading"><strong>Tasks</strong></div>

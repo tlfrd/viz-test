@@ -1,1 +1,7 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= @experiment.intro_html.html_safe %>
+  </div>
+</div>
+
 <%= link_to "Start Experiment", experiment_create_and_start_instance_path(@experiment.id), class: "btn btn-primary btn-white-text" %>

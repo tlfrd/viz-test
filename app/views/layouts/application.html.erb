@@ -9,14 +9,19 @@
   </head>
 
   <body data-turbolinks="false">
-    <%= nav_bar brand: "VizTest", static: :top, inverse: true, response: true do %>
-      <%= menu_group do %>
-        <%= menu_item "Visualisations", visualisations_path %>
-        <%= menu_item "Tasks", tasks_path %>
-        <%= menu_item "Experiments", experiments_path %>
-        <%= menu_item "Results", results_path %>
-      <% end %>
-    <% end %>
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <%= link_to root_path, class: "navbar-brand viz-logo" do %>
+          VizTest <span class="glyphicon glyphicon-signal viz-logo-small" aria-hidden="true"></span>
+        <% end %>
+        <ul class="nav navbar-nav">
+          <li><%= link_to "Visualisations", visualisations_path %></li>
+          <li><%= link_to "Tasks", tasks_path %></li>
+          <li><%= link_to "Experiments", experiments_path %></li>
+          <li><%= link_to "Results", results_path %></li>
+        </ul>
+      </div>
+    </nav>
     <div class="body-container">
       <div class="container">
         <%= yield %>
