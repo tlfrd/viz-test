@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-  <div class="panel-heading"><strong><%= @experiment_task_result.experiment_result.experiment.name %><br/></strong></div>
+  <div class="panel-heading"><strong><%= @experiment_task_result.experiment_result.experiment.name %></strong></div>
   <table class="table">
     <thead>
       <tr>
@@ -13,6 +13,22 @@
           <td><%= @experiment_task_result.experiment_result.uuid %></td>
           <td><%= @experiment_task_result.experiment_task.task.name %></td>
           <td><%= @experiment_task_result.experiment_task.task.description %></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><strong>Analysis</strong> (Click to pause)</div>
+  <table class="table">
+    <tbody>
+        <tr>
+          <td><strong>Selected coordinates</strong></td>
+          <td id="coordinates">(0, 0)</td>
+        </tr>
+        <tr>
+          <td><strong>Avg dist from selected coordinates</strong></td>
+          <td id="distance">0 px</td>
         </tr>
     </tbody>
   </table>
@@ -83,7 +99,7 @@
           distances.push(calculateDistance(x1, y1, d.x, d.y));
         });
 
-      console.log(average(distances));
+      return average(distances);
     }
 
     function removeAllLines(transition_boolean) {
@@ -98,6 +114,11 @@
       } else {
         lines.remove();
       }
+    }
+
+    function updateLiveAnalysis(coordinates, distance) {
+      $("#coordinates").html("(" + Math.round(coordinates[0]) + ", " + Math.round(coordinates[1]) + ")");
+      $("#distance").html(Math.round(distance) + " px");
     }
 
     var loadResults = function() {
@@ -126,13 +147,15 @@
           .style("pointer-events", "all")
           .on("mouseover", function() {
             if (!locked) {
-                drawLinesToAllCircles(d3.mouse(this)[0], d3.mouse(this)[1]);
+              var avgDist = drawLinesToAllCircles(d3.mouse(this)[0], d3.mouse(this)[1]);
+              updateLiveAnalysis(d3.mouse(this), avgDist);
             }
           })
           .on("mousemove", function() {
             if (!locked) {
               removeAllLines(false);
-              drawLinesToAllCircles(d3.mouse(this)[0], d3.mouse(this)[1]);
+              var avgDist = drawLinesToAllCircles(d3.mouse(this)[0], d3.mouse(this)[1]);
+              updateLiveAnalysis(d3.mouse(this), avgDist);
             }
           })
           .on("mouseout", function() {
