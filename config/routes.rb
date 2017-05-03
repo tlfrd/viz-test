@@ -11,10 +11,11 @@ Rails.application.routes.draw do
       get "preview/:position", :to => "experiments#preview", :as => "preview"
       get "create_instance"
       get "create_and_start_instance", :to => "experiments#create_and_start_instance", :as => "create_and_start_instance"
-      get "start", :to => "experiments#public_show", :as => "public_show"
       get "task_result/:experiment_task_result_id", :to => "experiments#experiment_task_result", :as => "view_experiment_task_result"
   end
   resources :visualisations
+
+  get ":experiment_uuid", :to => "experiments#public_show", :as => "public_show"
 
   get "run/:uuid", :to => "experiments#run_experiment", :as => "run_experiment"
   get "run/:uuid/task/:position", :to => "experiments#run_experiment", :as => "run_experiment_pos"

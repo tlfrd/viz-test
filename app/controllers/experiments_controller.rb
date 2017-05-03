@@ -17,7 +17,7 @@ class ExperimentsController < ApplicationController
   end
 
   def public_show
-    @experiment = Experiment.find(params[:experiment_id])
+    @experiment = Experiment.find_by_uuid(params[:experiment_uuid])
     render :layout => 'public_view'
   end
 
@@ -122,6 +122,7 @@ class ExperimentsController < ApplicationController
   # POST /experiments.json
   def create
     @experiment = Experiment.new(experiment_params)
+    @experiment.update(uuid: ExperimentResult.generate_uuid)
 
     respond_to do |format|
       if @experiment.save
