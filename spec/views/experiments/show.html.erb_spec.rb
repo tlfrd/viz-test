@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe "experiments/show", type: :view do
   before(:each) do
     @experiment = assign(:experiment, Experiment.create!(
-      :name => "Name"
+      :name => "Name",
+      :intro_html => "Hello"
     ))
     @experiment_results = assign(:experiment_results, [
       ExperimentResult.create!(
