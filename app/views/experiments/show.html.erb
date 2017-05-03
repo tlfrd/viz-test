@@ -61,9 +61,12 @@
           <td><%= link_to experiment_result.uuid, run_experiment_path(experiment_result.uuid) %></td>
           <td>
             <% if experiment_result.completed %>
-              Completed <%= link_to "(view results)", view_experiment_result_path(experiment_result.uuid) %>
+              <span class="label label-success">Completed</span>
             <% else %>
-              <%= experiment_result.experiment_task_results.length %> / <%= @experiment.experiment_tasks.length %> Tasks Completed
+              <span class="label label-primary">In Progress</span>
+            <% end %>
+            <%= link_to view_experiment_result_path(experiment_result.uuid) do %>
+              <span class="badge"><%= experiment_result.experiment_task_results.length %> / <%= @experiment.experiment_tasks.length %></span>
             <% end %>
           </td>
           <td><%= button_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
