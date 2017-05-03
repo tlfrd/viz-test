@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :experiment_results
+  resources :experiment_results do
+    get :download
+  end
   resources :experiment_tasks
   resources :tasks do
       get :preview
@@ -13,10 +15,6 @@ Rails.application.routes.draw do
       get "task_result/:experiment_task_result_id", :to => "experiments#experiment_task_result", :as => "view_experiment_task_result"
   end
   resources :visualisations
-  # resources :visualisations do
-  #     get :recreate
-  #     post :submit_json
-  # end
 
   get "run/:uuid", :to => "experiments#run_experiment", :as => "run_experiment"
   get "run/:uuid/task/:position", :to => "experiments#run_experiment", :as => "run_experiment_pos"
