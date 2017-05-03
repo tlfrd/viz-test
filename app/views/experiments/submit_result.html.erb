@@ -1,12 +1,12 @@
-<h2>Your results</h2></br>
+<h3>Your results</h3></br>
 
 <div class="panel panel-default">
   <div class="panel-heading"><strong><%= @experiment_result.experiment.name %></strong></div>
   <table class="table">
     <thead>
       <tr>
-        <td>Task Number</td>
-        <td>Task Name</td>
+        <td>Question</td>
+        <td>Description</td>
         <td>Result</td>
       </tr>
     </thead>
@@ -15,7 +15,7 @@
       <% @experiment_result.experiment_task_results.each do |result| %>
         <tr>
           <td><%= result.experiment_task.order %></td>
-          <td><%= result.experiment_task.task.name %></td>
+          <td><%= result.experiment_task.task.description %></td>
           <td>
             <% if result.experiment_task.task.task_type == "Click" %>
               <%= render partial: "click_task_result", object: @result = result.result %>

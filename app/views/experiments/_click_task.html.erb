@@ -1,4 +1,4 @@
-<button id="taskButton" class="btn btn-primary" onclick="startTask()">Start Task</button>
+<button id="taskButton" class="btn btn-primary" onclick="startTask()" disabled>Start Task</button>
 
 </br></br>
 
@@ -22,6 +22,10 @@
 </style>
 
 <script>
+  function loadResults() {
+    document.getElementById("taskButton").disabled = false;
+  }
+
   document.getElementById("json_submit").hidden = true;
 
   StopWatch = function() {
@@ -52,7 +56,7 @@
     document.getElementById("results").innerHTML = "";
     document.getElementById("taskButton").disabled = true;
     document.getElementById("taskButton").innerHTML = "Task active";
-    document.getElementById("taskDescription").innerHTML = "<%= @task.description %>";
+    document.getElementById("taskDescription").innerHTML = "<strong><%= @task.description %></strong> <i>Clicks remaining: <%= @task.no_of_clicks %></i>";
     s1.Start();
   }
 
@@ -68,6 +72,7 @@
     results[numberOfClicks] = singleResult;
 
     numberOfClicks += 1;
+    document.getElementById("taskDescription").innerHTML = "<strong><%= @task.description %></strong> <i>Clicks remaining: " + (numberOfClicksAllowed - numberOfClicks) + "</i>";
     if (numberOfClicks === numberOfClicksAllowed) {
       stopTask();
     }
@@ -95,7 +100,7 @@
         "<td>" + results[key].time + "</td></tr>";
         results_html += results_row;
       }
-      document.getElementById("results").innerHTML = results_html + "</table>";
+      // document.getElementById("results").innerHTML = results_html + "</table>";
       document.getElementById("request_result").value = JSON.stringify(results);
   }
 
