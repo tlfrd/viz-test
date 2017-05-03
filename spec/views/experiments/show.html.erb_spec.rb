@@ -4,6 +4,7 @@ RSpec.describe "experiments/show", type: :view do
   before(:each) do
     @experiment = assign(:experiment, Experiment.create!(
       :name => "Name",
+      :uuid => "bd9wf9sduuhfisdhfhsifshhfjjbsnb8ds9f8",
       :intro_html => "Hello"
     ))
     @experiment_results = assign(:experiment_results, [

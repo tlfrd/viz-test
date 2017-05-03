@@ -6,5 +6,5 @@ Visualisation.create!([
 Task.create!([
   {name: "US Choropleth Highest Point", visualisation_id: 1, task_type: "Click", description: "Where is the highest point?", no_of_clicks: 1},
   {name: "Kentucky Choropleth Two Highest Points", visualisation_id: 2, task_type: "Click", description: "Where are the two highest points?", no_of_clicks: 2},
-  {name: "Bubble Map Three Highest Points", visualisation_id: 4, task_type: "Click", description: "Where are the three highest points?", no_of_clicks: 3},
+  {name: "Bubble Map Three Highest Points", visualisation_id: 3, task_type: "Click", description: "Where are the three highest points?", no_of_clicks: 3},
 ])
