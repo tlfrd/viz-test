@@ -5,7 +5,7 @@
   <div class='row'>
     <% group.each do |visualisation| %>
       <div class='col-md-3'>
-        <%= image_tag( visualisation.img_src, class: "img-responsive visualisation-image img-rounded") %>
+        <%= image_tag( visualisation.img_src, class: "img-responsive visualisation-image") %>
         <h3><%= visualisation.title %></h3>
         <%= link_to 'Show', visualisation_path(visualisation), method: :get, class: "btn btn-default" %>
         <%= link_to 'Edit', edit_visualisation_path(visualisation), class: "btn btn-warning btn-white-text" %>
