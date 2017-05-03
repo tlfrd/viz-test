@@ -63,7 +63,7 @@
             <% if experiment_result.completed %>
               <span class="label label-success">Completed</span>
             <% else %>
-              <span class="label label-primary">In Progress</span>
+              <span class="label label-warning">In Progress</span>
             <% end %>
             <%= link_to view_experiment_result_path(experiment_result.uuid) do %>
               <span class="badge"><%= experiment_result.experiment_task_results.length %> / <%= @experiment.experiment_tasks.length %></span>
