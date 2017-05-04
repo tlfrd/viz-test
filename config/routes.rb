@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   end
   resources :visualisations
 
-  get ":experiment_uuid", :to => "experiments#public_show", :as => "public_show"
+  get "start/:experiment_uuid", :to => "experiments#public_show", :as => "public_show"
 
   get "run/:uuid", :to => "experiments#run_experiment", :as => "run_experiment"
   get "run/:uuid/task/:position", :to => "experiments#run_experiment", :as => "run_experiment_pos"

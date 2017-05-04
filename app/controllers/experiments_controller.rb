@@ -18,6 +18,9 @@ class ExperimentsController < ApplicationController
 
   def public_show
     @experiment = Experiment.find_by_uuid(params[:experiment_uuid])
+    if @experiment.intro_html
+      @experiment.intro_html = @experiment.intro_html.html_safe
+    end
     render :layout => 'public_view'
   end
 
