@@ -60,7 +60,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @experiment_task.limit(3).each do |experiment_task| %>
+        <% @experiment_task.each do |experiment_task| %>
           <tr>
             <td><%= experiment_task.experiment.name %></td>
             <td><%= experiment_task.task.name %></td>

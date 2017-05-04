@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get "experiment_tasks/new/:experiment_id", :to => "experiment_tasks#new", :as => "with_experiment"
 
   get "results", :to => "results#index"
+  get "results/experiment_task_result/:id", :to => "results#experiment_task_result"
 
   root 'visualisations#index'
 end

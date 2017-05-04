@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+  <table class="table">
+    <thead>
+      <tr>
+        <td><strong>Click</strong></td>
+        <td><strong>Time (ms)</strong></td>
+        <td><strong>Coordinates</strong></td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @result.each do |click| %>
+        <tr>
+          <td><%= click[0] %></td>
+          <td><%= click[1]["time"] %></td>
+          <td>(<%= click[1]["coordinates"][0].round %>, <%= click[1]["coordinates"][1].round %>)</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
