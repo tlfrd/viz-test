@@ -4,11 +4,7 @@
 
 <input id="request_result" hidden></input>
 <div id="json_submit">
-  <% if @experiment_tasks.length != @position.to_i %>
-    <input type="button" onclick="location.href='<%= experiment_preview_url(:experiment_id => @experiment.id, :position => (@position.to_i + 1)) %>';" value="Next Task" class="btn btn-success"/>
-  <% else %>
-    <input type="button" onclick="location.href='<%= experiment_url(@experiment) %>';" value="Finish Preview" class="btn btn-success"/>
-  <% end %>
+  <input type="button" onclick="location.href='<%= task_url(@task) %>';" value="Finish Preview" class="btn btn-success"/>
 </div>
 
 <div id="results"></div>
@@ -100,7 +96,7 @@
         "<td>" + results[key].time + "</td></tr>";
         results_html += results_row;
       }
-      // document.getElementById("results").innerHTML = results_html + "</table>";
+      document.getElementById("results").innerHTML = results_html + "</table>";
       document.getElementById("request_result").value = JSON.stringify(results);
   }
 

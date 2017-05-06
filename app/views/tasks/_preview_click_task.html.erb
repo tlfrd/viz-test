@@ -1,3 +1,14 @@
+<button id="taskButton" class="btn btn-primary" onclick="startTask()" disabled>Start Task</button>
+
+</br></br>
+
+<input id="request_result" hidden></input>
+<div id="json_submit">
+    <input type="button" onclick="location.href='<%= task_url(@task) %>';" value="Finish Preview" class="btn btn-success"/>
+</div>
+
+<div id="results"></div>
+
 <style>
   .click-circle {
       fill: white;
@@ -7,6 +18,12 @@
 </style>
 
 <script>
+  function loadResults() {
+    document.getElementById("taskButton").disabled = false;
+  }
+
+  document.getElementById("json_submit").hidden = true;
+
   StopWatch = function() {
     this.StartMilliseconds = 0;
     this.ElapsedMilliseconds = 0;
@@ -35,7 +52,7 @@
     document.getElementById("results").innerHTML = "";
     document.getElementById("taskButton").disabled = true;
     document.getElementById("taskButton").innerHTML = "Task active";
-    document.getElementById("taskDescription").innerHTML = "<%= @task.description %>";
+    document.getElementById("taskDescription").innerHTML = "<strong><%= @task.description %></strong> <i>Clicks remaining: <%= @task.no_of_clicks %></i>";
     s1.Start();
   }
 
@@ -51,6 +68,7 @@
     results[numberOfClicks] = singleResult;
 
     numberOfClicks += 1;
+    document.getElementById("taskDescription").innerHTML = "<strong><%= @task.description %></strong> <i>Clicks remaining: " + (numberOfClicksAllowed - numberOfClicks) + "</i>";
     if (numberOfClicks === numberOfClicksAllowed) {
       stopTask();
     }
@@ -61,9 +79,8 @@
     displayResults(results);
     results = {};
     numberOfClicks = 0;
-    document.getElementById("taskButton").disabled = false;
-    document.getElementById("taskButton").innerHTML = "Start Task"
-    document.getElementById("taskDescription").innerHTML = "<br/>";
+    document.getElementById("taskButton").innerHTML = "Task Complete";
+    document.getElementById("json_submit").hidden = false;
   }
 
   function displayResults(results) {
@@ -79,7 +96,8 @@
         "<td>" + results[key].time + "</td></tr>";
         results_html += results_row;
       }
-      document.getElementById("results").innerHTML = results_html + "</table>";
+      // document.getElementById("results").innerHTML = results_html + "</table>";
+      document.getElementById("request_result").value = JSON.stringify(results);
   }
 
   function drawCircle(x, y, size) {
@@ -112,7 +130,3 @@
     });
   }
 </script>
-
-<button id="taskButton" onclick="startTask()" class="btn btn-primary">Start Task</button>
-</br></br>
-<div id="results"></div>

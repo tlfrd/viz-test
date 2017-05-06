@@ -1,12 +1,18 @@
-<h1 id="taskText">Preview Task</h1>
-<h2 id="taskDescription"><br/></h2>
+<div class="panel panel-default">
+  <div class="panel-heading" id="question">Preview Task</div>
+  <div class="panel-body">
+    <div id="taskDescription">Click <i>Start Task</i> below to reveal the task</div>
+  </div>
+</div>
 
 <div class="visualisation">
   <%= @visualisation.html.html_safe %>
 </div>
 
+<br/>
+
 <% if @task.task_type == "Click" %>
-  <%= render 'click_task' %>
+  <%= render 'preview_click_task' %>
 <% else %>
-  <%= render 'question_task' %>
+  <%= render 'preview_question_task' %>
 <% end %>
