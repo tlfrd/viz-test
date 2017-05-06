@@ -1,11 +1,28 @@
-<p>
-  <strong>Title:</strong>
-  <%= @visualisation.title %>
-</p>
+<% if notice %>
+  <div class="alert alert-info" role="alert"><%= notice %></div>
+<% end %>
 
-<p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="panel-title">
+      <%= @visualisation.title %>
+    </div>
+  </div>
+
+  <table class="table">
+    <tr>
+      <td><strong>HTML</strong></td>
+      <td><%= @html_link %></td>
+    </tr>
+    <tr>
+      <td><strong>Thumbnail URL</strong></td>
+      <td><%= @visualisation.img_src %></td>
+    </tr>
+  </table>
+</div>
+
+<div>
   <%= @visualisation.html.html_safe %>
-</p>
-<div id="map"></div>
+</div>
 
 <%= link_to 'Back', visualisations_path, :class => "btn btn-default" %>

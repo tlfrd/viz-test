@@ -7,23 +7,11 @@ class VisualisationsController < ApplicationController
   end
 
   def show
+    @html_link = @visualisation.html
     if (@visualisation.html.start_with?('http'))
       @visualisation.html = open(@visualisation.html).read
     end
   end
-
-  # def recreate
-  #   @visualisation = Visualisation.find(params[:visualisation_id])
-  # end
-  #
-  # def submit_json
-  #   @visualisation = Visualisation.find(params[:visualisation_id])
-  #   @colours = params[:visualisation][:colour_values]
-  # end
-
-  # def tasks
-  #   @visualisation = Visualisation.find(params[:visualisation_id])
-  # end
 
   def new
     @visualisation = Visualisation.new
@@ -35,12 +23,19 @@ class VisualisationsController < ApplicationController
   def create
     @visualisation = Visualisation.new(visualisation_params)
 
-    @visualisation.save
-    redirect_to @visualisation
+    if @visualisation.save
+      redirect_to @visualisation, notice: 'Visualisation was successfully created.'
+    else
+      render :new
+    end
   end
 
   def update
-    @visualisation.update(visualisation_params)
+    if @visualisation.update(visualisation_params)
+      redirect_to @visualisation, notice: 'Visualisation was successfully updated.'
+    else
+      render :edit
+    end
   end
 
   def destroy
