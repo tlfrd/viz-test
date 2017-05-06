@@ -68,7 +68,7 @@
             <td><%= experiment_task.experiment.name %></td>
             <td><%= experiment_task.task.name %></td>
             <td><%= experiment_task.experiment_task_results.length %></td>
-            <td><%= link_to "Display Results", "", class: "btn btn-default" %></td>
+            <td><%= link_to "Display Results", all_experiment_task_results_path(experiment_task.id), class: "btn btn-default" %></td>
           </tr>
         <% end %>
       </tbody>

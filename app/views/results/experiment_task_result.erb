@@ -1,21 +1,35 @@
-<p>
-  <strong>Experiment:</strong>
-  <%= @experiment_task.experiment_id %>
-</p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="panel-title">
+      Experiment Task Result
+    </div>
+  </div>
 
-<p>
-  <strong>Task:</strong>
-  <%= @experiment_task.task_id %>
-</p>
+  <table class="table">
+    <tr>
+      <td><strong>Experiment</strong></td>
+      <td><%= link_to @experiment_task.experiment.name, @experiment_task.experiment %></td>
+    </tr>
+    <tr>
+      <td><strong>Task<strong></td>
+      <td><%= link_to @experiment_task.task.name, @experiment_task.task %></td>
+    </tr>
+    <tr>
+      <td><strong>Task Description<strong></td>
+      <td><%= @experiment_task.task.description %></td>
+    </tr>
+    <tr>
+      <td><strong>Order<strong></td>
+      <td><%= @experiment_task.order %></td>
+    </tr>
+  </table>
+</div>
 
-<p>
-  <strong>Order:</strong>
-  <%= @experiment_task.order %>
-</p>
-
-<div class="visualisation">
+<div>
   <%= @visualisation.html.html_safe %>
 </div>
+
+<br/>
 
 <% ExperimentTaskResult.where(experiment_task_id: @experiment_task.id).each do |experiment_task_result| %>
   <% if experiment_task_result.experiment_task.task.task_type == "Click" %>
@@ -24,6 +38,8 @@
     <%= render partial: "question_task_result", object: @result = experiment_task_result.result %>
   <% end %>
 <% end %>
+
+<br/><br/>
 
 <style>
   .click-circle {
