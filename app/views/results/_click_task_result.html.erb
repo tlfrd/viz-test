@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-  <table class="table">
+  <table class="table table-hover">
     <thead>
       <tr>
         <td><strong>Click</strong></td>
@@ -9,8 +9,8 @@
     </thead>
 
     <tbody>
-      <% @result.each do |click| %>
-        <tr>
+      <% @e_result.result.each do |click| %>
+        <tr class="hoverCircles" name="<%= @e_result.id %>" id="<%= click[0] %>">
           <td><%= click[0] %></td>
           <td><%= click[1]["time"] %></td>
           <td>(<%= click[1]["coordinates"][0].round %>, <%= click[1]["coordinates"][1].round %>)</td>
@@ -19,3 +19,13 @@
     </tbody>
   </table>
 </div>
+
+<script>
+  $(".hoverCircles").on("mouseover", function() {
+    highlightCircle($(this).attr('name') + "click" + $(this).attr('id'));
+  })
+  .on("mouseout", function() {
+    deHighlightCircle($(this).attr('name') + "click" + $(this).attr('id'));
+  });
+
+</script>

@@ -25,24 +25,26 @@
   </table>
 </div>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <div class="panel-title">
-      Summary
+<% if @experiment_task.task.task_type == "Click" %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">
+        Summary
+      </div>
     </div>
-  </div>
 
-  <table class="table">
-    <tr>
-      <td><strong>Average time</strong></td>
-      <td><%= @average_time %> ms</td>
-    </tr>
-    <tr>
-      <td><strong>Average coordinates</strong></td>
-      <td>(<%= @average_coordinates[0] %>, <%= @average_coordinates[1] %>)</td>
-    </tr>
-  </table>
-</div>
+    <table class="table table-hover" id="averageHover">
+      <tr>
+        <td><strong>Average time</strong></td>
+        <td><%= @average_time %> ms</td>
+      </tr>
+      <tr>
+        <td><strong>Average coordinates</strong></td>
+        <td>(<%= @average_coordinates[0] %>, <%= @average_coordinates[1] %>)</td>
+      </tr>
+    </table>
+  </div>
+<% end %>
 
 <div>
   <%= @visualisation.html.html_safe %>
@@ -52,9 +54,9 @@
 
 <% ExperimentTaskResult.where(experiment_task_id: @experiment_task.id).each do |experiment_task_result| %>
   <% if experiment_task_result.experiment_task.task.task_type == "Click" %>
-    <%= render partial: "click_task_result", object: @result = experiment_task_result.result %>
+    <%= render partial: "click_task_result", object: @e_result = experiment_task_result %>
   <% else %>
-    <%= render partial: "question_task_result", object: @result = experiment_task_result.result %>
+    <%= render partial: "question_task_result", object: @e_result = experiment_task_result %>
   <% end %>
 <% end %>
 
@@ -66,21 +68,45 @@
       stroke: black;
       stroke-width: 2px;
   }
+
+  .click-circle-red {
+      fill: red;
+      stroke: black;
+      stroke-width: 2px;
+  }
 </style>
 
 <script>
 
+  function highlightCircle(id) {
+    $("#" + id)
+      .attr("r", 7);
+  }
 
-  function drawCircle(x, y, size, time) {
-    var circle = svg.append("circle")
-        .attr('class', 'click-circle')
-        .attr("cx", x)
-        .attr("cy", y)
-        .attr("r", size)
-        .append("title")
-        .text(function(d) {
-              return time + " ms";
-        });
+  function deHighlightCircle(id) {
+    $("#" + id)
+      .attr("r", 5);
+  }
+
+  function drawCircle(x, y, size, time, average, id) {
+    var circle = svg.append("circle");
+    circle.attr('class', 'click-circle')
+      .attr("cx", x)
+      .attr("cy", y)
+      .attr("r", size)
+      .attr("id", id)
+      .append("title")
+      .text(function(d) {
+          if (average) {
+            return time + " ms (average)";
+          } else {
+            return time + " ms";
+          }
+      });
+
+    if (average) {
+      circle.attr('class', 'click-circle-red');
+    }
   }
 
   var loadResults = function() {
@@ -97,11 +123,24 @@
             .style("fill", "none")
             .style("stroke-width", 1);
 
-    <% ExperimentTaskResult.where(experiment_task_id: @experiment_task.id).each do |experiment_task_result| %>
-      <% experiment_task_result.result.each do |result| %>
-          drawCircle(<%= result[1]["coordinates"][0] %>, <%= result[1]["coordinates"][1] %>, 5, <%= result[1]["time"] %>);
+    <% if @experiment_task.task.task_type == "Click" %>
+      <% ExperimentTaskResult.where(experiment_task_id: @experiment_task.id).each do |experiment_task_result| %>
+        <% experiment_task_result.result.each do |result| %>
+            drawCircle(<%= result[1]["coordinates"][0] %>, <%= result[1]["coordinates"][1] %>, 5, <%= result[1]["time"] %>, false, "<%= experiment_task_result.id %>click<%= result[0] %>");
+        <% end %>
       <% end %>
+
+      drawCircle(<%= @average_coordinates[0] %>, <%= @average_coordinates[1] %>, 5, <%= @average_time %>, true, "average");
     <% end %>
   }
+
+  <% if @experiment_task.task.task_type == "Click" %>
+    $("#averageHover").on("mouseover", function() {
+      highlightCircle("average");
+    })
+    .on("mouseout", function() {
+      deHighlightCircle("average");
+    });
+  <% end %>
 
 </script>

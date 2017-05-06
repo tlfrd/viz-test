@@ -12,7 +12,9 @@ class ResultsController < ApplicationController
       @visualisation.html = open(@visualisation.html).read
     end
     @experiment_task_results = @experiment_task.experiment_task_results
-    @average_time = ExperimentTaskResult.get_average_time(@experiment_task_results)
-    @average_coordinates = ExperimentTaskResult.get_average_coordinates(@experiment_task_results)
+    if (@experiment_task.task.task_type == "Click")
+      @average_time = ExperimentTaskResult.get_average_time(@experiment_task_results)
+      @average_coordinates = ExperimentTaskResult.get_average_coordinates(@experiment_task_results)
+    end
   end
 end
