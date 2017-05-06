@@ -16,7 +16,9 @@
           <table class="table">
             <thead>
               <tr>
-                <td><strong>Most Recent Results</strong></td>
+                <td><strong>Most Recent Results</strong>
+                <td><strong>Progress</strong></td>
+                <td><strong>Last Updated</strong></td>
               <tr>
             </thead>
             <tbody>
@@ -33,6 +35,7 @@
                       <span class="badge"><%= experiment_result.experiment_task_results.length %> / <%= experiment_result.experiment.experiment_tasks.length %></span>
                     <% end %>
                   </td>
+                  <td><%= experiment_result.updated_at %></td>
                 </tr>
               <% end %>
             </tbody>

@@ -52,6 +52,8 @@
       <tr>
         <th>UUID</th>
         <th>Progress</th>
+        <th>Time Created</th>
+        <th>Time Completed</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -67,6 +69,14 @@
             <% end %>
             <%= link_to view_experiment_result_path(experiment_result.uuid) do %>
               <span class="badge"><%= experiment_result.experiment_task_results.length %> / <%= @experiment.experiment_tasks.length %></span>
+            <% end %>
+          </td>
+          <td><%= experiment_result.created_at %></td>
+          <td>
+            <% if experiment_result.completed %>
+              <%= experiment_result.updated_at %>
+            <% else %>
+              -
             <% end %>
           </td>
           <td><%= button_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
