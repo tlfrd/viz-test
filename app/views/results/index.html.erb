@@ -24,7 +24,7 @@
             <tbody>
               <% @experiment_results.limit(3).each do |experiment_result| %>
                 <tr>
-                  <td><%= link_to experiment_result.uuid, run_experiment_path(experiment_result.uuid) %></td>
+                  <td><%= experiment_result.uuid %></td>
                   <td>
                     <% if experiment_result.completed %>
                       <span class="label label-success">Completed</span>
@@ -57,16 +57,16 @@
     <table class="table">
       <thead>
         <tr>
-          <td><strong>Experiment Name</strong></td>
           <td><strong>Task Name</strong></td>
+          <td><strong>Experiment Name</strong></td>
           <td><strong>No. of Results</strong></td>
         </tr>
       </thead>
       <tbody>
-        <% @experiment_task.each do |experiment_task| %>
+        <% @experiment_tasks.limit(3).each do |experiment_task| %>
           <tr>
-            <td><%= experiment_task.experiment.name %></td>
-            <td><%= experiment_task.task.name %></td>
+            <td><%= link_to experiment_task.task.name, experiment_task.task %></td>
+            <td><%= link_to experiment_task.experiment.name, experiment_task.experiment %></td>
             <td><%= experiment_task.experiment_task_results.length %></td>
             <td><%= link_to "Display Results", all_experiment_task_results_path(experiment_task.id), class: "btn btn-default" %></td>
           </tr>

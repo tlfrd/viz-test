@@ -25,6 +25,25 @@
   </table>
 </div>
 
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="panel-title">
+      Summary
+    </div>
+  </div>
+
+  <table class="table">
+    <tr>
+      <td><strong>Average time</strong></td>
+      <td><%= @average_time %> ms</td>
+    </tr>
+    <tr>
+      <td><strong>Average coordinates</strong></td>
+      <td>(<%= @average_coordinates[0] %>, <%= @average_coordinates[1] %>)</td>
+    </tr>
+  </table>
+</div>
+
 <div>
   <%= @visualisation.html.html_safe %>
 </div>
