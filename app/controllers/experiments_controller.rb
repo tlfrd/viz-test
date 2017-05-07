@@ -84,7 +84,7 @@ class ExperimentsController < ApplicationController
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
     @experiment_result.update(completed: true)
     @experiment_task_results = @experiment_result.experiment_task_results.includes(:experiment_task).order("experiment_tasks.order asc")
-    
+
     render :layout => 'public_view'
   end
 
@@ -96,6 +96,17 @@ class ExperimentsController < ApplicationController
 
   def experiment_task_result
     @experiment_task_result = ExperimentTaskResult.find(params[:experiment_task_result_id])
+    @visualisation = @experiment_task_result.experiment_task.task.visualisation
+    if (@visualisation.html.start_with?('http'))
+      @visualisation.html = open(@visualisation.html).read
+    end
+  end
+
+  def public_experiment_task_result
+    @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
+    @experiment_task_results = @experiment_result.experiment_task_results
+    @experiment_task_result = ExperimentTaskResult.find_by(experiment_result_id: @experiment_result.id, experiment_task_id: params[:experiment_task_id])
+
     @visualisation = @experiment_task_result.experiment_task.task.visualisation
     if (@visualisation.html.start_with?('http'))
       @visualisation.html = open(@visualisation.html).read

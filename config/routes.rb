@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "run/:uuid", :to => "experiments#run_experiment", :as => "run_experiment"
   get "run/:uuid/task/:position", :to => "experiments#run_experiment", :as => "run_experiment_pos"
   get "completed/:uuid/", :to => "experiments#submit_result", :as => "submit_experiment_result"
+  get "completed/:uuid/task_result/:experiment_task_id", :to => "experiments#public_experiment_task_result", :as => "public_experiment_task_result"
   get "results/:uuid", :to => "experiments#view_results", :as => "view_experiment_result"
   post "submit/:uuid/task/:position", :to => "experiments#submit_task_result", :as => "submit_task_result"
 
