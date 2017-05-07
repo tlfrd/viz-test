@@ -1,0 +1,30 @@
+<div class="panel panel-default">
+  <table class="table">
+    <thead>
+      <tr>
+        <td><strong>Click</strong></td>
+        <td><strong>Your Time (ms)</strong></td>
+        <td><strong>Average time (ms)</strong></td>
+        <td><strong>Difference (ms)</strong></td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @e_t_result.result.each do |click| %>
+        <tr>
+          <td><%= click[0] %></td>
+          <td><%= click[1]["time"] %></td>
+          <td><%= click_avg = ExperimentTaskResult.get_average_time(@e_t_result.experiment_task.experiment_task_results, click[0]) %></td>
+          <td>
+            <% click_diff = click_avg - click[1]["time"] %>
+            <% if click_diff > 0 %>
+              <span class="green-text"><%= click_diff %> quicker</span>
+            <% else %>
+              <span class="red-text"><%= (click_diff * -1) %> slower</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

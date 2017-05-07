@@ -83,7 +83,8 @@ class ExperimentsController < ApplicationController
   def submit_result
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
     @experiment_result.update(completed: true)
-
+    @experiment_task_results = @experiment_result.experiment_task_results.includes(:experiment_task).order("experiment_tasks.order asc")
+    
     render :layout => 'public_view'
   end
 

@@ -1,24 +1,24 @@
-<h3>Your results</h3></br>
+<h3>Thanks for taking part!</h3></br>
 
 <div class="panel panel-default">
   <div class="panel-heading"><strong><%= @experiment_result.experiment.name %></strong></div>
   <table class="table">
     <thead>
       <tr>
-        <td>Question</td>
-        <td>Description</td>
-        <td>Result</td>
+        <td><strong>Question</strong></td>
+        <td><strong>Description</strong></td>
+        <td><strong>Result</strong></td>
       </tr>
     </thead>
 
     <tbody>
-      <% @experiment_result.experiment_task_results.each do |result| %>
+      <% @experiment_task_results.each do |result| %>
         <tr>
           <td><%= result.experiment_task.order %></td>
           <td><%= result.experiment_task.task.description %></td>
           <td>
             <% if result.experiment_task.task.task_type == "Click" %>
-              <%= render partial: "click_task_result", object: @result = result.result %>
+              <%= render partial: "click_task_result_compare", object: @e_t_result = result %>
             <% else %>
               <%= render partial: "question_task_result", object: @result = result.result %>
             <% end %>
