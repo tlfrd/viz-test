@@ -5,6 +5,10 @@ class ResultsController < ApplicationController
     @experiment_tasks = ExperimentTask.all.order(id: :asc)
   end
 
+  def experiment_task_results
+    @experiment_tasks = ExperimentTask.all.order(id: :asc)
+  end
+
   def experiment_task_result
     @experiment_task = ExperimentTask.find(params[:id])
     @visualisation = @experiment_task.task.visualisation
