@@ -106,11 +106,14 @@ class ExperimentsController < ApplicationController
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
     @experiment_task_results = @experiment_result.experiment_task_results
     @experiment_task_result = ExperimentTaskResult.find_by(experiment_result_id: @experiment_result.id, experiment_task_id: params[:experiment_task_id])
+    @experiment_task = @experiment_task_result.experiment_task
 
     @visualisation = @experiment_task_result.experiment_task.task.visualisation
     if (@visualisation.html.start_with?('http'))
       @visualisation.html = open(@visualisation.html).read
     end
+
+    render :layout => 'public_view'
   end
 
   def preview
