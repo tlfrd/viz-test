@@ -16,6 +16,19 @@ class ExperimentsController < ApplicationController
     # @experiment_result = ExperimentResult.get_next_id
   end
 
+  def download
+    @experiment = Experiment.find(params[:experiment_id])
+    @experiment_results = @experiment.experiment_results.order(:id)
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        headers['Content-Disposition'] = "attachment; filename\"experiment-results\""
+        headers['Content-Type'] ||= 'text/csv'
+      end
+    end
+  end
+
   def public_show
     @experiment = Experiment.find_by_uuid(params[:experiment_uuid])
     if @experiment.intro_html

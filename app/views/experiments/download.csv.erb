@@ -1,0 +1,7 @@
+<%- headers = ['experiment_result_id', 'uuid', 'position', 'experiment_task_name'] -%>
+<%= CSV.generate_line headers %>
+<%- @experiment_results.each do |experiment_result| -%>
+  <%- experiment_result.experiment_task_results.each do |experiment_task_result| -%>
+    <%= CSV.generate_line([experiment_result.id, experiment_result.uuid, experiment_task_result.experiment_task.order, experiment_task_result.experiment_task.task.name]) -%>
+  <%- end %>
+<%- end -%>

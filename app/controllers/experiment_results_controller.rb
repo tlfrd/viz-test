@@ -2,17 +2,17 @@ class ExperimentResultsController < ApplicationController
   before_action :set_experiment_result, only: [:destroy]
   http_basic_authenticate_with name: ENV["APP_USER"], password: ENV["APP_SECRET"]
 
-  def download
-    @experiment_results = ExperimentResult.all.order(:id)
-
-    respond_to do |format|
-      format.html
-      format.csv do
-        headers['Content-Disposition'] = "attachment; filename\"experiment-result-list\""
-        headers['Content-Type'] ||= 'text/csv'
-      end
-    end
-  end
+  # def download
+  #   @experiment_results = ExperimentResult.all.order(:id)
+  #
+  #   respond_to do |format|
+  #     format.html
+  #     format.csv do
+  #       headers['Content-Disposition'] = "attachment; filename\"experiment-result-list\""
+  #       headers['Content-Type'] ||= 'text/csv'
+  #     end
+  #   end
+  # end
 
   # DELETE /experiment_results/1
   # DELETE /experiment_results/1.json
