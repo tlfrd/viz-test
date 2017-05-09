@@ -79,7 +79,10 @@
               -
             <% end %>
           </td>
-          <td><%= button_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+          <td>
+            <%= button_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+            <%= button_to "Download", experiment_result, method: :get, class: "btn btn-default" %>
+          </td>
         </tr>
       <% end %>
     </tbody>

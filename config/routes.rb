@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :experiment_results
+  resources :experiment_results, :defaults => { :format => :json }
   resources :experiment_tasks
   resources :tasks do
       get :preview
