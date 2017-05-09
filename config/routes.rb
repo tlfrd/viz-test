@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :experiment_results do
-    get :download
-  end
+  resources :experiment_results
   resources :experiment_tasks
   resources :tasks do
       get :preview
@@ -12,7 +10,6 @@ Rails.application.routes.draw do
       get "create_instance"
       get "create_and_start_instance", :to => "experiments#create_and_start_instance", :as => "create_and_start_instance"
       get "task_result/:experiment_task_result_id", :to => "experiments#experiment_task_result", :as => "view_experiment_task_result"
-      get "download", :to => "experiments#download", :as => "download"
   end
   resources :visualisations
 
