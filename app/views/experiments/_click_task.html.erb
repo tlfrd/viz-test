@@ -1,6 +1,6 @@
 <button id="taskButton" class="btn btn-primary" onclick="startTask()" disabled>Start Task</button>
 
-</br></br>
+<br/><br/>
 
 <%= form_for(:request, :url => submit_task_result_path(:uuid => @experiment_result.uuid, :position => @position)) do |f| %>
     <div class="actions">
