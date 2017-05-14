@@ -31,8 +31,8 @@
           <td><strong><%= experiment_task.order %></strong></td>
           <td><%= link_to Task.find(experiment_task.task_id).name, task_path(experiment_task.task_id), method: :get %></td>
           <td>
-            <%= link_to 'Edit', edit_experiment_task_path(experiment_task), method: :get, class: "btn btn-warning btn-white-text" %>
-            <%= link_to 'Remove', experiment_task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-white-text" %>
+            <%= link_to 'Edit', edit_experiment_task_path(experiment_task), method: :get, class: "btn btn-warning btn-white-text btn-spacing" %>
+            <%= link_to 'Remove', experiment_task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-white-text btn-spacing" %>
           </td>
         </tr>
       <% end %>
@@ -80,8 +80,8 @@
             <% end %>
           </td>
           <td>
-            <%= button_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
-            <%= button_to "Download", experiment_result, method: :get, class: "btn btn-default" %>
+            <%= button_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-spacing" %>
+            <%= button_to "Download", experiment_result, method: :get, class: "btn btn-default btn-spacing" %>
           </td>
         </tr>
       <% end %>

@@ -20,9 +20,9 @@
         <tr>
           <td><%= experiment.name %></td>
           <td>
-            <%= link_to 'Show', experiment, method: :get, class: "btn btn-default" %>
-            <%= link_to 'Edit', edit_experiment_path(experiment), method: :get, class: "btn btn-warning" %>
-            <%= link_to 'Destroy', experiment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+            <%= link_to 'Show', experiment, method: :get, class: "btn btn-default btn-spacing" %>
+            <%= link_to 'Edit', edit_experiment_path(experiment), method: :get, class: "btn btn-warning btn-spacing" %>
+            <%= link_to 'Destroy', experiment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-spacing" %>
           </td>
         </tr>
       <% end %>

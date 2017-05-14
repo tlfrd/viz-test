@@ -26,9 +26,9 @@
           <td><%= task.task_type %></td>
           <td><%= task.description %></td>
           <td>
-            <%= link_to 'Show', task, method: :get, class: "btn btn-default" %>
-            <%= link_to 'Edit', edit_task_path(task), method: :get, class: "btn btn-warning" %>
-            <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+            <%= link_to 'Show', task, method: :get, class: "btn btn-default btn-spacing" %>
+            <%= link_to 'Edit', edit_task_path(task), method: :get, class: "btn btn-warning btn-spacing" %>
+            <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-spacing" %>
           </td>
         </tr>
       <% end %>
@@ -39,3 +39,5 @@
 <br>
 
 <%= button_to 'New Task', new_task_path, method: :get, class: "btn btn-primary" %>
+
+<br/><br/>
