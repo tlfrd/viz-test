@@ -7,6 +7,8 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://cdn.ravenjs.com/3.15.0/raven.min.js"></script>
+    <script>Raven.config('https://22061e27cec74e7fb76db2402e20af4a@sentry.io/168006').install()</script>
   </head>
 
   <body data-turbolinks="false">
