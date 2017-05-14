@@ -90,4 +90,8 @@ Rails.application.configure do
       ENV[key.to_s] = value
     end if File.exists?(env_file)
   end
+
+  Raven.configure do |config|
+    config.dsn = ENV["RAVEN_DSN"]
+  end
 end
