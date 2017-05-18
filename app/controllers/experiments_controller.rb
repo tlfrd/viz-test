@@ -1,6 +1,6 @@
 class ExperimentsController < ApplicationController
   before_action :set_experiment, only: [:show, :edit, :update, :destroy]
-  http_basic_authenticate_with name: ENV["APP_USER"], password: ENV["APP_SECRET"], except: [:public_show, :create_and_start_instance, :run_experiment, :submit_task_result, :submit_result]
+  http_basic_authenticate_with name: ENV["APP_USER"], password: ENV["APP_SECRET"], except: [:public_show, :create_and_start_instance, :run_experiment, :submit_task_result, :submit_result, :public_experiment_task_result]
 
   # GET /experiments
   # GET /experiments.json
