@@ -25,4 +25,10 @@
   <%= @visualisation.html.html_safe %>
 </div>
 
+<script>
+  loadVisualisation(function() {
+    console.log("Visualisation successfully loaded!");
+  });
+</script>
+
 <%= link_to 'Back', visualisations_path, :class => "btn btn-default" %>

@@ -12,7 +12,7 @@
 <br/>
 
 <% if @task.task_type == "Click" %>
-  <%= render 'preview_click_task' %>
+  <%= render 'tasks/partials/preview_click_task' %>
 <% else %>
-  <%= render 'preview_question_task' %>
+  <%= render 'tasks/partials/preview_question_task' %>
 <% end %>

@@ -13,7 +13,7 @@
 <br/>
 
 <% if @task.task_type == "Click" %>
-  <%= render 'click_task' %>
+  <%= render 'experiments/partials/live/click_task' %>
 <% else %>
-  <%= render 'question_task' %>
+  <%= render 'experiments/partials/live/question_task' %>
 <% end %>

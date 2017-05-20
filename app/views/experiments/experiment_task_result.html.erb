@@ -171,8 +171,8 @@
   </script>
 
   <br/>
-  <%= render partial: "click_task_result", object: @result = @experiment_task_result.result %>
+  <%= render partial: "experiments/partials/live/click_task_result", object: @result = @experiment_task_result.result %>
 <% else %>
   <br/>
-  <%= render partial: "question_task_result", object: @result = @experiment_task_result.result %>
+  <%= render partial: "experiments/partials/live/question_task_result", object: @result = @experiment_task_result.result %>
 <% end %>
