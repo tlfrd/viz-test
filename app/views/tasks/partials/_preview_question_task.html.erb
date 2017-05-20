@@ -1,5 +1,7 @@
 <script>
-  window.onload = function() {
+  document.getElementById("taskDescription").innerHTML = "<%= @task.description %>";
+
+  function init() {
     var selected_svg = d3.select("svg");
     var h = selected_svg.attr("height");
     var w = selected_svg.attr("width");
@@ -14,11 +16,7 @@
        			.style("stroke-width", 1);
   }
 
-  document.getElementById("taskDescription").innerHTML = "<%= @task.description %>";
-
-  function submitTask() {
-    console.log($("#answer").val());
-  }
+  loadVisualisation(init);
 </script>
 
 <textarea id="answer" rows="4" cols="50" placeholder="Write your answer here...">
@@ -26,10 +24,10 @@
 <br/><br/>
 
 <div id="json_submit">
-  <% if @experiment_tasks.length != @position.to_i %>
-    <input type="button" onclick="location.href='<%= experiment_preview_url(:experiment_id => @experiment.id, :position => (@position.to_i + 1)) %>';" value="Next Task" class="btn btn-success"/>
+  <% if (@position.to_i + 1) <= @experiment_tasks.length  %>
+    <%= button_to "Submit Task", experiment_preview_path(experiment_id: @experiment.id , position: (@position.to_i + 1)), method: :get, class: "btn btn-success" %>
   <% else %>
-    <input type="button" onclick="location.href='<%= experiment_url(@experiment) %>';" value="Finish Preview" class="btn btn-success"/>
+    <%= button_to "Finish Preview", @experiment, method: :get, class: "btn btn-success" %>
   <% end %>
 </div>
 

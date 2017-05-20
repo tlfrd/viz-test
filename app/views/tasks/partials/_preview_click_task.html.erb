@@ -4,7 +4,7 @@
 
 <input id="request_result" hidden></input>
 <div id="json_submit">
-    <input type="button" onclick="location.href='<%= task_url(@task) %>';" value="Finish Preview" class="btn btn-success"/>
+  <%= button_to "Finish Task Preview", @task, method: :get, class: "btn btn-success" %>
 </div>
 
 <div id="results"></div>
@@ -60,14 +60,14 @@
 
   function stopTask() {
     taskActive = false;
-    displayResults(results);
+    displayResults(true, results);
     results = {};
     numberOfClicks = 0;
     document.getElementById("taskButton").innerHTML = "Task Complete";
     document.getElementById("json_submit").hidden = false;
   }
 
-  function displayResults(results) {
+  function displayResults(display_bool, results) {
       var results_html = "<table class='table'><tr>" +
       "<td><strong>No.</strong></td>" +
       "<td><strong>Coordinates (pixels)</strong></td>" +
@@ -80,7 +80,9 @@
         "<td>" + results[key].time + "</td></tr>";
         results_html += results_row;
       }
-      // document.getElementById("results").innerHTML = results_html + "</table>";
+      if (display_bool) {
+        document.getElementById("results").innerHTML = results_html + "</table>";
+      }
       document.getElementById("request_result").value = JSON.stringify(results);
   }
 

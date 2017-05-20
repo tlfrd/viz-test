@@ -1,5 +1,7 @@
 <script>
-  window.onload = function() {
+  document.getElementById("taskDescription").innerHTML = "<%= @task.description %>";
+
+  function init() {
     var selected_svg = d3.select("svg");
     var h = selected_svg.attr("height");
     var w = selected_svg.attr("width");
@@ -14,7 +16,7 @@
        			.style("stroke-width", 1);
   }
 
-  document.getElementById("taskDescription").innerHTML = "<%= @task.description %>";
+  loadVisualisation(init);
 </script>
 
 <%= form_for(:request, :url => submit_task_result_path(:uuid => @experiment_result.uuid, :position => @position)) do |f| %>

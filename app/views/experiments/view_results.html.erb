@@ -17,15 +17,15 @@
           <td>
             <% if result.experiment_task.task.task_type == "Click" %>
               <%= render partial: "experiments/partials/click_task_result", object: @result = result.result %>
+              <%= button_to "View Result",
+                  experiment_view_experiment_task_result_path(
+                    experiment_id: @experiment.id,
+                    experiment_task_result_id: result.id),
+                    method: :get, class: "btn btn-default"
+              %>
             <% else %>
               <%= render partial: "experiments/partials/question_task_result", object: @result = result.result %>
             <% end %>
-            <%= button_to "View Result",
-                experiment_view_experiment_task_result_path(
-                  experiment_id: @experiment.id,
-                  experiment_task_result_id: result.id),
-                  method: :get, class: "btn btn-default"
-            %>
           </td>
         </tr>
       <% end %>

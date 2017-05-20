@@ -17,4 +17,4 @@
 //= require_tree .
 
 //= require stopwatch
-//= require click_task
+//= require display_results

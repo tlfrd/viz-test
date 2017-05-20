@@ -121,22 +121,24 @@
       $("#distance").html(Math.round(distance) + " px");
     }
 
-    var loadResults = function() {
-      var locked = false;
-      var h = svg.attr("height");
-      var w = svg.attr("width");
+    function displayResults() {
+      var selected_svg = d3.select("svg");
 
-      svg.append("g")
+      var locked = false;
+      var h = selected_svg.attr("height");
+      var w = selected_svg.attr("width");
+
+      selected_svg.append("g")
         .attr("class", "circles");
 
       <% @experiment_task_result.result.each do |result| %>
           drawCircle(<%= result[1]["coordinates"][0] %>, <%= result[1]["coordinates"][1] %>, 5, <%= result[1]["time"] %>);
       <% end %>
 
-      svg.append("g")
+      selected_svg.append("g")
         .attr("class", "lines");
 
-      var rectangle = svg.append("rect")
+      var rectangle = selected_svg.append("rect")
      			.attr("x", 0)
      			.attr("y", 0)
      			.attr("height", h)
@@ -166,13 +168,15 @@
           .on("click", function() {
             locked = !locked;
           })
-    }
+      };
+
+      loadVisualisation(displayResults);
 
   </script>
 
   <br/>
-  <%= render partial: "experiments/partials/live/click_task_result", object: @result = @experiment_task_result.result %>
+  <%= render partial: "experiments/partials/click_task_result", object: @result = @experiment_task_result.result %>
 <% else %>
   <br/>
-  <%= render partial: "experiments/partials/live/question_task_result", object: @result = @experiment_task_result.result %>
+  <%= render partial: "experiments/partials/question_task_result", object: @result = @experiment_task_result.result %>
 <% end %>
