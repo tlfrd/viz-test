@@ -10,9 +10,9 @@ function drawCirclePro(svg, x, y, size, time, red, id) {
   var circle = svg.append("circle")
     .attr('class', function() {
       if (red) {
-        return 'click-circle';
-      } else {
         return 'click-circle-red';
+      } else {
+        return 'click-circle';
       }
     })
     .attr("cx", x)

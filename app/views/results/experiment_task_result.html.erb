@@ -88,28 +88,7 @@
       .attr("r", 5);
   }
 
-  function drawCircle(x, y, size, time, average, id) {
-    var circle = svg.append("circle");
-    circle.attr('class', 'click-circle')
-      .attr("cx", x)
-      .attr("cy", y)
-      .attr("r", size)
-      .attr("id", id)
-      .append("title")
-      .text(function(d) {
-          if (average) {
-            return time + " ms (average)";
-          } else {
-            return time + " ms";
-          }
-      });
-
-    if (average) {
-      circle.attr('class', 'click-circle-red');
-    }
-  }
-
-  var loadResults = function() {
+  function init() {
     var selected_svg = d3.select("svg");
     var h = selected_svg.attr("height");
     var w = selected_svg.attr("width");
@@ -126,13 +105,15 @@
     <% if @experiment_task.task.task_type == "Click" %>
       <% ExperimentTaskResult.where(experiment_task_id: @experiment_task.id).each do |experiment_task_result| %>
         <% experiment_task_result.result.each do |result| %>
-            drawCircle(<%= result[1]["coordinates"][0] %>, <%= result[1]["coordinates"][1] %>, 5, <%= result[1]["time"] %>, false, "<%= experiment_task_result.id %>click<%= result[0] %>");
+            drawCirclePro(selected_svg, <%= result[1]["coordinates"][0] %>, <%= result[1]["coordinates"][1] %>, 5, <%= result[1]["time"] %>, false, "<%= experiment_task_result.id %>click<%= result[0] %>");
         <% end %>
       <% end %>
 
-      drawCircle(<%= @average_coordinates[0] %>, <%= @average_coordinates[1] %>, 5, <%= @average_time %>, true, "average");
+      drawCirclePro(selected_svg, <%= @average_coordinates[0] %>, <%= @average_coordinates[1] %>, 5, <%= @average_time %>, true, "average");
     <% end %>
   }
+
+  loadVisualisation(init);
 
   <% if @experiment_task.task.task_type == "Click" %>
     $("#averageHover").on("mouseover", function() {
