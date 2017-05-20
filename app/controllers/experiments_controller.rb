@@ -38,6 +38,7 @@ class ExperimentsController < ApplicationController
     redirect_to run_experiment_url(@experiment_result.uuid)
   end
 
+  # run an experiment
   def run_experiment
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
     @experiment = @experiment_result.experiment
@@ -94,6 +95,7 @@ class ExperimentsController < ApplicationController
     @experiment_task_results = @experiment_result.experiment_task_results.includes(:experiment_task).order("experiment_tasks.order asc")
   end
 
+  # a private view (admin) of an experiment_task result
   def experiment_task_result
     @experiment_task_result = ExperimentTaskResult.find(params[:experiment_task_result_id])
     @visualisation = @experiment_task_result.experiment_task.task.visualisation
@@ -102,6 +104,7 @@ class ExperimentsController < ApplicationController
     end
   end
 
+  # a public view of an experiment task result
   def public_experiment_task_result
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
     @experiment_task_results = @experiment_result.experiment_task_results
@@ -116,6 +119,7 @@ class ExperimentsController < ApplicationController
     render :layout => 'public_view'
   end
 
+  # for previewing experiments
   def preview
     @experiment = Experiment.find(params[:experiment_id])
     @experiment_tasks = @experiment.experiment_tasks.order(:order)
@@ -126,6 +130,10 @@ class ExperimentsController < ApplicationController
       @visualisation.html = open(@visualisation.html).read
     end
   end
+
+  #
+  # 
+  #
 
   # GET /experiments/new
   def new

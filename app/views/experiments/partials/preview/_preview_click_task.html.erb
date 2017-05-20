@@ -4,8 +4,14 @@
 
 <input id="request_result" hidden></input>
 <div id="json_submit">
-  <input type="button" onclick="location.href='<%= task_url(@task) %>';" value="Finish Preview" class="btn btn-success"/>
+  <% if (@position.to_i + 1) <= @experiment_tasks.length  %>
+    <%= button_to "Submit Task", experiment_preview_path(experiment_id: @experiment.id , position: (@position.to_i + 1)), method: :get, class: "btn btn-success" %>
+  <% else %>
+    <%= button_to "Finish Preview", @experiment, method: :get, class: "btn btn-success" %>
+  <% end %>
 </div>
+
+<br/>
 
 <div id="results"></div>
 
@@ -18,24 +24,8 @@
 </style>
 
 <script>
-  function loadResults() {
-    document.getElementById("taskButton").disabled = false;
-  }
 
   document.getElementById("json_submit").hidden = true;
-
-  StopWatch = function() {
-    this.StartMilliseconds = 0;
-    this.ElapsedMilliseconds = 0;
-  }
-
-  StopWatch.prototype.Start = function() {
-    this.StartMilliseconds = new Date().getTime();
-  }
-
-  StopWatch.prototype.Stop = function() {
-    this.ElapsedMilliseconds = new Date().getTime() - this.StartMilliseconds;
-  }
 
   var numberOfClicksAllowed = <%= @task.no_of_clicks %>;
   var numberOfClicks = 0;
@@ -76,14 +66,14 @@
 
   function stopTask() {
     taskActive = false;
-    displayResults(results);
+    displayResults(true, results);
     results = {};
     numberOfClicks = 0;
     document.getElementById("taskButton").innerHTML = "Task Complete";
     document.getElementById("json_submit").hidden = false;
   }
 
-  function displayResults(results) {
+  function displayResults(display_bool, results) {
       var results_html = "<table class='table'><tr>" +
       "<td><strong>No.</strong></td>" +
       "<td><strong>Coordinates (pixels)</strong></td>" +
@@ -96,19 +86,13 @@
         "<td>" + results[key].time + "</td></tr>";
         results_html += results_row;
       }
-      document.getElementById("results").innerHTML = results_html + "</table>";
+      if (display_bool) {
+        document.getElementById("results").innerHTML = results_html + "</table>";
+      }
       document.getElementById("request_result").value = JSON.stringify(results);
   }
 
-  function drawCircle(x, y, size) {
-    var circle = svg.append("circle")
-        .attr('class', 'click-circle')
-        .attr("cx", x)
-        .attr("cy", y)
-        .attr("r", size);
-  }
-
-  window.onload = function() {
+  function init() {
     var selected_svg = d3.select("svg");
     var h = selected_svg.attr("height");
     var w = selected_svg.attr("width");
@@ -125,8 +109,12 @@
     selected_svg.on("click", function() {
         if (taskActive) {
           recordResult(d3.mouse(this));
-          drawCircle(d3.mouse(this)[0], d3.mouse(this)[1], 5);
+          drawCircle(selected_svg, d3.mouse(this)[0], d3.mouse(this)[1], 5);
         }
     });
+
+    document.getElementById("taskButton").disabled = false;
   }
+
+  loadVisualisation(init);
 </script>
