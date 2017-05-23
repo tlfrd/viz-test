@@ -28,5 +28,7 @@ Rails.application.routes.draw do
   get "experiment_task_results", :to => "results#experiment_task_results", :as => "experiment_task_results_index"
   get "results/experiment_task_result/:id", :to => "results#experiment_task_result", :as => "all_experiment_task_results"
 
+  get "experiment_results/show_all/:id/", :to => "experiment_results#show_all", :as => "experiment_all_results", :defaults => { :format => :json }
+
   root 'visualisations#index'
 end

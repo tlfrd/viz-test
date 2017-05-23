@@ -8,6 +8,10 @@ class ExperimentResultsController < ApplicationController
     @experiment_result = ExperimentResult.find(params[:id])
   end
 
+  def show_all
+    @experiment_results = Experiment.find(params[:id]).experiment_results
+  end
+
   # DELETE /experiment_results/1
   # DELETE /experiment_results/1.json
   def destroy
