@@ -1,3 +1,7 @@
+<div class="visualisation">
+  <%= @visualisation.html.html_safe %>
+</div>
+
 <script>
   document.getElementById("taskDescription").innerHTML = "<%= @task.description %>";
 
@@ -24,11 +28,7 @@
 <br/><br/>
 
 <div id="json_submit">
-  <% if (@position.to_i + 1) <= @experiment_tasks.length  %>
-    <%= button_to "Submit Task", experiment_preview_path(experiment_id: @experiment.id , position: (@position.to_i + 1)), method: :get, class: "btn btn-success" %>
-  <% else %>
     <%= button_to "Finish Preview", @experiment, method: :get, class: "btn btn-success" %>
-  <% end %>
 </div>
 
 <br/><br/>

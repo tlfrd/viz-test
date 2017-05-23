@@ -5,10 +5,6 @@
   </div>
 </div>
 
-<div class="visualisation">
-  <%= @visualisation.html.html_safe %>
-</div>
-
 <% if @task.task_type == "Click" %>
   <%= render 'tasks/partials/preview_click_task' %>
 <% else %>

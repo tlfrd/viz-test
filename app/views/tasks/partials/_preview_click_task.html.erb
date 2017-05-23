@@ -1,25 +1,21 @@
-<button id="taskButton" class="btn btn-primary" onclick="startTask()" disabled>Start Task</button>
+<div class="buttons-container">
+  <button id="taskButton" class="btn btn-primary" onclick="startTask()" disabled>Start Task</button>
+  <span class="button-inline" id="json_submit">
+    <%= button_to "Finish Task Preview", @task, method: :get, class: "btn btn-success" %>
+  </span>
+</div>
 
-</br></br>
+<div class="visualisation">
+  <%= @visualisation.html.html_safe %>
+</div>
 
 <input id="request_result" hidden></input>
-<div id="json_submit">
-  <%= button_to "Finish Task Preview", @task, method: :get, class: "btn btn-success" %>
-</div>
 
 <div id="results"></div>
 
-<style>
-  .click-circle {
-      fill: white;
-      stroke: black;
-      stroke-width: 2px;
-  }
-</style>
-
 <script>
 
-  document.getElementById("json_submit").hidden = true;
+  document.getElementById("json_submit").style.display = "none";
 
   var numberOfClicksAllowed = <%= @task.no_of_clicks %>;
   var numberOfClicks = 0;
@@ -64,7 +60,7 @@
     results = {};
     numberOfClicks = 0;
     document.getElementById("taskButton").innerHTML = "Task Complete";
-    document.getElementById("json_submit").hidden = false;
+    document.getElementById("json_submit").style.display = "inline-block";
   }
 
   function displayResults(display_bool, results) {
