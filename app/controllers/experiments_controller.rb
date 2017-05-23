@@ -64,6 +64,7 @@ class ExperimentsController < ApplicationController
     end
   end
 
+  # submits each task result
   def submit_task_result
     @position = params[:position]
     if params[:request][:result].start_with?('{')
@@ -81,6 +82,7 @@ class ExperimentsController < ApplicationController
     redirect_to run_experiment_pos_path(:uuid => @experiment_result.uuid, :position => (@position.to_i + 1))
   end
 
+  # completes experiment
   def submit_result
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
     @experiment_result.update(completed: true)
@@ -132,7 +134,7 @@ class ExperimentsController < ApplicationController
   end
 
   #
-  # 
+  #
   #
 
   # GET /experiments/new

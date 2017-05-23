@@ -38,3 +38,13 @@ function appendRectangle(selected_svg) {
           .style("fill", "none")
           .style("stroke-width", 1);
 }
+
+function highlightCircle(id) {
+  $("#" + id)
+    .attr("r", 7);
+}
+
+function deHighlightCircle(id) {
+  $("#" + id)
+    .attr("r", 5);
+}

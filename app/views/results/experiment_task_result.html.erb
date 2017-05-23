@@ -46,11 +46,9 @@
   </div>
 <% end %>
 
-<div>
+<div class="visualisation">
   <%= @visualisation.html.html_safe %>
 </div>
-
-<br/>
 
 <% ExperimentTaskResult.where(experiment_task_id: @experiment_task.id).each do |experiment_task_result| %>
   <% if experiment_task_result.experiment_task.task.task_type == "Click" %>
@@ -60,34 +58,7 @@
   <% end %>
 <% end %>
 
-<br/><br/>
-
-<style>
-  .click-circle {
-      fill: white;
-      stroke: black;
-      stroke-width: 2px;
-  }
-
-  .click-circle-red {
-      fill: red;
-      stroke: black;
-      stroke-width: 2px;
-  }
-</style>
-
 <script>
-
-  function highlightCircle(id) {
-    $("#" + id)
-      .attr("r", 7);
-  }
-
-  function deHighlightCircle(id) {
-    $("#" + id)
-      .attr("r", 5);
-  }
-
   function init() {
     var selected_svg = d3.select("svg");
     var h = selected_svg.attr("height");

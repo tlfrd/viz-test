@@ -6,8 +6,6 @@
   <%= @experiment.name %>
 </h3>
 
-<br/>
-
 <div class="panel panel-default">
   <div class="panel-heading"><strong>Public intro text</strong></div>
   <div class="panel-body">
@@ -40,7 +38,9 @@
   </table>
 </div>
 
-<%= link_to "Add Task", new_experiment_task_path(:experiment_id => @experiment.id), class: "btn btn-success btn-white-text" %><br/><br/>
+<div class="buttons-container">
+  <%= link_to "Add Task", new_experiment_task_path(:experiment_id => @experiment.id), class: "btn btn-success btn-white-text" %>
+</div>
 
 <div class="panel panel-default">
   <div class="panel-heading"><strong>Instances</strong></div>
@@ -89,10 +89,9 @@
   </table>
 </div>
 
-
-<%= link_to "Create Instance", experiment_create_instance_path(@experiment.id), class: "btn btn-primary btn-white-text" %> </br></br>
-<%= link_to "Preview", experiment_preview_path(:experiment_id => @experiment.id, :position => 1), class: "btn btn-info btn-white-text" %>
-<%= link_to 'Edit', edit_experiment_path(@experiment), class: "btn btn-warning btn-white-text" %> </br></br>
-<%= link_to 'Back', experiments_path, class: "btn btn-default" %>
-
-<br/><br/><br/><br/>
+<div class="buttons-container">
+  <%= link_to "Create Instance", experiment_create_instance_path(@experiment.id), class: "btn btn-primary btn-white-text" %> </br></br>
+  <%= link_to "Preview", experiment_preview_path(:experiment_id => @experiment.id, :position => 1), class: "btn btn-info btn-white-text" %>
+  <%= link_to 'Edit', edit_experiment_path(@experiment), class: "btn btn-warning btn-white-text" %> </br></br>
+  <%= link_to 'Back', experiments_path, class: "btn btn-default" %>
+</div>

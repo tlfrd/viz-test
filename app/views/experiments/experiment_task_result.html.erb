@@ -39,16 +39,7 @@
 </div>
 
 <% if @experiment_task_result.experiment_task.task.task_type == "Click" %>
-  <style>
-    .click-circle {
-        fill: white;
-        stroke: black;
-        stroke-width: 2px;
-    }
-  </style>
-
   <script>
-
     function drawCircle(x, y, size, time) {
       d3.select("g.circles")
           .append("circle")

@@ -15,40 +15,13 @@
   </table>
 </div>
 
-<div>
+<div class="visualisation">
   <%= @visualisation.html.html_safe %>
 </div>
 
-<br/>
-
 <%= link_to 'Back', submit_experiment_result_path(params[:uuid]), :class => 'btn btn-default' %>
 
-<style>
-  .click-circle {
-      fill: white;
-      stroke: black;
-      stroke-width: 2px;
-  }
-
-  .click-circle-red {
-      fill: red;
-      stroke: black;
-      stroke-width: 2px;
-  }
-</style>
-
 <script>
-
-  function highlightCircle(id) {
-    $("#" + id)
-      .attr("r", 7);
-  }
-
-  function deHighlightCircle(id) {
-    $("#" + id)
-      .attr("r", 5);
-  }
-
   function init() {
 
     var selected_svg = d3.select("svg");

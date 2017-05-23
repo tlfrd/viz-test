@@ -1,12 +1,11 @@
 <h3>Visualisations</h3>
-</br>
 
 <% @visualisations.in_groups_of(4, false).each do |group| %>
   <div class='row'>
     <% group.each do |visualisation| %>
       <div class='col-md-3'>
         <%= image_tag( visualisation.img_src, class: "img-responsive visualisation-image") %>
-        <h3><%= visualisation.title %></h3>
+        <h4><%= visualisation.title %></h4>
         <%= link_to 'Show', visualisation_path(visualisation), method: :get, class: "btn btn-default btn-spacing" %>
         <%= link_to 'Edit', edit_visualisation_path(visualisation), class: "btn btn-warning btn-white-text btn-spacing" %>
         <%= link_to 'Destroy', visualisation, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-white-text btn-spacing" %>
