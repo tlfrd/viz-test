@@ -1,32 +1,29 @@
-<button id="taskButton" class="btn btn-primary" onclick="startTask()" disabled>Start Task</button>
+<div class="buttons-container">
+  <button id="taskButton" class="btn btn-primary" onclick="startTask()" disabled>Start Task</button>
+  <span class="button-inline" id="json_submit">
+  <%= form_for(:request, :url => submit_task_result_path(:uuid => @experiment_result.uuid, :position => @position)) do |f| %>
+          <%= f.hidden_field :result, :value => "{}" %>
+            <%= f.submit "Submit", class: "btn btn-success" %>
+  <% end %>
+  </span>
+</div>
 
-<br/><br/>
-
-<%= form_for(:request, :url => submit_task_result_path(:uuid => @experiment_result.uuid, :position => @position)) do |f| %>
-    <div class="actions">
-        <%= f.hidden_field :result, :value => "{}" %>
-        <div id="json_submit">
-          <%= f.submit "Submit", class: "btn btn-success" %>
-        </div>
-    </div>
-<% end %>
+<div class="visualisation">
+  <%= @visualisation.html.html_safe %>
+</div>
 
 <div id="results"></div>
 
-<style>
-  .click-circle {
-      fill: white;
-      stroke: black;
-      stroke-width: 2px;
-  }
-</style>
-
 <script>
-  document.getElementById("json_submit").hidden = true;
+  document.getElementById("json_submit").style.display = "none";
+  document.getElementById("taskDescription").innerHTML = "<strong><%= @task.description %></strong>";
 
   var numberOfClicksAllowed = <%= @task.no_of_clicks %>;
   var numberOfClicks = 0;
   var taskActive = false;
+
+  var coverElement;
+  var selected_svg;
 
   // store results for the task
   var results = {};
@@ -40,6 +37,11 @@
     document.getElementById("taskButton").disabled = true;
     document.getElementById("taskButton").innerHTML = "Task active";
     document.getElementById("taskDescription").innerHTML = "<strong><%= @task.description %></strong> <i>Clicks remaining: <%= @task.no_of_clicks %></i>";
+    coverElement.select("rect")
+      .style("fill", "none");
+    coverElement.select("text")
+      .remove();
+    addClickLayer(selected_svg);
     s1.Start();
   }
 
@@ -67,7 +69,7 @@
     results = {};
     numberOfClicks = 0;
     document.getElementById("taskButton").innerHTML = "Task Complete";
-    document.getElementById("json_submit").hidden = false;
+    document.getElementById("json_submit").style.display = "inline-block";
   }
 
   function displayResults(display_bool, results) {
@@ -89,26 +91,41 @@
       document.getElementById("request_result").value = JSON.stringify(results);
   }
 
-  function init() {
-    var selected_svg = d3.select("svg");
-    var h = selected_svg.attr("height");
-    var w = selected_svg.attr("width");
-
-    selected_svg.append("rect")
-       			.attr("x", 0)
-       			.attr("y", 0)
-       			.attr("height", h)
-       			.attr("width", w)
-       			.style("stroke", "black")
-       			.style("fill", "none")
-       			.style("stroke-width", 1);
-
+  function addClickLayer(selected_svg) {
     selected_svg.on("click", function() {
         if (taskActive) {
           recordResult(d3.mouse(this));
           drawCircle(selected_svg, d3.mouse(this)[0], d3.mouse(this)[1], 5);
         }
     });
+  }
+
+  function init() {
+    selected_svg = d3.select("svg");
+
+    var h = selected_svg.attr("height");
+    var w = selected_svg.attr("width");
+
+    var cover = selected_svg.append("g");
+
+    cover.append("rect")
+       			.attr("x", 0)
+       			.attr("y", 0)
+       			.attr("height", h)
+       			.attr("width", w)
+       			.style("stroke", "black")
+       			.style("fill", "#5D32EA")
+       			.style("stroke-width", 1);
+
+    cover.append("text")
+            .attr("x", w/2)
+            .attr("y", h/2)
+            .attr("font-size", "1em")
+            .attr("text-anchor", "middle")
+            .style("fill", "white")
+            .text("Click Start Task to reveal the visualisation and start the timer");
+
+    coverElement = cover;
 
     document.getElementById("taskButton").disabled = false;
   }
