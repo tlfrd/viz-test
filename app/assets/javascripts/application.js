@@ -18,3 +18,4 @@
 
 //= require stopwatch
 //= require display_results
+//= require record_results
