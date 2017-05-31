@@ -14,13 +14,13 @@
   <div class="field">
     <%= f.label :experiment_id %>
     <br/>
-    <%= f.collection_select(:experiment_id, Experiment.all, :id, :name, :selected => @experiment_id) %>
+    <%= f.select :experiment_id, options_for_select(Experiment.all.map {|v| [v.name, v.id]}, :selected => @experiment_id), { :include_blank => "Please select experiment"}, {:class => "form-control"} %>
   </div>
 
   <div class="field">
     <%= f.label :task_id %>
     <br/>
-    <%= f.collection_select(:task_id, Task.all, :id, :name) %>
+    <%= f.select :task_id, options_for_select(Task.all.map {|v| [v.name, v.id]}), { :include_blank => "Please select task"}, {:class => "form-control"} %>
   </div>
 
   <div class="field">

@@ -19,13 +19,13 @@
   <div class="field">
     <%= f.label :visualisation_id %>
     <br/>
-    <%= f.collection_select(:visualisation_id, Visualisation.all, :id, :title) %>
+    <%= f.select :visualisation_id, options_for_select(Visualisation.all.map {|v| [v.title, v.id]}), { :include_blank => "Please select visualisation"}, {:class => "form-control"} %>
   </div>
 
   <div class="field">
     <%= f.label :task_type %>
     <br/>
-    <%= f.select :task_type, ['Click', 'Question'] %>
+    <%= f.select :task_type, ['Click', 'Question'], { :include_blank => "Please select task"}, {:class => "form-control"} %>
   </div>
 
   <div class="field">
