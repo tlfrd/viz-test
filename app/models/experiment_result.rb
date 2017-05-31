@@ -1,6 +1,8 @@
 require 'securerandom'
 
 class ExperimentResult < ApplicationRecord
+  validates :device_type, :input_type, :presence => true
+
   has_many :experiment_task_results, dependent: :destroy
   belongs_to :experiment
 

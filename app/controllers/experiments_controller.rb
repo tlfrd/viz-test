@@ -27,15 +27,28 @@ class ExperimentsController < ApplicationController
   # creates an instance of the experiment
   def create_instance
     @experiment = Experiment.find(params[:experiment_id])
-    @experiment_result = ExperimentResult.create(experiment_id: @experiment.id, uuid: ExperimentResult.generate_uuid, completed: false)
+    @experiment_result = ExperimentResult.create(experiment_id: @experiment.id,
+    uuid: ExperimentResult.generate_uuid, completed: false,
+    input_type: "None", device_type: "None")
+
     redirect_to @experiment
   end
 
   def create_and_start_instance
-    @experiment = Experiment.find(params[:experiment_id])
-    @experiment_result = ExperimentResult.create(experiment_id: @experiment.id, uuid: ExperimentResult.generate_uuid, completed: false)
+    input_type = params[:request][:input_type]
+    device_type = params[:request][:device_type]
 
-    redirect_to run_experiment_url(@experiment_result.uuid)
+    @experiment = Experiment.find(params[:experiment_id])
+    @experiment_result = ExperimentResult.create(experiment_id: @experiment.id,
+    uuid: ExperimentResult.generate_uuid, completed: false,
+    input_type: input_type, device_type: device_type)
+
+    if (@experiment_result.valid?)
+      redirect_to run_experiment_url(@experiment_result.uuid)
+    else
+      redirect_to public_show_path(@experiment.uuid), notice: 'Please select a device type and input type to proceed!'
+    end
+
   end
 
   # run an experiment

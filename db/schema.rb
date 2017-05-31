@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503225900) do
+ActiveRecord::Schema.define(version: 20170531160659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 20170503225900) do
     t.integer  "experiment_id"
     t.string   "uuid"
     t.boolean  "completed"
+    t.string   "input_type"
+    t.string   "device_type"
     t.index ["experiment_id"], name: "index_experiment_results_on_experiment_id", using: :btree
     t.index ["experiment_task_result_id"], name: "index_experiment_results_on_experiment_task_result_id", using: :btree
   end
