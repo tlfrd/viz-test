@@ -10,7 +10,9 @@ RSpec.describe "experiments/show", type: :view do
     @experiment_results = assign(:experiment_results, [
       ExperimentResult.create!(
       :experiment => @experiment,
-      :uuid => ExperimentResult.generate_uuid
+      :uuid => ExperimentResult.generate_uuid,
+      :device_type => "Other",
+      :input_type => "Other"
       )
     ])
     @visualisation = assign(:visualisation, Visualisation.create!(
