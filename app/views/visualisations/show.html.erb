@@ -18,6 +18,26 @@
       <td><strong>Thumbnail URL</strong></td>
       <td><%= @visualisation.img_src %></td>
     </tr>
+    <% if @visualisation.colour_list.length > 0 %>
+      <tr>
+        <td><strong>Colour Tags</strong></td>
+        <td>
+          <% @visualisation.colour_list.each do |colour| %>
+            <span class="label label-default"><%= colour %></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <% if @visualisation.type_list.length > 0 %>
+      <tr>
+          <td><strong>Type Tags</strong></td>
+          <td>
+            <% @visualisation.type_list.each do |type| %>
+              <span class="label label-default"><%= type %></span>
+            <% end %>
+          </td>
+      </tr>
+    <% end %>
   </table>
 </div>
 

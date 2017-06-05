@@ -5,6 +5,8 @@
     <thead>
       <tr>
         <th>Name</th>
+        <th>Colour Tags</th>
+        <th>Type Tags</th>
         <th>Actions</th>
         <th colspan="2"></th>
       </tr>
@@ -14,6 +16,24 @@
       <% @visualisations.order(:created_at).each do |visualisation| %>
         <tr>
           <td><%= visualisation.title %></td>
+          <td>
+            <% if visualisation.colour_list.length > 0 %>
+              <% visualisation.colour_list.each do |colour| %>
+                <span class="label label-default"><%= colour %></span>
+              <% end %>
+            <% else %>
+              -
+            <% end %>
+          </td>
+          <td>
+            <% if visualisation.type_list.length > 0 %>
+              <% visualisation.type_list.each do |type| %>
+                <span class="label label-default"><%= type %></span>
+              <% end %>
+            <% else %>
+              -
+            <% end %>
+          </td>
           <td>
             <%= link_to 'Show', visualisation_path(visualisation), method: :get, class: "btn btn-default btn-spacing" %>
             <%= link_to 'Edit', edit_visualisation_path(visualisation), class: "btn btn-warning btn-white-text btn-spacing" %>

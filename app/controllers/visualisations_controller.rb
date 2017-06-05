@@ -52,6 +52,6 @@ class VisualisationsController < ApplicationController
     end
 
     def visualisation_params
-      params.require(:visualisation).permit(:title, :html, :img_src)
+      params.require(:visualisation).permit(:title, :html, :img_src, :colour_list, :type_list)
     end
 end
