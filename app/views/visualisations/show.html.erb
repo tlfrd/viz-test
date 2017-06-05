@@ -5,7 +5,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="panel-title">
-      <%= @visualisation.title %>
+      <strong><%= @visualisation.title %></strong>
     </div>
   </div>
 
@@ -21,6 +21,30 @@
   </table>
 </div>
 
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">
+        Tasks Appears In
+      </div>
+    </div>
+
+    <table class="table">
+      <tbody>
+        <% if @visualisation.tasks.length > 0 %>
+          <% @visualisation.tasks.each do |task| %>
+            <tr>
+              <td><%= link_to task.name, task %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td>None</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
 <div>
   <%= @visualisation.html.html_safe %>
 </div>
@@ -30,5 +54,10 @@
     console.log("Visualisation successfully loaded!");
   });
 </script>
+
+<%= link_to 'Edit', edit_visualisation_path(@visualisation), class: "btn btn-warning" %>
+<%= link_to 'Destroy', @visualisation, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+
+<br/><br/>
 
 <%= link_to 'Back', visualisations_path, :class => "btn btn-default" %>
