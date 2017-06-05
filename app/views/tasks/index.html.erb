@@ -11,7 +11,7 @@
         <th>Name</th>
         <th>Visualisation</th>
         <th>Type</th>
-        <th>Description</th>
+        <th>Tags</th>
         <th>Actions</th>
         <th colspan="2"></th>
       </tr>
@@ -23,7 +23,14 @@
           <td><%= task.name %></td>
           <td><%= link_to Visualisation.find(task.visualisation_id).title, visualisation_path(task.visualisation_id), method: :get %></td>
           <td><%= task.task_type %></td>
-          <td><%= task.description %></td>
+          <td>
+              <% task.visualisation.colour_list.each do |colour| %>
+                <span class="label label-default"><%= colour %></span>
+              <% end %>
+              <% task.visualisation.type_list.each do |type| %>
+                <span class="label label-default"><%= type %></span>
+              <% end %>
+          </td>
           <td>
             <%= link_to 'Show', task, method: :get, class: "btn btn-default btn-spacing" %>
             <%= link_to 'Edit', edit_task_path(task), method: :get, class: "btn btn-warning btn-spacing" %>

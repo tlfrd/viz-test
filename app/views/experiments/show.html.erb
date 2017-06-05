@@ -20,6 +20,7 @@
       <tr>
         <th>Order</th>
         <th>Task</th>
+        <th>Visualisation Tags</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -28,6 +29,14 @@
         <tr>
           <td><strong><%= experiment_task.order %></strong></td>
           <td><%= link_to Task.find(experiment_task.task_id).name, task_path(experiment_task.task_id), method: :get %></td>
+          <td>
+            <% experiment_task.task.visualisation.colour_list.each do |colour| %>
+              <span class="label label-default"><%= colour %></span>
+            <% end %>
+            <% experiment_task.task.visualisation.type_list.each do |type| %>
+              <span class="label label-default"><%= type %></span>
+            <% end %>
+          </td>
           <td>
             <%= link_to 'Edit', edit_experiment_task_path(experiment_task), method: :get, class: "btn btn-warning btn-white-text btn-spacing" %>
             <%= link_to 'Remove', experiment_task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-white-text btn-spacing" %>
