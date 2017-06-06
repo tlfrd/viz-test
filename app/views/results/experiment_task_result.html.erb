@@ -34,14 +34,22 @@
     </div>
 
     <table class="table table-hover" id="averageHover">
-      <tr>
-        <td><strong>Average time</strong></td>
-        <td><%= @average_time %> ms</td>
-      </tr>
-      <tr>
-        <td><strong>Average coordinates</strong></td>
-        <td>(<%= @average_coordinates[0] %>, <%= @average_coordinates[1] %>)</td>
-      </tr>
+      <thead>
+        <tr>
+          <td><strong>Click No.</strong></td>
+          <td><strong>Average Time (ms)<strong></td>
+        </tr>
+      </thead>
+      <tbody>
+      <% for i in 0..@experiment_task.task.no_of_clicks - 1 %>
+        <tr>
+          <td><%= i %></td>
+          <td>
+            <%= ExperimentTaskResult.get_average_time(@experiment_task_results, i) %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
     </table>
   </div>
 <% end %>
@@ -80,7 +88,9 @@
         <% end %>
       <% end %>
 
-      drawCirclePro(selected_svg, <%= @average_coordinates[0] %>, <%= @average_coordinates[1] %>, 5, <%= @average_time %>, true, "average");
+      <% if false %>
+        drawCirclePro(selected_svg, <%= @average_coordinates[0] %>, <%= @average_coordinates[1] %>, 5, <%= @average_time %>, true, "average");
+      <% end %>
     <% end %>
   }
 
