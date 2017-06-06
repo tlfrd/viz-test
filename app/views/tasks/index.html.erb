@@ -8,6 +8,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th>ID</th>
         <th>Name</th>
         <th>Visualisation</th>
         <th>Type</th>
@@ -20,6 +21,7 @@
     <tbody>
       <% @tasks.order(created_at: :desc).each do |task| %>
         <tr>
+          <td><%= task.id %></td>
           <td><%= task.name %></td>
           <td><%= link_to Visualisation.find(task.visualisation_id).title, visualisation_path(task.visualisation_id), method: :get %></td>
           <td><%= task.task_type %></td>

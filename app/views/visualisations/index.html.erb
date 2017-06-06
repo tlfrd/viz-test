@@ -4,6 +4,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th>ID</th>
         <th>Name</th>
         <th>Colour Tags</th>
         <th>Type Tags</th>
@@ -15,6 +16,7 @@
     <tbody>
       <% @visualisations.order(created_at: :desc).each do |visualisation| %>
         <tr>
+          <td><%= visualisation.id %></td>
           <td><%= visualisation.title %></td>
           <td>
             <% if visualisation.colour_list.length > 0 %>
