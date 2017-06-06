@@ -78,7 +78,8 @@ class ExperimentsController < ApplicationController
         @position = 1
       end
 
-      @experiment_task = @experiment_tasks[@position - 1]
+      converted_position = @experiment_result.ordering[@position - 1].to_i
+      @experiment_task = @experiment_tasks[converted_position - 1]
       @task = @experiment_task.task
       @visualisation = @task.visualisation
       if (@visualisation.html.start_with?('http'))
@@ -99,7 +100,8 @@ class ExperimentsController < ApplicationController
     end
     @experiment_result = ExperimentResult.find_by_uuid(params[:uuid])
     @experiment = @experiment_result.experiment
-    @experiment_task = ExperimentTask.find_by(order: @position, experiment_id: @experiment.id)
+    converted_position = @experiment_result.ordering[@position.to_i - 1].to_i
+    @experiment_task = ExperimentTask.find_by(order: converted_position, experiment_id: @experiment.id)
 
     @experiment_task_result = ExperimentTaskResult.find_or_create_by(experiment_task_id: @experiment_task.id, experiment_result_id: @experiment_result.id)
     @experiment_task_result.update(result: @result)
