@@ -5,6 +5,8 @@ json.experiment_task_results experiment_result.experiment_task_results do |exper
   json.position experiment_task_result.experiment_task.order
   json.created_at experiment_task_result.created_at
   json.update_at experiment_task_result.updated_at
+  json.colour_tags experiment_task_result.experiment_task.task.visualisation.colour_list
+  json.type_tags experiment_task_result.experiment_task.task.visualisation.type_list
   json.results experiment_task_result.result do |result|
     if experiment_task_result.experiment_task.task.task_type == "Click"
       json.click_no result[0].to_i
