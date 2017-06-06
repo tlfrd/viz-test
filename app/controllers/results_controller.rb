@@ -6,7 +6,7 @@ class ResultsController < ApplicationController
   end
 
   def experiment_task_results
-    @experiment_tasks = ExperimentTask.all.order(id: :asc)
+    @experiment_tasks = ExperimentTask.paginate(:page => params[:page], :per_page => 10)
   end
 
   def experiment_task_result

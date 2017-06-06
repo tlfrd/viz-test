@@ -12,17 +12,25 @@
         </tr>
       </thead>
       <tbody>
-        <% @experiment_tasks.each do |experiment_task| %>
-          <tr>
-            <td><%= link_to experiment_task.task.name, experiment_task.task %></td>
-            <td><%= link_to experiment_task.experiment.name, experiment_task.experiment %></td>
-            <td><%= experiment_task.experiment_task_results.length %></td>
-            <td><%= link_to "Display Results", all_experiment_task_results_path(experiment_task.id), class: "btn btn-default" %></td>
-          </tr>
+        <% @experiment_tasks.order(created_at: :desc).each do |experiment_task| %>
+          <% if experiment_task.experiment_task_results.length > 0 %>
+            <tr>
+              <td><%= link_to experiment_task.task.name, experiment_task.task %></td>
+              <td><%= link_to experiment_task.experiment.name, experiment_task.experiment %></td>
+              <td><%= experiment_task.experiment_task_results.length %></td>
+              <td><%= link_to "Display Results", all_experiment_task_results_path(experiment_task.id), class: "btn btn-default" %></td>
+            </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>
   </div>
 </div>
+
+<div class="digg_pagination">
+  <%= will_paginate @experiment_tasks, :container => false %>
+</div>
+
+<br/><br/>
 
 <%= link_to 'Back', results_path, :class => 'btn btn-default' %>
