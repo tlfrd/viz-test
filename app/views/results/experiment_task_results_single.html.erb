@@ -1,0 +1,41 @@
+<h3>Experiment Task Results</h3>
+
+<div class="panel panel-default">
+  <table class="table">
+    <thead>
+      <tr>
+        <td><strong>Order</strong></td>
+        <td><strong>Task Name</strong></td>
+        <td><strong>No. of Results</strong></td>
+        <td><strong>Visualisation Tags</strong></td>
+        <td><strong>Actions</strong></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @experiment_tasks.order(order: :asc).each do |experiment_task| %>
+        <% if experiment_task.experiment_task_results.length > 0 %>
+          <tr>
+            <td><%= experiment_task.order %></td>
+            <td><%= link_to experiment_task.task.name, experiment_task.task %></td>
+            <td><%= experiment_task.experiment_task_results.length %></td>
+            <td>
+              <% experiment_task.task.visualisation.colour_list.each do |colour| %>
+                <span class="label label-default"><%= colour %></span>
+              <% end %>
+              <% experiment_task.task.visualisation.type_list.each do |type| %>
+                <span class="label label-default"><%= type %></span>
+              <% end %>
+            </td>
+            <td><%= link_to "Display Results", all_experiment_task_results_path(experiment_task.id), class: "btn btn-default" %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to 'Download All Results', experiment_all_results_path(@experiment), class: "btn btn-default" %>
+
+<br/><br/>
+
+<%= link_to 'Back', @experiment, :class => 'btn btn-default' %>

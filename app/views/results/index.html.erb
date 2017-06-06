@@ -53,25 +53,6 @@
     Experiment Task Results
   </div>
   <div class="panel-body">
-    <table class="table">
-      <thead>
-        <tr>
-          <td><strong>Task Name</strong></td>
-          <td><strong>Experiment Name</strong></td>
-          <td><strong>No. of Results</strong></td>
-        </tr>
-      </thead>
-      <tbody>
-        <% @experiment_tasks.limit(3).each do |experiment_task| %>
-          <tr>
-            <td><%= link_to experiment_task.task.name, experiment_task.task %></td>
-            <td><%= link_to experiment_task.experiment.name, experiment_task.experiment %></td>
-            <td><%= experiment_task.experiment_task_results.length %></td>
-            <td><%= link_to "Display Results", all_experiment_task_results_path(experiment_task.id), class: "btn btn-default" %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
     <%= link_to "View All Results", experiment_task_results_index_path, class: "btn btn-default" %>
   </div>
 </div>

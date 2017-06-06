@@ -9,6 +9,11 @@ class ResultsController < ApplicationController
     @experiment_tasks = ExperimentTask.paginate(:page => params[:page], :per_page => 10)
   end
 
+  def experiment_task_results_single
+    @experiment_tasks = ExperimentTask.where(experiment_id: params[:experiment_id])
+    @experiment = Experiment.find_by_id(params[:experiment_id])
+  end
+
   def experiment_task_result
     @experiment_task = ExperimentTask.find(params[:id])
     @visualisation = @experiment_task.task.visualisation
