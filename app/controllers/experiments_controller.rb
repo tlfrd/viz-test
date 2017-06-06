@@ -27,9 +27,14 @@ class ExperimentsController < ApplicationController
   # creates an instance of the experiment
   def create_instance
     @experiment = Experiment.find(params[:experiment_id])
+
+    experiment_length = @experiment.experiment_tasks.length
+    ordering = *(1..experiment_length)
+    ordering = ordering.shuffle
+
     @experiment_result = ExperimentResult.create(experiment_id: @experiment.id,
     uuid: ExperimentResult.generate_uuid, completed: false,
-    input_type: "None", device_type: "None")
+    input_type: "None", device_type: "None", ordering: ordering)
 
     redirect_to @experiment
   end
@@ -39,9 +44,14 @@ class ExperimentsController < ApplicationController
     device_type = params[:request][:device_type]
 
     @experiment = Experiment.find(params[:experiment_id])
+
+    experiment_length = @experiment.experiment_tasks.length
+    ordering = *(1..experiment_length)
+    ordering = ordering.shuffle
+
     @experiment_result = ExperimentResult.create(experiment_id: @experiment.id,
     uuid: ExperimentResult.generate_uuid, completed: false,
-    input_type: input_type, device_type: device_type)
+    input_type: input_type, device_type: device_type, ordering: ordering)
 
     if (@experiment_result.valid?)
       redirect_to run_experiment_url(@experiment_result.uuid)

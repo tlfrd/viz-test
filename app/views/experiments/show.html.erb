@@ -65,6 +65,7 @@
         <th>Time Completed</th>
         <th>Device Type</th>
         <th>Input Type</th>
+        <th>Ordering</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -92,6 +93,7 @@
           </td>
           <td><%= experiment_result.device_type %></td>
           <td><%= experiment_result.input_type %></td>
+          <td><%= experiment_result.ordering %></td>
           <td>
             <%= button_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-spacing" %>
             <%= button_to "Download", experiment_result, method: :get, class: "btn btn-default btn-spacing" %>
