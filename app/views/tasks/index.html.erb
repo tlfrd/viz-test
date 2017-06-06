@@ -42,6 +42,12 @@
   </table>
 </div>
 
+<div class="digg_pagination">
+  <%= will_paginate @visualisations, :container => false %>
+</div>
+
+<br/><br/>
+
 <%= button_to 'New Task', new_task_path, method: :get, class: "btn btn-primary" %>
 
 <br/><br/>

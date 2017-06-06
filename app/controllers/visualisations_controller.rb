@@ -3,7 +3,7 @@ class VisualisationsController < ApplicationController
   http_basic_authenticate_with name: ENV["APP_USER"], password: ENV["APP_SECRET"]
 
   def index
-    @visualisations = Visualisation.all
+    @visualisations = Visualisation.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show

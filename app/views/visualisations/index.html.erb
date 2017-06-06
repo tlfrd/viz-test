@@ -13,7 +13,7 @@
     </thead>
 
     <tbody>
-      <% @visualisations.order(:created_at).each do |visualisation| %>
+      <% @visualisations.order(created_at: :desc).each do |visualisation| %>
         <tr>
           <td><%= visualisation.title %></td>
           <td>
@@ -43,6 +43,12 @@
     </tbody>
   </table>
 </div>
+
+<div class="digg_pagination">
+  <%= will_paginate @visualisations, :container => false %>
+</div>
+
+<br/><br/>
 
 <%= button_to 'New Visualisation', new_visualisation_path, method: :get, class: "btn btn-primary" %>
 
