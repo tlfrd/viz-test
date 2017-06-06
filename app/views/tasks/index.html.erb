@@ -18,7 +18,7 @@
     </thead>
 
     <tbody>
-      <% @tasks.each do |task| %>
+      <% @tasks.order(created_at: :desc).each do |task| %>
         <tr>
           <td><%= task.name %></td>
           <td><%= link_to Visualisation.find(task.visualisation_id).title, visualisation_path(task.visualisation_id), method: :get %></td>
