@@ -29,8 +29,9 @@ class ExperimentsController < ApplicationController
     @experiment = Experiment.find(params[:experiment_id])
 
     experiment_length = @experiment.experiment_tasks.length
-    ordering = *(1..experiment_length)
+    ordering = *(2..experiment_length)
     ordering = ordering.shuffle
+    ordering.unshift(1)
 
     @experiment_result = ExperimentResult.create(experiment_id: @experiment.id,
     uuid: ExperimentResult.generate_uuid, completed: false,
@@ -46,8 +47,9 @@ class ExperimentsController < ApplicationController
     @experiment = Experiment.find(params[:experiment_id])
 
     experiment_length = @experiment.experiment_tasks.length
-    ordering = *(1..experiment_length)
+    ordering = *(2..experiment_length)
     ordering = ordering.shuffle
+    ordering.unshift(1)
 
     @experiment_result = ExperimentResult.create(experiment_id: @experiment.id,
     uuid: ExperimentResult.generate_uuid, completed: false,
