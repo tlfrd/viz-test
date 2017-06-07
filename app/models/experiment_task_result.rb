@@ -19,7 +19,7 @@ class ExperimentTaskResult < ApplicationRecord
     count = 0
     experiment_tasks_results.each do |experiment_task_result|
       experiment_task_result.result.each do |json_result|
-        if json_result[0].to_i == click_pos
+        if json_result[0].to_i == click_pos.to_i
           total += json_result[1]["time"]
           count += 1
         end
