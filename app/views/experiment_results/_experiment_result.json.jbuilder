@@ -1,4 +1,4 @@
-json.extract! experiment_result, :id, :uuid, :experiment_id, :created_at, :updated_at
+json.extract! experiment_result, :id, :uuid, :device_type, :input_type, :experiment_id, :created_at, :updated_at
 json.experiment_task_results experiment_result.experiment_task_results do |experiment_task_result|
   json.experiment_task_result_id experiment_task_result.id
   json.experiment_task_id experiment_task_result.experiment_task.id
