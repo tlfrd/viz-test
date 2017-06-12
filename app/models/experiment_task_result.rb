@@ -28,6 +28,22 @@ class ExperimentTaskResult < ApplicationRecord
     return total/count
   end
 
+  def self.get_median_time(experiment_tasks_results, click_pos)
+    array = []
+    count = 0
+    experiment_tasks_results.each do |experiment_task_result|
+      experiment_task_result.result.each do |json_result|
+        if json_result[0].to_i == click_pos.to_i
+          array[count] = json_result[1]["time"]
+          count += 1
+        end
+      end
+    end
+    sorted = array.sort
+    median = (sorted[(count - 1) / 2] + sorted[count / 2]) / 2
+    return median
+  end
+
   def self.get_average_coordinates(experiment_task_results)
     total_x = 0
     total_y = 0
