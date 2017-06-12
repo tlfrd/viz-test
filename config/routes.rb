@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :experiment_tasks
   resources :tasks do
       get :preview
+      post :add_coordinates
   end
   resources :experiments do
       get "preview/:position", :to => "experiments#preview", :as => "preview"

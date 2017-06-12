@@ -26,8 +26,65 @@
       <td><strong>Number of clicks<strong></td>
       <td><%= @task.no_of_clicks %></td>
     </tr>
+    <tr>
+      <td><strong>Answer Coordinates<strong></td>
+      <td>
+        <% @task.correct_coordinates.each do |coords| %>
+          [<%= coords[0].to_i %>, <%= coords[1].to_i %>]<br/>
+        <% end %>
+      </td>
+    </tr>
   </table>
 </div>
+
+<div class="visualisation">
+  <%= @visualisation.html.html_safe %>
+</div>
+
+<%= form_for(:request, :url => task_add_coordinates_path(@task)) do |f| %>
+  <%= f.hidden_field :result, :value => "{}" %>
+  <%= f.submit "Add Answer Coordinates", class: "btn btn-success" %>
+<% end %>
+<br/>
+
+<script>
+  var selected_svg;
+  var results = [];
+
+  function addClickLayer(selected_svg) {
+    selected_svg.on("click", function() {
+        recordResult(d3.mouse(this));
+        drawCircle(selected_svg, d3.mouse(this)[0], d3.mouse(this)[1], 5);
+    });
+  }
+
+  function recordResult(coordinates) {
+    results.push(coordinates);
+    document.getElementById("request_result").value = JSON.stringify(results);
+  }
+
+  function init() {
+    selected_svg = d3.select("svg");
+
+    var h = selected_svg.attr("height");
+    var w = selected_svg.attr("width");
+
+    var cover = selected_svg.append("g");
+
+    cover.append("rect")
+       			.attr("x", 0)
+       			.attr("y", 0)
+       			.attr("height", h)
+       			.attr("width", w)
+       			.style("stroke", "black")
+            .style("fill", "none")
+       			.style("stroke-width", 1);
+
+    addClickLayer(selected_svg);
+  }
+
+  loadVisualisation(init);
+</script>
 
 <%= link_to 'Preview Task', task_preview_path(@task), method: :get, :class => "btn btn-info btn-white-text" %>
 </br></br>

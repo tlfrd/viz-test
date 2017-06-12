@@ -12,6 +12,9 @@ class TasksController < ApplicationController
   # GET /tasks/1.json
   def show
     @visualisation = Visualisation.find(@task.visualisation_id)
+    if (@visualisation.html.start_with?('http'))
+      @visualisation.html = open(@visualisation.html).read
+    end
   end
 
   # GET /tasks/1/preview
@@ -30,6 +33,13 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+  end
+
+  def add_coordinates
+    @task = Task.find(params[:task_id])
+    @coordinates = JSON.parse(params[:request][:result])
+    @task.update(correct_coordinates: @coordinates)
+    redirect_to @task, notice: 'Answer coordinates successfully added.'
   end
 
   # POST /tasks
