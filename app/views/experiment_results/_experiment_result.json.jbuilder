@@ -12,6 +12,7 @@ json.experiment_task_results experiment_result.experiment_task_results do |exper
       json.click_no result[0].to_i
       json.time result[1]["time"]
       json.coordinates result[1]["coordinates"]
+      json.correct ExperimentTaskResult.is_correct?(experiment_task_result.experiment_task.task.correct_coordinates, result[1]["coordinates"])
     else
       json.answer result[0]["answer"]
     end
