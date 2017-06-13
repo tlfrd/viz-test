@@ -5,6 +5,7 @@
         <td><strong>Click</strong></td>
         <td><strong>Time (ms)</strong></td>
         <td><strong>Coordinates</strong></td>
+        <td><strong>Correct</strong></td>
       </tr>
     </thead>
 
@@ -14,6 +15,9 @@
           <td><%= click[0] %></td>
           <td><%= click[1]["time"] %></td>
           <td>(<%= click[1]["coordinates"][0].round %>, <%= click[1]["coordinates"][1].round %>)</td>
+          <td>
+            <%= ExperimentTaskResult.is_correct?(@task.correct_coordinates, click[1]["coordinates"]) %>
+          </td>
         </tr>
       <% end %>
     </tbody>

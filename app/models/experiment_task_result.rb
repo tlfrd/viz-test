@@ -57,4 +57,31 @@ class ExperimentTaskResult < ApplicationRecord
     end
     return [total_x / count, total_y / count]
   end
+
+  def self.is_correct?(rectangles, point)
+    rectangles.each do |rectangle|
+      if contains_point?(rectangle, point)
+        return true
+      end
+    end
+    return false
+  end
+
+  def self.contains_point?(rectangle, point)
+    new_rectangle = [[rectangle[0][0].to_f, rectangle[0][1].to_f], [rectangle[1][0].to_f, rectangle[0][1].to_f], [rectangle[1][0].to_f, rectangle[1][1].to_f], [rectangle[0][0].to_f, rectangle[1][1].to_f]]
+    c = false
+    i = -1
+    j = new_rectangle.size - 1
+    while (i += 1) < new_rectangle.size
+      if ((new_rectangle[i][1] <= point[1] && point[1] < new_rectangle[j][1]) ||
+         (new_rectangle[j][1] <= point[1] && point[1] < new_rectangle[i][1]))
+        if (point[0] < (new_rectangle[j][0] - new_rectangle[i][0]) * (point[1] - new_rectangle[i][1]) /
+                      (new_rectangle[j][1] - new_rectangle[i][1]) + new_rectangle[i][0])
+          c = !c
+        end
+      end
+      j = i
+    end
+    return c
+  end
 end
