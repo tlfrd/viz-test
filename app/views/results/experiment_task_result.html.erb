@@ -39,6 +39,7 @@
           <td><strong>Click No.</strong></td>
           <td><strong>Average Time (ms)<strong></td>
           <td><strong>Median Time (ms)<strong></td>
+          <td><strong>Percentage Correct<strong></td>
         </tr>
       </thead>
       <tbody>
@@ -50,6 +51,9 @@
           </td>
           <td>
             <%= ExperimentTaskResult.get_median_time(@experiment_task_results, i) %>
+          </td>
+          <td>
+            <%= ExperimentTaskResult.get_correct_rate(@experiment_task_results, i, @task.correct_coordinates).round %> %
           </td>
         </tr>
       <% end %>
@@ -237,7 +241,7 @@
 
   function init() {
     selected_svg = d3.select("svg");
-    
+
     var h = selected_svg.attr("height");
     var w = selected_svg.attr("width");
 

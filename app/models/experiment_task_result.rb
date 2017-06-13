@@ -58,6 +58,22 @@ class ExperimentTaskResult < ApplicationRecord
     return [total_x / count, total_y / count]
   end
 
+  def self.get_correct_rate(experiment_tasks_results, click_pos, rectangles)
+    total = 0
+    count = 0
+    experiment_tasks_results.each do |experiment_task_result|
+      experiment_task_result.result.each do |json_result|
+        if json_result[0].to_i == click_pos.to_i
+          count += 1
+          if is_correct?(rectangles, json_result[1]["coordinates"])
+            total += 1
+          end
+        end
+      end
+    end
+    return (total.to_f / count.to_f) * 100
+  end
+
   def self.is_correct?(rectangles, point)
     rectangles.each do |rectangle|
       if contains_point?(rectangle, point)
