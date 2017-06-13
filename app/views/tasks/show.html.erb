@@ -27,10 +27,13 @@
       <td><%= @task.no_of_clicks %></td>
     </tr>
     <tr>
-      <td><strong>Answer Coordinates<strong></td>
+      <td><strong>Answer Selection Coordinates<strong></td>
       <td>
-        <% @task.correct_coordinates.each do |coords| %>
-          [(<%= coords[0][0].to_i %>, <%= coords[0][1].to_i %>), (<%= coords[1][0].to_i %>, <%= coords[1][1].to_i %>)]
+        <% @task.correct_coordinates.each_with_index do |coords, index| %>
+          <% if coords %>
+            <strong><%= index %>:</strong> (<%= coords[0][0].to_i %>, <%= coords[0][1].to_i %>), (<%= coords[1][0].to_i %>, <%= coords[1][1].to_i %>)
+            <%= link_to "remove", task_remove_coordinates_path(task_id: @task.id, position: index), :method => :post %><br/>
+          <% end %>
         <% end %>
       </td>
     </tr>
@@ -43,11 +46,13 @@
 
 <%= form_for(:request, :url => task_add_coordinates_path(@task)) do |f| %>
   <%= f.hidden_field :result, :value => "{}" %>
-  <%= f.submit "Add Answer Coordinates", class: "btn btn-success" %>
+  <%= f.submit "Add Answer Coordinates", class: "btn btn-success", id: "add" %>
 <% end %>
 <br/>
 
 <script>
+  document.getElementById("add").disabled = true;
+
   var selected_svg;
   var results = [];
 
@@ -55,6 +60,18 @@
     console.log(coordinates);
     results.push([[coordinates.x1, coordinates.y1], [coordinates.x2, coordinates.y2]]);
     document.getElementById("request_result").value = JSON.stringify(results);
+  }
+
+  function drawRectangle(coordinates) {
+    selected_svg
+     .append("rect")
+       			.attr("x", coordinates[0][0])
+       			.attr("y", coordinates[0][1])
+       			.attr("height", coordinates[1][0] - coordinates[0][0])
+       			.attr("width", coordinates[1][1] - coordinates[0][1])
+       			.style("stroke", "black")
+            .style("fill", "none")
+       			.style("stroke-width", 1);
   }
 
   var selectionRect = {
@@ -157,6 +174,7 @@
   function dragEnd() {
   	var finalAttributes = selectionRect.getCurrentAttributes();
   	recordResult(finalAttributes);
+    document.getElementById("add").disabled = false;
   	if(finalAttributes.x2 - finalAttributes.x1 > 1 && finalAttributes.y2 - finalAttributes.y1 > 1){
   		// range selected
   		d3.event.sourceEvent.preventDefault();
@@ -191,6 +209,12 @@
        			.style("stroke-width", 1);
 
     selected_svg.call(dragBehavior);
+
+    <% @task.correct_coordinates.each_with_index do |coords, index| %>
+      <% if coords %>
+        drawRectangle([[<%= coords[0][0].to_i %>, <%= coords[0][1].to_i %>], [<%= coords[1][0].to_i %>, <%= coords[1][1].to_i %>]]);
+      <% end %>
+    <% end %>
   }
 
   loadVisualisation(init);

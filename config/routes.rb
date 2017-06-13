@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :tasks do
       get :preview
       post :add_coordinates
+      post "remove_coordinates/:position", :to => "tasks#remove_coordinates", :as => "remove_coordinates"
   end
   resources :experiments do
       get "preview/:position", :to => "experiments#preview", :as => "preview"

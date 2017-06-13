@@ -40,8 +40,17 @@ class TasksController < ApplicationController
   def add_coordinates
     @task = Task.find(params[:task_id])
     @coordinates = JSON.parse(params[:request][:result])
-    @task.update(correct_coordinates: @coordinates)
-    redirect_to @task, notice: 'Answer coordinates successfully added.'
+    updated_coordinates = @task.correct_coordinates.push(@coordinates[0])
+    @task.update(correct_coordinates: updated_coordinates)
+    redirect_to @task, notice: 'Coordinates successfully added.'
+  end
+
+  def remove_coordinates
+    @task = Task.find(params[:task_id])
+    new_coordinates = @task.correct_coordinates
+    new_coordinates.delete_at(params[:position].to_i)
+    @task.update(correct_coordinates: new_coordinates)
+    redirect_to @task, notice: 'Coordinates successfully removed.'
   end
 
   # POST /tasks
