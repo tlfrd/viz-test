@@ -50,12 +50,14 @@ function deHighlightCircle(id) {
 }
 
 function drawRectangle(selected_svg, coordinates) {
+  var width = coordinates[1][0] - coordinates[0][0];
+  var height = coordinates[1][1] - coordinates[0][1];
   selected_svg
    .append("rect")
           .attr("x", coordinates[0][0])
           .attr("y", coordinates[0][1])
-          .attr("height", coordinates[1][0] - coordinates[0][0])
-          .attr("width", coordinates[1][1] - coordinates[0][1])
+          .attr("height", height)
+          .attr("width", width)
           .style("stroke", "black")
           .style("fill", "none")
           .style("stroke-width", 1);
