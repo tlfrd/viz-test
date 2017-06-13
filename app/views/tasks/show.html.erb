@@ -27,7 +27,7 @@
       <td><%= @task.no_of_clicks %></td>
     </tr>
     <tr>
-      <td><strong>Answer Selection Coordinates<strong></td>
+      <td><strong>Correct Click Areas<strong></td>
       <td>
         <% @task.correct_coordinates.each_with_index do |coords, index| %>
           <% if coords %>
@@ -60,18 +60,6 @@
     console.log(coordinates);
     results.push([[coordinates.x1, coordinates.y1], [coordinates.x2, coordinates.y2]]);
     document.getElementById("request_result").value = JSON.stringify(results);
-  }
-
-  function drawRectangle(coordinates) {
-    selected_svg
-     .append("rect")
-       			.attr("x", coordinates[0][0])
-       			.attr("y", coordinates[0][1])
-       			.attr("height", coordinates[1][0] - coordinates[0][0])
-       			.attr("width", coordinates[1][1] - coordinates[0][1])
-       			.style("stroke", "black")
-            .style("fill", "none")
-       			.style("stroke-width", 1);
   }
 
   var selectionRect = {
@@ -212,7 +200,7 @@
 
     <% @task.correct_coordinates.each_with_index do |coords, index| %>
       <% if coords %>
-        drawRectangle([[<%= coords[0][0].to_i %>, <%= coords[0][1].to_i %>], [<%= coords[1][0].to_i %>, <%= coords[1][1].to_i %>]]);
+        drawRectangle(selected_svg, [[<%= coords[0][0].to_i %>, <%= coords[0][1].to_i %>], [<%= coords[1][0].to_i %>, <%= coords[1][1].to_i %>]]);
       <% end %>
     <% end %>
   }

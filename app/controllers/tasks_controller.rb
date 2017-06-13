@@ -42,7 +42,7 @@ class TasksController < ApplicationController
     @coordinates = JSON.parse(params[:request][:result])
     updated_coordinates = @task.correct_coordinates.push(@coordinates[0])
     @task.update(correct_coordinates: updated_coordinates)
-    redirect_to @task, notice: 'Coordinates successfully added.'
+    redirect_back(fallback_location: @task)
   end
 
   def remove_coordinates
@@ -50,7 +50,7 @@ class TasksController < ApplicationController
     new_coordinates = @task.correct_coordinates
     new_coordinates.delete_at(params[:position].to_i)
     @task.update(correct_coordinates: new_coordinates)
-    redirect_to @task, notice: 'Coordinates successfully removed.'
+    redirect_back(fallback_location: @task)
   end
 
   # POST /tasks

@@ -56,11 +56,47 @@
       </tbody>
     </table>
   </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">
+        Correct Click Areas
+      </div>
+    </div>
+
+    <table class="table table-hover" id="averageHover">
+      <thead>
+        <tr>
+          <td><strong>Click Area</strong></td>
+          <td><strong>Coordinates<strong></td>
+          <td><strong>Actions<strong></td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @task.correct_coordinates.each_with_index do |coords, index| %>
+          <tr>
+            <% if coords %>
+              <td><%= index %></td>
+              <td>(<%= coords[0][0].to_i %>, <%= coords[0][1].to_i %>), (<%= coords[1][0].to_i %>, <%= coords[1][1].to_i %>)</td>
+              <td><%= button_to "Remove", task_remove_coordinates_path(task_id: @task.id, position: index), :method => :post, class: "btn btn-danger" %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>
 
 <div class="visualisation">
   <%= @visualisation.html.html_safe %>
 </div>
+
+<%= form_for(:request, :url => task_add_coordinates_path(@task)) do |f| %>
+  <%= f.hidden_field :result, :value => "{}" %>
+  <%= f.submit "Add Answer Coordinates", class: "btn btn-success", id: "add" %>
+<% end %>
+
+<br/>
 
 <% ExperimentTaskResult.where(experiment_task_id: @experiment_task.id).each do |experiment_task_result| %>
   <% if experiment_task_result.experiment_task.task.task_type == "Click" %>
@@ -71,19 +107,150 @@
 <% end %>
 
 <script>
+  document.getElementById("add").disabled = true;
+
+  var selected_svg;
+  var results = [];
+
+  function recordResult(coordinates) {
+    console.log(coordinates);
+    results.push([[coordinates.x1, coordinates.y1], [coordinates.x2, coordinates.y2]]);
+    document.getElementById("request_result").value = JSON.stringify(results);
+  }
+
+  var selectionRect = {
+    element			: null,
+    previousElement : null,
+    currentY		: 0,
+    currentX		: 0,
+    originX			: 0,
+    originY			: 0,
+    setElement: function(ele) {
+      this.previousElement = this.element;
+      this.element = ele;
+    },
+
+    getNewAttributes: function() {
+      var x = this.currentX<this.originX?this.currentX:this.originX;
+      var y = this.currentY<this.originY?this.currentY:this.originY;
+      var width = Math.abs(this.currentX - this.originX);
+      var height = Math.abs(this.currentY - this.originY);
+      return {
+            x       : x,
+            y       : y,
+            width  	: width,
+            height  : height
+      };
+    },
+
+    getCurrentAttributes: function() {
+      // use plus sign to convert string into number
+      var x = +this.element.attr("x");
+      var y = +this.element.attr("y");
+      var width = +this.element.attr("width");
+      var height = +this.element.attr("height");
+      return {
+        x1  : x,
+            y1	: y,
+            x2  : x + width,
+            y2  : y + height
+      };
+    },
+
+    getCurrentAttributesAsText: function() {
+      var attrs = this.getCurrentAttributes();
+      return "x1: " + attrs.x1 + " x2: " + attrs.x2 + " y1: " + attrs.y1 + " y2: " + attrs.y2;
+    },
+
+    init: function(newX, newY) {
+      var rectElement = selected_svg.append("rect")
+          .attr("rx", 4)
+          .attr("ry", 4)
+          .attr("x", 0)
+          .attr("y", 0)
+          .attr("width", 0)
+          .attr("height", 0)
+          .classed("selection", true);
+        this.setElement(rectElement);
+      this.originX = newX;
+      this.originY = newY;
+      this.update(newX, newY);
+    },
+
+    update: function(newX, newY) {
+      this.currentX = newX;
+      this.currentY = newY;
+      var attributes = this.getNewAttributes();
+      this.element
+        .attr("x", attributes.x)
+        .attr("y", attributes.y)
+        .attr("width", attributes.width)
+        .attr("height", attributes.height);
+    },
+
+    focus: function() {
+          this.element
+              .style("stroke", "#DE695B")
+              .style("stroke-width", "2.5");
+      },
+      remove: function() {
+        this.element.remove();
+        this.element = null;
+      },
+      removePrevious: function() {
+        if(this.previousElement) {
+          this.previousElement.remove();
+        }
+      }
+  };
+
+  function dragStart() {
+      var p = d3.mouse(this);
+      selectionRect.init(p[0], p[1]);
+    selectionRect.removePrevious();
+  }
+
+  function dragMove() {
+    var p = d3.mouse(this);
+      selectionRect.update(p[0], p[1]);
+  }
+
+  function dragEnd() {
+    var finalAttributes = selectionRect.getCurrentAttributes();
+    recordResult(finalAttributes);
+    document.getElementById("add").disabled = false;
+    if(finalAttributes.x2 - finalAttributes.x1 > 1 && finalAttributes.y2 - finalAttributes.y1 > 1){
+      // range selected
+      d3.event.sourceEvent.preventDefault();
+      selectionRect.focus();
+    } else {
+          // single point selected
+          selectionRect.remove();
+          // trigger click event manually
+      }
+  }
+
+  var dragBehavior = d3.drag()
+      .on("drag", dragMove)
+      .on("start", dragStart)
+      .on("end", dragEnd);
+
   function init() {
-    var selected_svg = d3.select("svg");
+    selected_svg = d3.select("svg");
+    
     var h = selected_svg.attr("height");
     var w = selected_svg.attr("width");
 
-    selected_svg.append("rect")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("height", h)
-            .attr("width", w)
-            .style("stroke", "black")
+    var cover = selected_svg.append("g");
+
+    cover.append("rect")
+       			.attr("x", 0)
+       			.attr("y", 0)
+       			.attr("height", h)
+       			.attr("width", w)
+       			.style("stroke", "black")
             .style("fill", "none")
-            .style("stroke-width", 1);
+       			.style("stroke-width", 1);
 
     <% if @experiment_task.task.task_type == "Click" %>
       <% ExperimentTaskResult.where(experiment_task_id: @experiment_task.id).each do |experiment_task_result| %>
@@ -94,6 +261,14 @@
 
       <% if false %>
         drawCirclePro(selected_svg, <%= @average_coordinates[0] %>, <%= @average_coordinates[1] %>, 5, <%= @average_time %>, true, "average");
+      <% end %>
+    <% end %>
+
+    selected_svg.call(dragBehavior);
+
+    <% @task.correct_coordinates.each_with_index do |coords, index| %>
+      <% if coords %>
+        drawRectangle(selected_svg, [[<%= coords[0][0].to_i %>, <%= coords[0][1].to_i %>], [<%= coords[1][0].to_i %>, <%= coords[1][1].to_i %>]]);
       <% end %>
     <% end %>
   }

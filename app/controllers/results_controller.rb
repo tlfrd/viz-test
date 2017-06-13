@@ -16,6 +16,7 @@ class ResultsController < ApplicationController
 
   def experiment_task_result
     @experiment_task = ExperimentTask.find(params[:id])
+    @task = @experiment_task.task
     @visualisation = @experiment_task.task.visualisation
     if (@visualisation.html.start_with?('http'))
       @visualisation.html = open(@visualisation.html).read
