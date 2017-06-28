@@ -109,6 +109,6 @@
   <%= link_to "Preview", experiment_preview_path(:experiment_id => @experiment.id, :position => 1), class: "btn btn-info btn-white-text" %>
   <%= link_to 'Edit', edit_experiment_path(@experiment), class: "btn btn-warning btn-white-text" %> <br/><br/>
   <%= link_to 'Download All Results', experiment_all_results_path(@experiment), class: "btn btn-default" %>
-  <%= link_to 'Show All Results', experiment_single_all_results_path(@experiment), class: "btn btn-default" %> <br/><br/>
+  <%= link_to 'Show All Results', experiment_task_results_for_experiment_path(@experiment), class: "btn btn-default" %> <br/><br/>
   <%= link_to 'Back', experiments_path, class: "btn btn-default" %>
 </div>
