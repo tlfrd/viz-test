@@ -26,12 +26,10 @@ Rails.application.routes.draw do
 
   get "experiment_tasks/new/:experiment_id", :to => "experiment_tasks#new", :as => "with_experiment"
 
-  get "results", :to => "results#index"
-  get "experiment_task_results", :to => "results#experiment_task_results", :as => "experiment_task_results_index"
   get "results/experiment_task_result/:id", :to => "results#experiment_task_result", :as => "all_experiment_task_results"
 
   get "experiment_results/show_all/:id/", :to => "experiment_results#show_all", :as => "experiment_all_results", :defaults => { :format => :json }
-  get "experiment_task_results/experiment/:experiment_id/", :to => "results#experiment_task_results_single", :as => "experiment_single_all_results"
+  get "experiment_task_results/experiment/:experiment_id/", :to => "results#experiment_task_results_for_experiment", :as => "experiment_task_results_for_experiment"
 
   root 'visualisations#index'
 end
