@@ -31,6 +31,9 @@ class TasksController < ApplicationController
   # GET /tasks/new
   def new
     @task = Task.new
+    if params[:visualisation_id]
+      @visualisation_id = params[:visualisation_id]
+    end
   end
 
   # GET /tasks/1/edit

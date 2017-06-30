@@ -13,13 +13,13 @@
 
   <div class="field">
     <%= f.label :name %>
-    <%= f.text_field :name, :placeholder => "Give your visualisation a name", :class => "form-control" %>
+    <%= f.text_field :name, :placeholder => "Give your task a name", :class => "form-control" %>
   </div>
 
   <div class="field">
     <%= f.label :visualisation_id %>
     <br/>
-    <%= f.select :visualisation_id, options_for_select(Visualisation.all.map {|v| [v.title, v.id]}), { :include_blank => "Please select visualisation"}, {:class => "form-control"} %>
+    <%= f.select :visualisation_id, options_for_select(Visualisation.all.map {|v| [v.title, v.id]}, :selected => @visualisation_id), { :include_blank => "Please select visualisation"}, {:class => "form-control"} %>
   </div>
 
   <div class="field">

@@ -60,3 +60,7 @@ a {
 .btn-padding {
   padding: 17px;
 }
+
+.select2-container--bootstrap .select2-selection {
+  border-radius: 0px;
+}

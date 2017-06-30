@@ -2,53 +2,110 @@
   <div class="alert alert-info" role="alert"><%= notice %></div>
 <% end %>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <div class="panel-title">
-      <%= @task.name %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3><%= @task.name %></h3>
+    <div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            Attributes
+          </div>
+        </div>
+
+        <table class="table">
+          <tr>
+            <td><strong>Visualisation</strong></td>
+            <td><%= link_to @visualisation.title, @visualisation %></td>
+          </tr>
+          <tr>
+            <td><strong>Type<strong></td>
+            <td><%= @task.task_type %></td>
+          </tr>
+          <tr>
+            <td><strong>Description<strong></td>
+            <td><%= @task.description %></td>
+          </tr>
+          <tr>
+            <td><strong>Number of clicks<strong></td>
+            <td><%= @task.no_of_clicks %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <%= link_to 'Preview Task', task_preview_path(@task), method: :get, :class => "btn btn-info btn-white-text btn-spacing" %><br/>
+      <%= link_to 'Edit', edit_task_path(@task), :class => "btn btn-warning btn-spacing"  %></br>
+      <%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-spacing" %><br/>
     </div>
   </div>
+</div>
 
-  <table class="table">
-    <tr>
-      <td><strong>HTML</strong></td>
-      <td><%= link_to "Link", @visualisation.html.html_safe %></td>
-    </tr>
-    <tr>
-      <td><strong>Type<strong></td>
-      <td><%= @task.task_type %></td>
-    </tr>
-    <tr>
-      <td><strong>Description<strong></td>
-      <td><%= @task.description %></td>
-    </tr>
-    <tr>
-      <td><strong>Number of clicks<strong></td>
-      <td><%= @task.no_of_clicks %></td>
-    </tr>
-    <tr>
-      <td><strong>Correct Click Areas<strong></td>
-      <td>
-        <% @task.correct_coordinates.each_with_index do |coords, index| %>
-          <% if coords %>
-            <strong><%= index %>:</strong> (<%= coords[0][0].to_i %>, <%= coords[0][1].to_i %>), (<%= coords[1][0].to_i %>, <%= coords[1][1].to_i %>)
-            <%= link_to "remove", task_remove_coordinates_path(task_id: @task.id, position: index), :method => :post %><br/>
-          <% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            Correct Click Areas
+          </div>
+        </div>
+
+        <% if @task.correct_coordinates.length > 0 %>
+          <table class="table">
+            <thead>
+              <tr>
+                <td><strong>Index</strong></td>
+                <td><strong>Coordinates</strong></td>
+                <td><strong>Actions</strong></td>
+              </tr>
+            </thead>
+            <tbody>
+              <% @task.correct_coordinates.each_with_index do |coords, index| %>
+                <% if coords %>
+                  <tr>
+                    <td><strong><%= index %></strong></td>
+                    <td>(<%= coords[0][0].to_i %>, <%= coords[0][1].to_i %>), (<%= coords[1][0].to_i %>, <%= coords[1][1].to_i %>)</td>
+                    <td><%= button_to "Remove", task_remove_coordinates_path(task_id: @task.id, position: index), :method => :post, :class => "btn btn-danger btn-spacing" %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="panel-body">
+            None defined
+          </div>
         <% end %>
-      </td>
-    </tr>
-  </table>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <%= form_for(:request, :url => task_add_coordinates_path(@task)) do |f| %>
+        <%= f.hidden_field :result, :value => "{}" %>
+        <%= f.submit "Add Answer Coordinates", class: "btn btn-success", id: "add" %>
+      <% end %>
+    </div>
+  </div>
 </div>
 
-<div class="visualisation">
-  <%= @visualisation.html.html_safe %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="visualisation">
+        <%= @visualisation.html.html_safe %>
+      </div>
+    </div>
+  </div>
 </div>
-
-<%= form_for(:request, :url => task_add_coordinates_path(@task)) do |f| %>
-  <%= f.hidden_field :result, :value => "{}" %>
-  <%= f.submit "Add Answer Coordinates", class: "btn btn-success", id: "add" %>
-<% end %>
-<br/>
 
 <script>
   document.getElementById("add").disabled = true;
@@ -207,9 +264,3 @@
 
   loadVisualisation(init);
 </script>
-
-<%= link_to 'Preview Task', task_preview_path(@task), method: :get, :class => "btn btn-info btn-white-text" %>
-</br></br>
-
-<%= link_to 'Edit', edit_task_path(@task), :class => "btn btn-warning btn-white-text"  %>
-<%= link_to 'Back', tasks_path, :class => "btn btn-default" %>
