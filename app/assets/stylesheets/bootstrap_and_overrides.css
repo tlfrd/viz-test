@@ -38,3 +38,25 @@ body {
 a {
   color: #5D32EA;
 }
+
+.label.label-default a {
+  color: white;
+  text-decoration: none;
+}
+
+.label.label-default:hover {
+  background-color: black;
+}
+
+.btn-white-text,
+.btn-white-text:visited {
+  color: white;
+}
+
+.btn-none {
+  background: none;
+}
+
+.btn-padding {
+  padding: 17px;
+}

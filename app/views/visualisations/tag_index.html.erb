@@ -1,5 +1,9 @@
 <h3>Visualisations</h3>
 
+<div class="currently-displaying">
+  Currently displaying visualisations with the <strong><%= params[:tag] %></strong> tag (<%= link_to 'View all', visualisations_path %>)
+</div>
+
 <div class="panel panel-default">
   <table class="table">
     <thead>
@@ -22,6 +26,7 @@
             <% if visualisation.colour_list.length > 0 %>
               <% visualisation.colour_list.each do |colour| %>
                 <span class="label label-default"><%= link_to colour, group_by_tags_path(colour) %></span>
+
               <% end %>
             <% else %>
               -
@@ -30,7 +35,7 @@
           <td>
             <% if visualisation.type_list.length > 0 %>
               <% visualisation.type_list.each do |type| %>
-                <span class="label label-default"><%= link_to type, group_by_tags_path(type) %></span>              
+                <span class="label label-default"><%= link_to type, group_by_tags_path(type) %></span>
               <% end %>
             <% else %>
               -

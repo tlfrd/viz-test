@@ -3,17 +3,19 @@ Rails.application.routes.draw do
   resources :experiment_results, :defaults => { :format => :json }
   resources :experiment_tasks
   resources :tasks do
-      get :preview
-      post :add_coordinates
-      post "remove_coordinates/:position", :to => "tasks#remove_coordinates", :as => "remove_coordinates"
+    get :preview
+    post :add_coordinates
+    post "remove_coordinates/:position", :to => "tasks#remove_coordinates", :as => "remove_coordinates"
   end
   resources :experiments do
-      get "preview/:position", :to => "experiments#preview", :as => "preview"
-      get "create_instance"
-      post "create_and_start_instance", :to => "experiments#create_and_start_instance", :as => "create_and_start_instance"
-      get "task_result/:experiment_task_result_id", :to => "experiments#experiment_task_result", :as => "view_experiment_task_result"
+    get "preview/:position", :to => "experiments#preview", :as => "preview"
+    get "create_instance"
+    post "create_and_start_instance", :to => "experiments#create_and_start_instance", :as => "create_and_start_instance"
+    get "task_result/:experiment_task_result_id", :to => "experiments#experiment_task_result", :as => "view_experiment_task_result"
   end
   resources :visualisations
+
+  get "visualisations/tag/:tag", :to => "visualisations#tag_index", :as => "group_by_tags"
 
   get "start/:experiment_uuid", :to => "experiments#public_show", :as => "public_show"
 
