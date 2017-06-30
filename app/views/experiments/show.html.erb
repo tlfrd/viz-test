@@ -26,10 +26,8 @@
       </div>
     </div>
 
-      <div class="col-md-2">
-      <div class="buttons-container">
-        <%= link_to 'Edit', edit_experiment_path(@experiment), class: "btn btn-warning btn-white-text btn-padding" %>
-      </div>
+    <div class="col-md-2">
+      <%= link_to 'Edit', edit_experiment_path(@experiment), class: "btn btn-warning btn-white-text" %>
     </div>
   </div>
 </div>
@@ -80,9 +78,7 @@
     </div>
 
     <div class="col-md-2">
-      <div class="buttons-container">
-        <%= link_to "Add Task", new_experiment_task_path(:experiment_id => @experiment.id), class: "btn btn-success btn-white-text btn-padding" %>
-      </div>
+      <%= link_to "Add Task", new_experiment_task_path(:experiment_id => @experiment.id), class: "btn btn-success btn-white-text" %>
     </div>
   </div>
 </div>
@@ -152,9 +148,7 @@
     </div>
 
     <div class="col-md-2">
-      <div class="buttons-container">
-        <%= link_to "Create Instance", experiment_create_instance_path(@experiment.id), class: "btn btn-primary btn-white-text btn-padding" %>
-      </div>
+      <%= link_to "Create Instance", experiment_create_instance_path(@experiment.id), class: "btn btn-primary btn-white-text" %>
     </div>
   </div>
 </div>
@@ -162,9 +156,9 @@
 <div class="controls-container container">
   <div class="row">
     <div class="col-md-12">
-      <%= link_to "Preview", experiment_preview_path(:experiment_id => @experiment.id, :position => 1), class: "btn btn-info btn-white-text btn-padding" %>
-      <%= link_to 'Download Results', experiment_all_results_path(@experiment), class: "btn btn-default btn-padding" %>
-      <%= link_to 'Show Results', experiment_task_results_for_experiment_path(@experiment), class: "btn btn-default btn-padding" %>
+      <%= link_to "Preview", experiment_preview_path(:experiment_id => @experiment.id, :position => 1), class: "btn btn-info btn-white-text" %>
+      <%= link_to 'Download Results', experiment_all_results_path(@experiment), class: "btn btn-default" %>
+      <%= link_to 'Show Results', experiment_task_results_for_experiment_path(@experiment), class: "btn btn-default" %>
     <div>
   </div>
 </div>
