@@ -1,24 +1,15 @@
-# README
+# VizTest
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A tool to crowdsource graphical perception experiments built using Ruby on Rails and D3.js
 
-Things you may want to cover:
+Coming soon:
 
-* Ruby version
+* How to install/deploy
 
-* System dependencies
+* Related work
 
-* Configuration
+* Experiments so far
 
-* Database creation
+* Masters report
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* The paper
