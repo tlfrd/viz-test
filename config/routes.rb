@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   # experiments
   resources :experiments do
+    post "open", :to => "experiments#open", :as => "open"
+    post "close", :to => "experiments#close", :as => "close"    
     get "preview/:position", :to => "experiments#preview", :as => "preview"
     get "create_instance"
     post "create_and_start_instance", :to => "experiments#create_and_start_instance", :as => "create_and_start_instance"

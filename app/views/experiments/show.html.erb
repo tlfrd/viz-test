@@ -5,7 +5,16 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h3><%= @experiment.name %></h3>
+      <h3>
+        <% if @experiment.active %>
+          <span class="label label-success">Open</span>
+        <% else %>
+          <span class="label label-danger">Closed</span>          
+        <% end %>
+        <span class="experiment-title">
+          <%= @experiment.name %>
+        </span>
+      </h3> 
     <div>
   </div>
 </div>
@@ -152,6 +161,20 @@
     </div>
   </div>
 </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <% if !@experiment.active %>
+         <%= button_to "Open experiment", experiment_open_path(:experiment_id => @experiment.id), method: :post, class: "btn btn-success btn-white-text" %>
+      <% else %>
+         <%= button_to "Close experiment", experiment_close_path(:experiment_id => @experiment.id), method: :post, class: "btn btn-danger btn-white-text" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<br/>
 
 <div class="controls-container container">
   <div class="row">
