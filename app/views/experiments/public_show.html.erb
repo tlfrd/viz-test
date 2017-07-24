@@ -2,28 +2,39 @@
   <div class="alert alert-info" role="alert"><%= notice %></div>
 <% end %>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-    <%= raw @experiment.intro_html %>
+<% if @experiment.active %>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <%= raw @experiment.intro_html %>
+    </div>
   </div>
-</div>
 
-<%= form_for(:request, :url => experiment_create_and_start_instance_path(:experiment_id => @experiment.id)) do |f| %>
-    <h4><strong>Please fill out the information below to proceed</strong></h4>
-    <br/>
-
-    <div class="field">
-      <%= f.label :input_type %>
+  <%= form_for(:request, :url => experiment_create_and_start_instance_path(:experiment_id => @experiment.id)) do |f| %>
+      <h4><strong>Please fill out the information below to proceed</strong></h4>
       <br/>
-      <%= f.select :input_type, ['Trackpad', 'Mouse', 'Touchscreen'], { :include_blank => "Please select input type"}, {:class => "form-control"} %>
-    </div>
 
-    <div class="field">
-      <%= f.label :device_type %>
+      <div class="field">
+        <%= f.label :input_type %>
+        <br/>
+        <%= f.select :input_type, ['Trackpad', 'Mouse', 'Touchscreen'], { :include_blank => "Please select input type"}, {:class => "form-control"} %>
+      </div>
+
+      <div class="field">
+        <%= f.label :device_type %>
+        <br/>
+        <%= f.select :device_type, ['Laptop', 'Desktop', 'Tablet', 'Phone'], { :include_blank => "Please select device type"}, {:class => "form-control"} %>
+      </div>
+
       <br/>
-      <%= f.select :device_type, ['Laptop', 'Desktop', 'Tablet', 'Phone'], { :include_blank => "Please select device type"}, {:class => "form-control"} %>
-    </div>
+      <%= f.submit "Start Experiment", class: "btn btn-success" %>
+  <% end %>
 
-    <br/>
-    <%= f.submit "Start Experiment", class: "btn btn-success" %>
+<% else %>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      This experiment is currently closed.
+    </div>
+  </div>
 <% end %>
