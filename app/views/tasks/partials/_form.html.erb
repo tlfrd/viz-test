@@ -19,7 +19,11 @@
   <div class="field">
     <%= f.label :visualisation_id %>
     <br/>
-    <%= f.select :visualisation_id, options_for_select(Visualisation.all.map {|v| [v.title, v.id]}, :selected => @visualisation_id), { :include_blank => "Please select visualisation"}, {:class => "form-control"} %>
+    <% if @task.visualisation %>
+      <%= f.select :visualisation_id, options_for_select(Visualisation.all.map {|v| [v.title, v.id]}, :selected => @task.visualisation.id ), { :include_blank => "Please select visualisation"}, {:class => "form-control"} %>
+    <% else %>
+      <%= f.select :visualisation_id, options_for_select(Visualisation.all.map {|v| [v.title, v.id]}, :selected => @visualisation_id ), { :include_blank => "Please select visualisation"}, {:class => "form-control"} %>
+    <% end %>    
   </div>
 
   <div class="field">
