@@ -105,6 +105,7 @@
     <div class="col-md-12">
       <button type="button" class="btn btn-warning" id="move">Edit annotations</button>
       <button type="button" class="btn btn-success" id="add">Add annotation</button>
+      <button type="button" class="btn btn-danger" id="remove">Remove last annotation</button>      
       <br/><br/>
       <%= form_for(:request, :url => task_add_annotations_path(@task)) do |f| %>
         <%= f.hidden_field :annotations, :value => "{}" %>
@@ -339,6 +340,27 @@
         d3.select(this).html("Save annotations");
       }
     });
+
+  d3.select("#remove")
+    .on("click", function() {
+      removeLastAnnotation();
+    });
+
+  function removeLastAnnotation() {
+    if (annotations.length > 1) {
+      annotations.pop();
+
+      makeAnnotations.annotations(annotations).update();
+
+      makeAnnotations.editMode(true).update();
+      inEditMode = true;        
+      d3.select("#move").html("Save annotations");
+    } else {
+      annotations.pop();
+      d3.select("g.annotations").remove()
+      makeAnnotations.annotations(annotations).update();      
+    }
+  }
 
   function saveAnnotations() {
     makeAnnotations.collection().annotations.forEach(function(d, i) {
