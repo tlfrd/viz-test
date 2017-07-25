@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :tasks do
     get :preview
     post :add_coordinates
+    post :add_annotations
     post "remove_coordinates/:position", :to => "tasks#remove_coordinates", :as => "remove_coordinates"
   end
 

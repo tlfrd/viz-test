@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724141646) do
+ActiveRecord::Schema.define(version: 20170725144045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,10 +88,11 @@ ActiveRecord::Schema.define(version: 20170724141646) do
     t.integer  "visualisation_id"
     t.string   "task_type"
     t.string   "description"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.integer  "no_of_clicks"
-    t.string   "correct_coordinates", default: [],              array: true
+    t.string   "correct_coordinates", default: [],                array: true
+    t.string   "annotations",         default: "{}"
     t.index ["visualisation_id"], name: "index_tasks_on_visualisation_id", using: :btree
   end
 

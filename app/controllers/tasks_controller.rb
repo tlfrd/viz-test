@@ -40,6 +40,13 @@ class TasksController < ApplicationController
   def edit
   end
 
+  def add_annotations
+    @task = Task.find(params[:task_id])
+    @annotations = params[:request][:annotations]
+    @task.update(annotations: @annotations)
+    redirect_back(fallback_location: @task)
+  end
+
   def add_coordinates
     @task = Task.find(params[:task_id])
     @coordinates = JSON.parse(params[:request][:result])
