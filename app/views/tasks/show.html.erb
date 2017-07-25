@@ -298,16 +298,18 @@
   var json = "<%= @task.annotations %>".replace(/&quot;/gi, '"');
   var objs = JSON.parse(json);
 
-  objs.forEach(function(d, i) {
-    var obj = {
-        type: d3.annotationCalloutCircle,
-        note: { label: "Point " + (i + 1) },
-        x: d.x, y: d.y,
-        dx: d.dx, dy: d.dy,
-        subject: d.subject
-      };
-    annotations.push(obj);
-  });
+  if (objs.length > 0) {
+    objs.forEach(function(d, i) {
+      var obj = {
+          type: d3.annotationCalloutCircle,
+          note: { label: "Point " + (i + 1) },
+          x: d.x, y: d.y,
+          dx: d.dx, dy: d.dy,
+          subject: d.subject
+        };
+      annotations.push(obj);
+    });
+  }
 
   d3.select("#add")
     .on("click", function() {
