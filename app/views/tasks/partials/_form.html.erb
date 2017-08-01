@@ -13,24 +13,28 @@
 
   <div class="field">
     <%= f.label :name %>
-    <%= f.text_field :name, :class => "form-control" %>
+    <%= f.text_field :name, :placeholder => "Give your task a name", :class => "form-control" %>
   </div>
 
   <div class="field">
     <%= f.label :visualisation_id %>
     <br/>
-    <%= f.select :visualisation_id, options_for_select(Visualisation.all.map {|v| [v.title, v.id]}), { :include_blank => "Please select visualisation"}, {:class => "form-control"} %>
+    <% if @task.visualisation %>
+      <%= f.select :visualisation_id, options_for_select(Visualisation.all.map {|v| [v.title, v.id]}, :selected => @task.visualisation.id ), { :include_blank => "Please select visualisation"}, {:class => "form-control"} %>
+    <% else %>
+      <%= f.select :visualisation_id, options_for_select(Visualisation.all.map {|v| [v.title, v.id]}, :selected => @visualisation_id ), { :include_blank => "Please select visualisation"}, {:class => "form-control"} %>
+    <% end %>    
   </div>
 
   <div class="field">
     <%= f.label :task_type %>
     <br/>
-    <%= f.select :task_type, ['Click', 'Question'], { :include_blank => "Please select task"}, {:class => "form-control"} %>
+    <%= f.select :task_type, ['Click', 'Question', 'Compare'], { :include_blank => "Please select task"}, {:class => "form-control"} %>
   </div>
 
   <div class="field">
-    <%= f.label :description, "Description/Question" %>
-    <%= f.text_field :description, :class => "form-control" %>
+    <%= f.label :description, "Task Description" %>
+    <%= f.text_field :description, :placeholder => "...", :class => "form-control" %>
   </div>
 
   <div class="field">
@@ -43,18 +47,22 @@
   </div>
 
   <script>
-  var task_type = $("#task_task_type option:selected").text();
-  if (task_type !== "Click") {
-    $("#task_no_of_clicks").attr("disabled", true);
-  }
+    $( "#task_visualisation_id" ).select2({
+      theme: "bootstrap"
+    });
 
-  $("#task_task_type").change(function() {
-    task_type = this.options[this.selectedIndex].value;
-    if (task_type === "Click") {
-      $("#task_no_of_clicks").attr("disabled", false);
-    } else {
+    var task_type = $("#task_task_type option:selected").text();
+    if (task_type !== "Click") {
       $("#task_no_of_clicks").attr("disabled", true);
     }
-  });
+
+    $("#task_task_type").change(function() {
+      task_type = this.options[this.selectedIndex].value;
+      if (task_type === "Click") {
+        $("#task_no_of_clicks").attr("disabled", false);
+      } else {
+        $("#task_no_of_clicks").attr("disabled", true);
+      }
+    });
   </script>
 <% end %>

@@ -1,0 +1,18 @@
+.annotation path {
+    stroke: black;
+    fill: none;
+}
+
+.annotation-note-bg {
+    fill: none;
+}
+
+.annotation-note text {
+    font-weight: bold;
+}
+
+.annotations circle {
+    fill: rgba(0, 0, 0, 0);
+    stroke: black;
+    stroke-dasharray: 3,3;
+}

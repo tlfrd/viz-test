@@ -6,6 +6,10 @@ class VisualisationsController < ApplicationController
     @visualisations = Visualisation.paginate(:page => params[:page], :per_page => 10)
   end
 
+  def tag_index
+    @visualisations = Visualisation.tagged_with(params[:tag]).paginate(:page => params[:page], :per_page => 10)
+  end
+
   def show
     @html_link = @visualisation.html
     if (@visualisation.html.start_with?('http'))

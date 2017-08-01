@@ -2,54 +2,132 @@
   <div class="alert alert-info" role="alert"><%= notice %></div>
 <% end %>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <div class="panel-title">
-      <%= @task.name %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3><%= @task.name %></h3>
+    <div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            Attributes
+          </div>
+        </div>
+
+        <table class="table">
+          <tr>
+            <td><strong>Visualisation</strong></td>
+            <td><%= link_to @visualisation.title, @visualisation %></td>
+          </tr>
+          <tr>
+            <td><strong>Type<strong></td>
+            <td><%= @task.task_type %></td>
+          </tr>
+          <tr>
+            <td><strong>Description<strong></td>
+            <td><%= @task.description %></td>
+          </tr>
+          <tr>
+            <td><strong>Number of clicks<strong></td>
+            <td><%= @task.no_of_clicks %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <%= link_to 'Preview Task', task_preview_path(@task), method: :get, :class => "btn btn-info btn-white-text btn-spacing" %><br/>
+      <%= link_to 'Edit', edit_task_path(@task), :class => "btn btn-warning btn-spacing"  %></br>
+      <%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-spacing" %><br/>
     </div>
   </div>
+</div>
 
-  <table class="table">
-    <tr>
-      <td><strong>HTML</strong></td>
-      <td><%= link_to "Link", @visualisation.html.html_safe %></td>
-    </tr>
-    <tr>
-      <td><strong>Type<strong></td>
-      <td><%= @task.task_type %></td>
-    </tr>
-    <tr>
-      <td><strong>Description<strong></td>
-      <td><%= @task.description %></td>
-    </tr>
-    <tr>
-      <td><strong>Number of clicks<strong></td>
-      <td><%= @task.no_of_clicks %></td>
-    </tr>
-    <tr>
-      <td><strong>Correct Click Areas<strong></td>
-      <td>
-        <% @task.correct_coordinates.each_with_index do |coords, index| %>
-          <% if coords %>
-            <strong><%= index %>:</strong> (<%= coords[0][0].to_i %>, <%= coords[0][1].to_i %>), (<%= coords[1][0].to_i %>, <%= coords[1][1].to_i %>)
-            <%= link_to "remove", task_remove_coordinates_path(task_id: @task.id, position: index), :method => :post %><br/>
-          <% end %>
+<% if @task.task_type == "Click" %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            Correct Click Areas
+          </div>
+        </div>
+
+        <% if @task.correct_coordinates.length > 0 %>
+          <table class="table">
+            <thead>
+              <tr>
+                <td><strong>Index</strong></td>
+                <td><strong>Coordinates</strong></td>
+                <td><strong>Actions</strong></td>
+              </tr>
+            </thead>
+            <tbody>
+              <% @task.correct_coordinates.each_with_index do |coords, index| %>
+                <% if coords %>
+                  <tr>
+                    <td><strong><%= index %></strong></td>
+                    <td>(<%= coords[0][0].to_i %>, <%= coords[0][1].to_i %>), (<%= coords[1][0].to_i %>, <%= coords[1][1].to_i %>)</td>
+                    <td><%= button_to "Remove", task_remove_coordinates_path(task_id: @task.id, position: index), :method => :post, :class => "btn btn-danger btn-spacing" %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="panel-body">
+            None defined
+          </div>
         <% end %>
-      </td>
-    </tr>
-  </table>
-</div>
+      </div>
+    </div>
 
-<div class="visualisation">
-  <%= @visualisation.html.html_safe %>
+    <div class="col-md-2">
+      <%= form_for(:request, :url => task_add_coordinates_path(@task)) do |f| %>
+        <%= f.hidden_field :result, :value => "{}" %>
+        <%= f.submit "Add Answer Coordinates", class: "btn btn-success", id: "add" %>
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<%= form_for(:request, :url => task_add_coordinates_path(@task)) do |f| %>
-  <%= f.hidden_field :result, :value => "{}" %>
-  <%= f.submit "Add Answer Coordinates", class: "btn btn-success", id: "add" %>
 <% end %>
-<br/>
 
+<% if @task.task_type == "Compare" %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <button type="button" class="btn btn-warning" id="move">Edit annotations</button>
+      <button type="button" class="btn btn-success" id="add">Add annotation</button>
+      <button type="button" class="btn btn-danger" id="remove">Remove last annotation</button>      
+      <br/><br/>
+      <%= form_for(:request, :url => task_add_annotations_path(@task)) do |f| %>
+        <%= f.hidden_field :annotations, :value => "{}" %>
+        <%= f.submit "Submit annotations", class: "btn btn-success", id: "submit" %>
+      <% end %>
+      <br/><br/>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="visualisation">
+        <%= @visualisation.html.html_safe %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @task.task_type == "Click" %>
 <script>
   document.getElementById("add").disabled = true;
 
@@ -207,9 +285,154 @@
 
   loadVisualisation(init);
 </script>
+<% end %>
 
-<%= link_to 'Preview Task', task_preview_path(@task), method: :get, :class => "btn btn-info btn-white-text" %>
-</br></br>
+<% if @task.task_type == "Compare" %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/1.18.0/d3-annotation.min.js"></script>
+<script>
 
-<%= link_to 'Edit', edit_task_path(@task), :class => "btn btn-warning btn-white-text"  %>
-<%= link_to 'Back', tasks_path, :class => "btn btn-default" %>
+  var makeAnnotations;
+  var annotations = [];
+  var inEditMode = false;  
+
+  var json = "<%= @task.annotations %>".replace(/&quot;/gi, '"');
+  var objs = JSON.parse(json);
+
+  if (objs.length > 0) {
+    objs.forEach(function(d, i) {
+      var obj = {
+          type: d3.annotationCalloutCircle,
+          note: { label: "Point " + (i + 1) },
+          x: d.x, y: d.y,
+          dx: d.dx, dy: d.dy,
+          subject: d.subject
+        };
+      annotations.push(obj);
+    });
+  }
+
+  d3.select("#add")
+    .on("click", function() {
+        saveAnnotations();      
+        annotations.push({
+            type: d3.annotationCalloutCircle,
+            note: { label: "Point " + (annotations.length + 1) },
+            x: 50, y: 50,
+            dy: 50, dx: 50,
+            subject: { radius: 25, radiusPadding: 0 }
+          });
+        
+        makeAnnotations.annotations(annotations).update();
+
+        makeAnnotations.editMode(true).update();
+        inEditMode = true;        
+        d3.select("#move").html("Save annotations");
+    });
+
+  d3.select("#move")
+    .on("click", function() {
+      if (inEditMode) {
+        makeAnnotations.editMode(false).update();
+        inEditMode = false;
+        d3.select(this).html("Edit annotations");
+        saveAnnotations();
+      } else {
+        makeAnnotations.editMode(true).update();
+        inEditMode = true;        
+        d3.select(this).html("Save annotations");
+      }
+    });
+
+  d3.select("#remove")
+    .on("click", function() {
+      removeLastAnnotation();
+    });
+
+  function removeLastAnnotation() {
+    if (annotations.length > 1) {
+      annotations.pop();
+
+      makeAnnotations.annotations(annotations).update();
+
+      makeAnnotations.editMode(true).update();
+      inEditMode = true;        
+      d3.select("#move").html("Save annotations");
+    } else {
+      annotations.pop();
+      d3.select("g.annotations").remove()
+      makeAnnotations.annotations(annotations).update();      
+    }
+  }
+
+  function saveAnnotations() {
+    makeAnnotations.collection().annotations.forEach(function(d, i) {
+      var obj = {
+        x: d.x,
+        y: d.y,
+        dx: d.dx,
+        dy: d.dy,
+        subject: d.subject
+      };
+      annotations[i].x = d.x;
+      annotations[i].y = d.y;
+      annotations[i].dx = d.dx;
+      annotations[i].dy = d.dy;
+      annotations[i].subject = d.subject;
+    });
+
+    document.getElementById("request_annotations").value = JSON.stringify(annotations);
+  }
+
+  function init() {
+    makeAnnotations = d3.annotation()
+        .editMode(false)
+        .annotations(annotations);
+
+    var selected_svg = d3.select("svg");
+
+    var h = selected_svg.attr("height");
+    var w = selected_svg.attr("width");
+
+    var cover = selected_svg.append("g");
+
+    cover.append("rect")
+       			.attr("x", 0)
+       			.attr("y", 0)
+       			.attr("height", h)
+       			.attr("width", w)
+       			.style("stroke", "black")
+            .style("fill", "none")
+       			.style("stroke-width", 1);
+
+    cover.append("g")
+      	.attr("class", "annotation-group")
+      	.call(makeAnnotations);
+  }
+
+  loadVisualisation(init);
+</script>
+<% end %>
+
+<% if @task.task_type == "Question" %>
+<script>
+  function init() {
+    var selected_svg = d3.select("svg");
+
+    var h = selected_svg.attr("height");
+    var w = selected_svg.attr("width");
+
+    var cover = selected_svg.append("g");
+
+    cover.append("rect")
+       			.attr("x", 0)
+       			.attr("y", 0)
+       			.attr("height", h)
+       			.attr("width", w)
+       			.style("stroke", "black")
+            .style("fill", "none")
+       			.style("stroke-width", 1);
+  }
+
+  loadVisualisation(init);
+</script>
+<% end %>

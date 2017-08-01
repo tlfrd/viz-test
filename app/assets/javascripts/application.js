@@ -19,3 +19,5 @@
 //= require stopwatch
 //= require display_results
 //= require record_results
+
+//= require select2

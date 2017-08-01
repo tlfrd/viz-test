@@ -1,35 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe VisualisationsController, type: :controller do
-
   before(:each) do
     http_login
+    Visualisation.create(title: "CoolMap1", html: "https://raw.githubusercontent.com/tlfrd/viz-collection/master/comics/index.html")
+    Visualisation.create(title: "CoolMap2", html: "https://raw.githubusercontent.com/tlfrd/viz-collection/master/comics/index.html")
   end
   
   describe "GET #index" do
-    it "responds successfully with an HTTP 200 status code" do
+    it "loads all of the visualisations" do
       get :index
-      expect(response).to be_success
-      expect(response).to have_http_status(200)
-    end
-
-    it "renders the index template" do
-      get :index
-      expect(response).to render_template("index")
-    end
-
-    it "loads all of the visualisations into @visualisations" do
-      vis1, vis2 = Visualisation.create!, Visualisation.create!
-      get :index
-
-      expect(assigns(:visualisations)).to match_array([vis1, vis2])
+      visualisations = Visualisation.all
+      expect(assigns(:visualisations)).to match_array(visualisations)
     end
   end
 
-  describe '#create' do
-    it "creates a successful visualisation" do
-      @visualisation = Visualisation.create(title: "CoolMap")
-      expect(@visualisation).to be_an_instance_of Visualisation
+  describe "GET #show" do
+    it "renders the show template" do
+      get :show, id: Visualisation.first.id
+      expect(response).to render_template("show")
     end
   end
 end

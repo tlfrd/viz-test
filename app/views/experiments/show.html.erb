@@ -2,113 +2,194 @@
   <div class="alert alert-info" role="alert"><%= notice %></div>
 <% end %>
 
-<h3>
-  <%= @experiment.name %>
-</h3>
-
-<div class="panel panel-default">
-  <div class="panel-heading"><strong>Public intro text</strong></div>
-  <div class="panel-body">
-    <%= @experiment.intro_html.html_safe %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>
+        <% if @experiment.active %>
+          <span class="label label-success">Open</span>
+        <% else %>
+          <span class="label label-danger">Closed</span>          
+        <% end %>
+        <span class="experiment-title">
+          <%= @experiment.name %>
+        </span>
+      </h3> 
+    <div>
   </div>
 </div>
 
-<div class="panel panel-default">
-  <div class="panel-heading"><strong>Tasks</strong></div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Order</th>
-        <th>Task</th>
-        <th>Visualisation Tags</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @experiment_tasks.each do |experiment_task| %>
-        <tr>
-          <td><strong><%= experiment_task.order %></strong></td>
-          <td><%= link_to Task.find(experiment_task.task_id).name, task_path(experiment_task.task_id), method: :get %></td>
-          <td>
-            <% experiment_task.task.visualisation.colour_list.each do |colour| %>
-              <span class="label label-default"><%= colour %></span>
-            <% end %>
-            <% experiment_task.task.visualisation.type_list.each do |type| %>
-              <span class="label label-default"><%= type %></span>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to 'Edit', edit_experiment_task_path(experiment_task), method: :get, class: "btn btn-warning btn-white-text btn-spacing" %>
-            <%= link_to 'Remove', experiment_task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-white-text btn-spacing" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <button class="btn btn-none" data-toggle="collapse" data-target="#intro-text">
+            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+          </button> 
+          <strong>Public Intro Text</strong>    
+        </div>
+        <div id="intro-text" class="panel-body collapse">
+          <%= @experiment.intro_html.html_safe %>
+        </div>
+      </div>
+    </div>
 
-<div class="buttons-container">
-  <%= link_to "Add Task", new_experiment_task_path(:experiment_id => @experiment.id), class: "btn btn-success btn-white-text" %>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-heading"><strong>Instances</strong></div>
-  <div class="panel-body">
-    Public link to create and start an instance: <%= link_to public_show_url(@experiment.uuid), public_show_url(@experiment.uuid) %>
+    <div class="col-md-2">
+      <%= link_to 'Edit', edit_experiment_path(@experiment), class: "btn btn-warning btn-white-text" %>
+    </div>
   </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>UUID</th>
-        <th>Progress</th>
-        <th>Time Created</th>
-        <th>Time Completed</th>
-        <th>Device Type</th>
-        <th>Input Type</th>
-        <th>Ordering</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @experiment_results.each do |experiment_result| %>
-        <tr>
-          <td><%= link_to experiment_result.uuid.truncate(11), run_experiment_path(experiment_result.uuid) %></td>
-          <td>
-            <% if experiment_result.completed %>
-              <span class="label label-success">Completed</span>
-            <% else %>
-              <span class="label label-warning">In Progress</span>
-            <% end %>
-            <%= link_to view_experiment_result_path(experiment_result.uuid) do %>
-              <span class="badge"><%= experiment_result.experiment_task_results.length %> / <%= @experiment.experiment_tasks.length %></span>
-            <% end %>
-          </td>
-          <td><%= experiment_result.created_at %></td>
-          <td>
-            <% if experiment_result.completed %>
-              <%= experiment_result.updated_at %>
-            <% else %>
-              -
-            <% end %>
-          </td>
-          <td><%= experiment_result.device_type %></td>
-          <td><%= experiment_result.input_type %></td>
-          <td><%= experiment_result.ordering %></td>
-          <td>
-            <%= button_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-spacing" %>
-            <%= button_to "Download", experiment_result, method: :get, class: "btn btn-default btn-spacing" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
 </div>
 
-<div class="buttons-container">
-  <%= link_to "Create Instance", experiment_create_instance_path(@experiment.id), class: "btn btn-primary btn-white-text" %> </br></br>
-  <%= link_to "Preview", experiment_preview_path(:experiment_id => @experiment.id, :position => 1), class: "btn btn-info btn-white-text" %>
-  <%= link_to 'Edit', edit_experiment_path(@experiment), class: "btn btn-warning btn-white-text" %> <br/><br/>
-  <%= link_to 'Download All Results', experiment_all_results_path(@experiment), class: "btn btn-default" %>
-  <%= link_to 'Show All Results', experiment_single_all_results_path(@experiment), class: "btn btn-default" %> <br/><br/>
-  <%= link_to 'Back', experiments_path, class: "btn btn-default" %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <button class="btn btn-none" data-toggle="collapse" data-target="#tasks">
+            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+          </button> 
+          <strong>Tasks</strong>  
+        </div>
+        <div id="tasks" class="collapse">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Task</th>
+                <th>Visualisation Tags</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @experiment_tasks.each do |experiment_task| %>
+                <tr>
+                  <td><strong><%= experiment_task.order %></strong></td>
+                  <td><%= link_to Task.find(experiment_task.task_id).name, task_path(experiment_task.task_id), method: :get %></td>
+                  <td>
+                    <% experiment_task.task.visualisation.colour_list.each do |colour| %>
+                      <span class="label label-default"><%= colour %></span>
+                    <% end %>
+                    <% experiment_task.task.visualisation.type_list.each do |type| %>
+                      <span class="label label-default"><%= type %></span>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to 'Edit', edit_experiment_task_path(experiment_task), method: :get, class: "btn btn-warning btn-white-text btn-spacing" %>
+                    <%= link_to 'Remove', experiment_task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-white-text btn-spacing" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <%= link_to "Add Task", new_experiment_task_path(:experiment_id => @experiment.id), class: "btn btn-success btn-white-text" %>
+    </div>
+  </div>
 </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <button class="btn btn-none" data-toggle="collapse" data-target="#instances">
+            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+          </button> 
+          <strong>Instances</strong>
+        </div>
+        <div class="panel-body">
+          Public link to create and start an instance: <%= link_to public_show_url(@experiment.uuid), public_show_url(@experiment.uuid) %>
+        </div>
+        <div id="instances" class="collapse">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>UUID</th>
+                <th>Progress</th>
+                <th>Time Created</th>
+                <th>Time Completed</th>
+                <th>Device Type</th>
+                <th>Input Type</th>
+                <!--th>Ordering</th-->
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @experiment_results.each do |experiment_result| %>
+                <tr>
+                  <td><%= link_to experiment_result.uuid.truncate(11), run_experiment_path(experiment_result.uuid) %></td>
+                  <td>
+                    <% if experiment_result.completed %>
+                      <span class="label label-success">Completed</span>
+                    <% else %>
+                      <span class="label label-warning">In Progress</span>
+                    <% end %>
+                    <%= link_to view_experiment_result_path(experiment_result.uuid) do %>
+                      <span class="badge"><%= experiment_result.experiment_task_results.length %> / <%= @experiment.experiment_tasks.length %></span>
+                    <% end %>
+                  </td>
+                  <td><%= experiment_result.created_at %></td>
+                  <td>
+                    <% if experiment_result.completed %>
+                      <%= experiment_result.updated_at %>
+                    <% else %>
+                      -
+                    <% end %>
+                  </td>
+                  <td><%= experiment_result.device_type %></td>
+                  <td><%= experiment_result.input_type %></td>
+                  <!--td><%= experiment_result.ordering %></td-->
+                  <td>
+                    <%= button_to 'Destroy', experiment_result, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-spacing" %>
+                    <%= button_to "Download", experiment_result, method: :get, class: "btn btn-default btn-spacing" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <%= link_to "Create Instance", experiment_create_instance_path(@experiment.id), class: "btn btn-primary btn-white-text" %>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <% if !@experiment.active %>
+         <%= button_to "Open experiment", experiment_open_path(:experiment_id => @experiment.id), method: :post, class: "btn btn-success btn-white-text" %>
+      <% else %>
+         <%= button_to "Close experiment", experiment_close_path(:experiment_id => @experiment.id), method: :post, class: "btn btn-danger btn-white-text" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<br/>
+
+<div class="controls-container container">
+  <div class="row">
+    <div class="col-md-12">
+      <%= link_to "Preview", experiment_preview_path(:experiment_id => @experiment.id, :position => 1), class: "btn btn-info btn-white-text" %>
+      <%= link_to 'Download Results', experiment_all_results_path(@experiment), class: "btn btn-default" %>
+      <%= link_to 'Show Results', experiment_task_results_for_experiment_path(@experiment), class: "btn btn-default" %>
+    <div>
+  </div>
+</div>
+
+<!--<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <%= link_to 'Back', experiments_path, class: "btn btn-default" %>
+    </div>
+  </div>
+</div>-->

@@ -16,6 +16,20 @@ class ExperimentsController < ApplicationController
     # @experiment_result = ExperimentResult.get_next_id
   end
 
+  def open
+    @experiment = Experiment.find(params[:experiment_id])
+    @experiment.update(active: true)  
+
+    redirect_to @experiment, notice: 'This experiment now live.'
+  end
+
+  def close
+    @experiment = Experiment.find(params[:experiment_id])
+    @experiment.update(active: false) 
+    
+    redirect_to @experiment, notice: 'This experiment is now closed.'    
+  end
+
   def public_show
     @experiment = Experiment.find_by_uuid(params[:experiment_uuid])
     if @experiment.intro_html
@@ -177,7 +191,7 @@ class ExperimentsController < ApplicationController
   # POST /experiments.json
   def create
     @experiment = Experiment.new(experiment_params)
-    @experiment.update(uuid: ExperimentResult.generate_uuid)
+    @experiment.update(uuid: ExperimentResult.generate_uuid, active: false)
 
     respond_to do |format|
       if @experiment.save

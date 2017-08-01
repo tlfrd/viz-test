@@ -2,9 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.btn-white-text,
-.btn-white-text:visited {
-  color: white;
+.currently-displaying {
+  margin-bottom: 2em;
 }
 
 .visualisation-image {
@@ -48,11 +47,16 @@ h3 {
   margin-bottom: 1em;
 }
 
+h3.padding {
+  padding-left: 1em;
+}
+
 .panel {
   margin-bottom: 2em;
 }
 
 .buttons-container {
+  margin-top: 2em;
   margin-bottom: 2em;
 }
 
@@ -109,4 +113,16 @@ rect.selection {
   stroke-opacity: 1;
   fill: white;
   fill-opacity: 0.5;
+}
+
+.experiment-title {
+  position: relative;
+  top: 3px;
+  left: 5px;
+}
+
+.experiment-title-small {
+  position: relative;
+  top: 2px;
+  left: 3px;
 }

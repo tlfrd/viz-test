@@ -31,10 +31,20 @@ class TasksController < ApplicationController
   # GET /tasks/new
   def new
     @task = Task.new
+    if params[:visualisation_id]
+      @visualisation_id = params[:visualisation_id]
+    end
   end
 
   # GET /tasks/1/edit
   def edit
+  end
+
+  def add_annotations
+    @task = Task.find(params[:task_id])
+    @annotations = params[:request][:annotations]
+    @task.update(annotations: @annotations)
+    redirect_back(fallback_location: @task)
   end
 
   def add_coordinates

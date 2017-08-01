@@ -71,13 +71,14 @@
 
 <script>
   loadVisualisation(function() {
-    console.log("Visualisation successfully loaded!");
-  });
+    console.log("Visualisation loaded!");
+  })
 </script>
 
-<%= link_to 'Edit', edit_visualisation_path(@visualisation), class: "btn btn-warning" %>
-<%= link_to 'Destroy', @visualisation, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
-
-<br/><br/>
+<div class="buttons-container">
+  <%= link_to "Create Task", new_task_path(:visualisation_id => @visualisation.id), class: "btn btn-success" %>
+  <%= link_to 'Edit', edit_visualisation_path(@visualisation), class: "btn btn-warning" %>
+  <%= link_to 'Destroy', @visualisation, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+</div>
 
 <%= link_to 'Back', visualisations_path, :class => "btn btn-default" %>

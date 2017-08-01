@@ -1,15 +1,7 @@
 class ResultsController < ApplicationController
   http_basic_authenticate_with name: ENV["APP_USER"], password: ENV["APP_SECRET"]
-  def index
-    @experiment_results = ExperimentResult.all.order(id: :desc)
-    @experiment_tasks = ExperimentTask.all.order(id: :asc)
-  end
 
-  def experiment_task_results
-    @experiment_tasks = ExperimentTask.paginate(:page => params[:page], :per_page => 10)
-  end
-
-  def experiment_task_results_single
+  def experiment_task_results_for_experiment
     @experiment_tasks = ExperimentTask.where(experiment_id: params[:experiment_id])
     @experiment = Experiment.find_by_id(params[:experiment_id])
   end

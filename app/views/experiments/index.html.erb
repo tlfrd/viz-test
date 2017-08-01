@@ -11,7 +11,7 @@
         <th>ID</th>
         <th>Name</th>
         <th>Actions</th>
-        <th colspan="2"></th>
+        <th>Results</th>
       </tr>
     </thead>
 
@@ -19,11 +19,23 @@
       <% @experiments.order(created_at: :desc).each do |experiment| %>
         <tr>
           <td><%= experiment.id %></td>
-          <td><%= experiment.name %></td>
+          <td>
+            <% if experiment.active %>
+              <span class="label label-success">Open</span>
+            <% else %>
+              <span class="label label-danger">Closed</span>          
+            <% end %>
+            <span class="experiment-title-small">
+              <%= experiment.name %>
+            </span>
+          </td>
           <td>
             <%= link_to 'Show', experiment, method: :get, class: "btn btn-default btn-spacing" %>
             <%= link_to 'Edit', edit_experiment_path(experiment), method: :get, class: "btn btn-warning btn-spacing" %>
-            <%= link_to 'Destroy', experiment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-spacing" %>
+          </td>
+          <td>
+            <%= link_to 'Download', experiment_all_results_path(experiment), class: "btn btn-default btn-spacing" %>
+            <%= link_to 'Show All', experiment_task_results_for_experiment_path(experiment), class: "btn btn-default btn-spacing" %>
           </td>
         </tr>
       <% end %>
