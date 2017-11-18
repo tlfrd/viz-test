@@ -2,14 +2,16 @@
 
 A tool to crowdsource graphical perception experiments built using Ruby on Rails and D3.js
 
-Coming soon:
+## Installation
 
-* How to install/deploy
+Install Ruby 2.4 and RubyGems.
 
-* Related work
+Run ```$ bundler install``` to install necessary gems.
 
-* Experiments so far
+Run ```$ rake db:migrate``` to initialise database/run migrations.
 
-* Masters report
+Finally, set APP_USER and APP_SECRET environment variables for basic HTTP authentication.
 
-* The paper
+## Tests
+
+Run ```$ rspec``` to run tests (some will fail as they have not been updated, this is a WIP).
