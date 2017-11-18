@@ -40,8 +40,6 @@ gem "twitter-bootstrap-rails"
 
 gem 'rails_12factor'
 
-gem "sentry-raven"
-
 gem 'acts-as-taggable-on', '~> 4.0'
 
 gem 'will_paginate'
